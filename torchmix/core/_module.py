@@ -3,12 +3,13 @@ import inspect
 import os
 import re
 from collections.abc import Mapping, Sequence
+from inspect import Signature
 from pathlib import Path
 from typing import Optional
 
 from hydra.core.config_store import ConfigStore
 from hydra_zen import instantiate
-from hydra_zen.typing import Partial
+from hydra_zen.typing import Builds, Partial
 from omegaconf import DictConfig, OmegaConf
 from torch import nn
 from typing_extensions import Self
@@ -16,6 +17,30 @@ from typing_extensions import Self
 from torchmix.core._builds import BuildMode, builds
 
 NO_PARAMS = False
+
+
+def _extract_args_from_signature(sig: Signature):
+    args = tuple(
+        name
+        for name, param in sig.parameters.items()
+        if param.default is param.empty
+        and name != "self"
+        and param.kind != param.VAR_KEYWORD
+        # TODO: VAR_POSITIONAL must be handled as well.
+    )
+    return args
+
+
+def _extract_kwargs_from_signature(sig: Signature):
+    # Extracting keyword-only arguments and their default values
+    # Cannot use param.kind here.
+    # See https://stackoverflow.com/questions/57848612
+    kwargs = {
+        name: param.default
+        for name, param in sig.parameters.items()
+        if param.default is not param.empty
+    }
+    return kwargs
 
 
 def _underscore(name: str) -> str:
@@ -110,10 +135,49 @@ class MixModule(nn.Module):
         """
         old_init = cls.__init__
         old_sig = inspect.signature(old_init)
+        default_args = _extract_args_from_signature(old_sig)
+        default_kwargs = _extract_kwargs_from_signature(old_sig)
 
         def new_init(self, *args, **kwargs):
+            if cls.build_mode is BuildMode.WITHOUT_ARGS:
+                args_offset = len(args) - len(default_args)
+                num_args_to_be_provided = len(default_args)
+                kwargs_keys = list(default_kwargs)
+
+                if args_offset < 0:
+                    for i in range(-args_offset):
+                        if default_args[i + len(args)] in kwargs:
+                            num_args_to_be_provided -= 1
+                        else:
+                            raise TypeError(
+                                f"{cls.__name__}.__init__() missing "
+                                "{-args_offset} "
+                                "required positional arguments: "
+                                f"""'{"', '".join(default_args[args_offset:])}'"""
+                            )
+
+                kwargs_as_pos = {
+                    kwargs_keys[i]: args[i + len(default_args)]
+                    for i in range(args_offset)
+                }
+
+                got_multiple_values = set(kwargs_as_pos).intersection(kwargs)
+
+                if got_multiple_values:
+                    raise TypeError(
+                        f"{cls.__name__}.__init__() got multiple values for argument "
+                        f"""'{"', '".join(got_multiple_values)}'"""
+                    )
+
+                default_kwargs.update(kwargs)
+                default_kwargs.update(kwargs_as_pos)
+
+                args = args[:num_args_to_be_provided]
+                kwargs = default_kwargs
+
             _args = ()
             _kwargs = {}
+
             for arg in args:
                 _args += (_parse(arg),)
 
@@ -171,7 +235,7 @@ class MixModule(nn.Module):
         return functools.partial(cls, *args, **kwargs)
 
     @property
-    def config(self):
+    def config(self) -> Builds:
         """
         Returns the `DictConfig` object containing the configuration for the
         `MixModule` instance.
