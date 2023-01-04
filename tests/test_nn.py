@@ -58,5 +58,4 @@ testdata = [
 
 @pytest.mark.parametrize("module,num_parameters", testdata)
 def test_export(module: MixModule, num_parameters: int):
-    print(module)
     assert sum(p.numel() for p in module.parameters()) == num_parameters

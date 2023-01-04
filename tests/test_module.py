@@ -56,7 +56,6 @@ def test_arg_6():
 
 def test_arg_7():
     x = Dummy2(2, 3)
-    print(x.config.__dict__)
     assert x.config.__dict__["a"] == 2
     assert x.config.__dict__["b"] == 3
     assert x.config.__dict__["c"] == 3
@@ -125,7 +124,6 @@ class Dummy4(MixModule):
             nn.GELU(),
         ),
     ):
-        print(a)
         self.a = a
 
 
