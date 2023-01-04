@@ -20,3 +20,9 @@ def no_parameters():
     """
     with unittest.mock.patch("torchmix.core._module.NO_PARAMS", True):
         yield
+
+
+@contextlib.contextmanager
+def config(*_args, **kwargs):
+    with unittest.mock.patch("torchmix.core._module.GLOBAL_KWARGS", kwargs):
+        yield

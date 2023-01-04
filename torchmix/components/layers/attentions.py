@@ -16,9 +16,9 @@ __all__ = [
 class SelfAttention(MixModule):
     def __init__(
         self,
-        dim: int,
-        num_heads: int,
-        head_dim: int,
+        dim: int = 768,
+        num_heads: int = 12,
+        head_dim: int = 64,
     ):
         self.inner_dim = num_heads * head_dim
         self.scale: float = head_dim**-0.5
