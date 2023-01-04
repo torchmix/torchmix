@@ -1,0 +1,14 @@
+_target_: __main__.CustomModule
+proj_layer:
+  _target_: torchmix.nn.Linear
+  _partial_: true
+  _args_:
+  - 100
+  - 100
+  bias: true
+  device: null
+  dtype: null
+act_layer:
+  _target_: torchmix.nn.GELU
+  _partial_: true
+  approximate: none
