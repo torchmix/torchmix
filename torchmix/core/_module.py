@@ -228,7 +228,9 @@ class MixModule(nn.Module):
         elif cls.build_mode is BuildMode.WITH_ARGS:
             return builds(cls, *args, **kwargs)
         else:
-            raise ValueError("build_mode must be one of WITHOUT_ARGS or WITH_ARGS")
+            raise ValueError(
+                "build_mode must be one of WITHOUT_ARGS or WITH_ARGS"
+            )
 
     @classmethod
     def partial(cls, *args, **kwargs):

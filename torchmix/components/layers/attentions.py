@@ -1,4 +1,5 @@
 import math
+from typing import Tuple
 
 from einops import einsum, rearrange, unpack
 from jaxtyping import Float
@@ -42,7 +43,11 @@ class SelfAttention(MixModule):
 
     def to_qkv(
         self, x: Float[Tensor, "b n d"]
-    ) -> tuple[Float[Tensor, "b n d"], Float[Tensor, "b n d"], Float[Tensor, "b n d"]]:
+    ) -> Tuple[
+        Float[Tensor, "b n d"],
+        Float[Tensor, "b n d"],
+        Float[Tensor, "b n d"],
+    ]:
         query, key, value = unpack(
             self._to_qkv(x),
             [[self.inner_dim], [self.inner_dim], [self.inner_dim]],
@@ -55,7 +60,7 @@ class SelfAttention(MixModule):
         query: Float[Tensor, "b n d_in"],
         key: Float[Tensor, "b n d_in"],
         value: Float[Tensor, "b n d_in"],
-    ) -> tuple[
+    ) -> Tuple[
         Float[Tensor, "b h n d_out"],
         Float[Tensor, "b h n d_out"],
         Float[Tensor, "b h n d_out"],
@@ -81,7 +86,9 @@ class SelfAttention(MixModule):
         out = einsum(attention, value, "... q k, ... k d -> ... q d")
         return out
 
-    def collect_heads(self, out: Float[Tensor, "b h n d"]) -> Float[Tensor, "b n h*d"]:
+    def collect_heads(
+        self, out: Float[Tensor, "b h n d"]
+    ) -> Float[Tensor, "b n h*d"]:
         return rearrange(out, "b h n d -> b n (h d)")
 
     def forward(self, x: Float[Tensor, "b n d"]) -> Float[Tensor, "b n d"]:
@@ -110,17 +117,21 @@ class WindowAttention(SelfAttention):
 
     def split_qkv(
         self,
-        query: Float[Tensor, "b n d"],
-        key: Float[Tensor, "b n d"],
-        value: Float[Tensor, "b n d"],
-    ) -> tuple[Float[Tensor, "b n d"], Float[Tensor, "b n d"], Float[Tensor, "b n d"],]:
+        query: Float[Tensor, "b n d_in"],
+        key: Float[Tensor, "b n d_in"],
+        value: Float[Tensor, "b n d_in"],
+    ) -> Tuple[
+        Float[Tensor, "b h w head window d_out"],
+        Float[Tensor, "b h w head window d_out"],
+        Float[Tensor, "b h w head window d_out"],
+    ]:
         _batch_size, _seq_length, _inner_dim = query.shape
         patch_size = round(math.sqrt(_seq_length))
 
         query, key, value = map(
             lambda x: rearrange(
                 x,
-                "b (h ph w pw) (hd d) -> b h w hd (ph pw) d",
+                "b (h ph w pw) (head d) -> b h w head (ph pw) d",
                 ph=self.window_size,
                 pw=self.window_size,
                 h=patch_size // self.window_size,
@@ -132,11 +143,12 @@ class WindowAttention(SelfAttention):
         return query, key, value
 
     def collect_heads(
-        self, out: Float[Tensor, "b h n d_out"]
+        self,
+        out: Float[Tensor, "b h w head window d_out"],
     ) -> Float[Tensor, "b n d_in"]:
         return rearrange(
             out,
-            "b h w hd (ph pw) d -> b (h ph w pw) (hd d)",
+            "b h w head (ph pw) d -> b (h ph w pw) (head d)",
             ph=self.window_size,
             pw=self.window_size,
         )

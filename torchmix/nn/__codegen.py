@@ -105,6 +105,8 @@ with open("torchmix/nn/__init__.py", "w") as f:
             pass
 
 try:
-    subprocess.run(["poetry", "run", "black", "-l", "78", "torchmix/nn/__init__.py"])
+    subprocess.run(
+        ["poetry", "run", "black", "-l", "78", "torchmix/nn/__init__.py"]
+    )
 except:  # noqa: E722
     pass
