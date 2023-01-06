@@ -4,8 +4,8 @@ from einops import einsum, rearrange, unpack
 from jaxtyping import Float
 from torch import Tensor
 
+from torchmix import nn
 from torchmix.core._module import MixModule
-from torchmix.third_party.einops import EinMix
 
 
 class SelfAttention(MixModule):
@@ -19,23 +19,25 @@ class SelfAttention(MixModule):
         self.scale: float = head_dim**-0.5
         self.num_heads: float = num_heads
 
-        self._to_qkv = EinMix(
-            # einops.EinopsError: Ellipsis is not supported in EinMix (right now)
-            "b n d_in -> b n d_out",
-            weight_shape="d_in d_out",
-            bias_shape="d_out",
-            d_in=dim,
-            d_out=3 * self.inner_dim,
-        )
+        # einops.EinopsError: Ellipsis is not supported in EinMix (right now)
+        # self._to_qkv = EinMix(
+        #     "... d_in -> ... d_out",
+        #     weight_shape="d_in d_out",
+        #     bias_shape="d_out",
+        #     d_in=dim,
+        #     d_out=3 * self.inner_dim,
+        # )
+        self._to_qkv = nn.Linear(dim, 3 * self.inner_dim)
 
-        self._proj = EinMix(
-            # einops.EinopsError: Ellipsis is not supported in EinMix (right now)
-            "b n d_out -> b n d_in",
-            weight_shape="d_in d_out",
-            bias_shape="d_in",
-            d_in=dim,
-            d_out=self.inner_dim,
-        )
+        # einops.EinopsError: Ellipsis is not supported in EinMix (right now)
+        # self._proj = EinMix(
+        #     "... d_out -> ... d_in",
+        #     weight_shape="d_in d_out",
+        #     bias_shape="d_in",
+        #     d_in=dim,
+        #     d_out=self.inner_dim,
+        # )
+        self._proj = nn.Linear(self.inner_dim, dim)
 
     def to_qkv(
         self, x: Float[Tensor, "... d"]

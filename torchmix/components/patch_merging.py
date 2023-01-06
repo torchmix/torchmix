@@ -5,7 +5,7 @@ from torch import Tensor
 
 from torchmix import nn
 from torchmix.core._module import MixModule
-from torchmix.third_party.einops import EinMix, Rearrange
+from torchmix.third_party.einops import Rearrange
 
 
 class PatchMerging(MixModule):
@@ -20,14 +20,15 @@ class PatchMerging(MixModule):
 
         self.proj = nn.Sequential(
             nn.LayerNorm(dim * 4),
-            EinMix(
-                # einops.EinopsError: Ellipsis is not supported in EinMix (right now)
-                "b n d_in -> b n d_out",
-                weight_shape="d_in d_out",
-                bias_shape="d_out",
-                d_in=dim * 4,
-                d_out=dim * 2,
-            ),
+            # einops.EinopsError: Ellipsis is not supported in EinMix (right now)
+            # EinMix(
+            #     "... d_in -> ... d_out",
+            #     weight_shape="d_in d_out",
+            #     bias_shape="d_out",
+            #     d_in=dim * 4,
+            #     d_out=dim * 2,
+            # ),
+            nn.Linear(dim * 4, dim * 2),
         )
 
     def forward(self, x: Float[Tensor, "... n d"]) -> Float[Tensor, "... n/4 d*2"]:
