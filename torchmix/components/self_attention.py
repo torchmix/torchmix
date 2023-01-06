@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from einops import einsum, rearrange, unpack
 from jaxtyping import Float
 from torch import Tensor
@@ -18,6 +20,7 @@ class SelfAttention(MixModule):
         self.num_heads: float = num_heads
 
         self._to_qkv = EinMix(
+            # einops.EinopsError: Ellipsis is not supported in EinMix (right now)
             "b n d_in -> b n d_out",
             weight_shape="d_in d_out",
             bias_shape="d_out",
@@ -26,6 +29,7 @@ class SelfAttention(MixModule):
         )
 
         self._proj = EinMix(
+            # einops.EinopsError: Ellipsis is not supported in EinMix (right now)
             "b n d_out -> b n d_in",
             weight_shape="d_in d_out",
             bias_shape="d_in",
@@ -34,29 +38,30 @@ class SelfAttention(MixModule):
         )
 
     def to_qkv(
-        self, x: Float[Tensor, "b n d"]
-    ) -> tuple[Float[Tensor, "b n d"], Float[Tensor, "b n d"], Float[Tensor, "b n d"]]:
+        self, x: Float[Tensor, "... d"]
+    ) -> Tuple[Float[Tensor, "... d"], Float[Tensor, "... d"], Float[Tensor, "... d"],]:
         query, key, value = unpack(
             self._to_qkv(x),
             [[self.inner_dim], [self.inner_dim], [self.inner_dim]],
+            # einops.EinopsError: Invalid axis name ... in unpack(..., "... *")
             "b n *",
         )
         return query, key, value
 
     def split_qkv(
         self,
-        query: Float[Tensor, "b n d_in"],
-        key: Float[Tensor, "b n d_in"],
-        value: Float[Tensor, "b n d_in"],
-    ) -> tuple[
-        Float[Tensor, "b h n d_out"],
-        Float[Tensor, "b h n d_out"],
-        Float[Tensor, "b h n d_out"],
+        query: Float[Tensor, "... n d_in"],
+        key: Float[Tensor, "... n d_in"],
+        value: Float[Tensor, "... n d_in"],
+    ) -> Tuple[
+        Float[Tensor, "... h n d_out"],
+        Float[Tensor, "... h n d_out"],
+        Float[Tensor, "... h n d_out"],
     ]:
         query, key, value = map(
             lambda x: rearrange(
                 x,
-                "b n (h d) -> b h n d",
+                "... n (h d) -> ... h n d",
                 h=self.num_heads,
             ),
             (query, key, value),
@@ -74,10 +79,12 @@ class SelfAttention(MixModule):
         out = einsum(attention, value, "... q k, ... k d -> ... q d")
         return out
 
-    def collect_heads(self, out: Float[Tensor, "b h n d"]) -> Float[Tensor, "b n h*d"]:
-        return rearrange(out, "b h n d -> b n (h d)")
+    def collect_heads(
+        self, out: Float[Tensor, "... h n d"]
+    ) -> Float[Tensor, "... n h*d"]:
+        return rearrange(out, "... h n d -> ... n (h d)")
 
-    def forward(self, x: Float[Tensor, "b n d"]) -> Float[Tensor, "b n d"]:
+    def forward(self, x: Float[Tensor, "... d"]) -> Float[Tensor, "... d"]:
         q, k, v = self.to_qkv(x)
         q, k, v = self.split_qkv(q, k, v)
         out = self.attention(q, k, v)

@@ -8,12 +8,39 @@ from torchmix.third_party.einops import EinMix
 
 
 class ChannelMixer(MixModule):
+    """Channel mixer that performs token-wise transformations on
+    an input tensor.
+
+    This layer applies two EinMix layers in sequence to perform token-wise
+    transformations on the input tensor. The first EinMix layer expands
+    the number of channels by a specified expansion factor, and the second
+    EinMix layer reduces the number of channels back to its original value.
+
+    An activation layer can be inserted between the two EinMix layers.
+
+    Args:
+        act_layer (Partial[MixModule]): Activation layer to be inserted
+            between the two EinMix layers.
+        dim (int, optional): Number of channels in the input tensor.
+            Default: 1024.
+        expansion_factor (float, optional): Factor by which to expand
+            the number of channels in the first EinMix layer. Default: 4.
+
+    Examples:
+        >>> channel_mixer = ChannelMixer()
+        >>> x = torch.randn(32, 196, 1024)
+        >>> y = channel_mixer(x)
+        >>> x.shape == y.shape
+        True
+    """
+
     def __init__(
         self,
         act_layer: Partial[MixModule],
         dim: int = 1024,
         expansion_factor: float = 4,
     ):
+        # einops.EinopsError: Ellipsis is not supported in EinMix (right now)
         self.block = nn.Sequential(
             EinMix(
                 "b n d_in -> b n d_out",
@@ -32,5 +59,17 @@ class ChannelMixer(MixModule):
             ),
         )
 
-    def forward(self, x: Float[Tensor, "b n d"]) -> Float[Tensor, "b n d"]:
+    def forward(self, x: Float[Tensor, "... d"]) -> Float[Tensor, "... d"]:
+        """Perform channel-wise transformations on the input tensor.
+
+        Args:
+            x (Float[Tensor, "... d"]): Input tensor with any number of
+                leading dimensions and a trailing dimension representing
+                the number of channels.
+
+        Returns:
+            Float[Tensor, "... d"]: Output tensor with the same dimensions
+                as the input tensor, but with the channels transformed by
+                the channel mixer.
+        """
         return self.block(x)

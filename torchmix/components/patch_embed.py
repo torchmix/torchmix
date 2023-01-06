@@ -13,6 +13,7 @@ class PatchEmbed(MixModule):
         dim: int = 768,
     ):
         self.projection = EinMix(
+            # einops.EinopsError: Ellipsis is not supported in EinMix (right now)
             "b c (h ph) (w pw) -> b (h w) d",
             weight_shape="c ph pw d",
             bias_shape="d",
@@ -22,5 +23,5 @@ class PatchEmbed(MixModule):
             d=dim,
         )
 
-    def forward(self, x: Float[Tensor, "b c h w"]) -> Float[Tensor, "b n d"]:
+    def forward(self, x: Float[Tensor, "... c h w"]) -> Float[Tensor, "... n d"]:
         return self.projection(x)

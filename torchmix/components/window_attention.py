@@ -1,4 +1,5 @@
 import math
+from typing import Tuple
 
 from einops import rearrange
 from jaxtyping import Float
@@ -24,17 +25,21 @@ class WindowAttention(SelfAttention):
 
     def split_qkv(
         self,
-        query: Float[Tensor, "b n d"],
-        key: Float[Tensor, "b n d"],
-        value: Float[Tensor, "b n d"],
-    ) -> tuple[Float[Tensor, "b n d"], Float[Tensor, "b n d"], Float[Tensor, "b n d"],]:
+        query: Float[Tensor, "b n d_in"],
+        key: Float[Tensor, "b n d_in"],
+        value: Float[Tensor, "b n d_in"],
+    ) -> Tuple[
+        Float[Tensor, "b h w head window d_out"],
+        Float[Tensor, "b h w head window d_out"],
+        Float[Tensor, "b h w head window d_out"],
+    ]:
         _batch_size, _seq_length, _inner_dim = query.shape
         patch_size = round(math.sqrt(_seq_length))
 
         query, key, value = map(
             lambda x: rearrange(
                 x,
-                "b (h ph w pw) (hd d) -> b h w hd (ph pw) d",
+                "... (h ph w pw) (hd d) -> ... h w hd (ph pw) d",
                 ph=self.window_size,
                 pw=self.window_size,
                 h=patch_size // self.window_size,
@@ -46,11 +51,12 @@ class WindowAttention(SelfAttention):
         return query, key, value
 
     def collect_heads(
-        self, out: Float[Tensor, "b h n d_out"]
-    ) -> Float[Tensor, "b n d_in"]:
+        self,
+        out: Float[Tensor, "... h w head window d_out"],
+    ) -> Float[Tensor, "... n d_in"]:
         return rearrange(
             out,
-            "b h w hd (ph pw) d -> b (h ph w pw) (hd d)",
+            "... h w hd (ph pw) d -> ... (h ph w pw) (hd d)",
             ph=self.window_size,
             pw=self.window_size,
         )

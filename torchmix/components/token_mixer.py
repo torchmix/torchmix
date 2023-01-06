@@ -16,6 +16,7 @@ class TokenMixer(MixModule):
     ):
         self.block = nn.Sequential(
             EinMix(
+                # einops.EinopsError: Ellipsis is not supported in EinMix (right now)
                 "b n_in d -> b n_out d",
                 weight_shape="n_in n_out",
                 bias_shape="n_out",
@@ -24,6 +25,7 @@ class TokenMixer(MixModule):
             ),
             act_layer(),
             EinMix(
+                # einops.EinopsError: Ellipsis is not supported in EinMix (right now)
                 "b n_out d -> b n_in d",
                 weight_shape="n_out n_in",
                 bias_shape="n_in",
@@ -32,5 +34,5 @@ class TokenMixer(MixModule):
             ),
         )
 
-    def forward(self, x: Float[Tensor, "b n d"]) -> Float[Tensor, "b n d"]:
+    def forward(self, x: Float[Tensor, "... n d"]) -> Float[Tensor, "... n d"]:
         return self.block(x)

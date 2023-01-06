@@ -6,8 +6,12 @@ from torchmix.third_party.einops import Reduce
 
 
 class AvgPool(MixModule):
-    def __init__(self):
-        self.pool = Reduce("b n d -> b d", reduction="mean")
+    """Average pooling layer that averages over the penultimate dimension
+    of an input tensor.
+    """
 
-    def forward(self, x: Float[Tensor, "b n d"]) -> Float[Tensor, "b d"]:
+    def __init__(self):
+        self.pool = Reduce("... n d -> ... d", reduction="mean")
+
+    def forward(self, x: Float[Tensor, "... n d"]) -> Float[Tensor, "... d"]:
         return self.pool(x)
