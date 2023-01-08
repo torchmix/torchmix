@@ -4,7 +4,7 @@
 
 ### Using the `partial` Method
 
-The `partial` method allows you to create a partially instantiated version of a `MixModule`. This means that some of its arguments have not yet been specified. For example:
+The `partial` method allows you to create a partially instantiated version of a `MixModule`. This means that some of its arguments have not yet been specified. For Examples:
 
 ```python
 from torchmix import nn

@@ -1,0 +1,22 @@
+import { Callout } from "nextra-theme-docs";
+
+# Welcome to TorchMix!
+
+**TorchMix** is a collection of PyTorch modules that aims to simplify
+your model development process with pre-made PyTorch components. We've
+included a range of operations, from basic ones like
+[`Repeat`](/components/Repeat) and [`Add`](/components/Add),
+to more complex ones like [`WindowAttention`](/components/WindowAttention)
+in the [Swin-Transformer](https://arxiv.org/abs/2103.14030).
+
+We've designed `torchmix` to be as user-friendly as possible. Each implementation
+is kept minimal and easy to understand, using [`einops`](https://github.com/arogozhnikov/einops) to avoid
+confusing tensor manipulation (such as `permute`, `transpose`, and `reshape`) and
+[`jaxtyping`](https://github.com/google/jaxtyping) to clearly document the shapes of the input and
+output tensors. This means that you can use `torchmix` with confidence, knowing
+that the components you're working with are clean and reliable.
+
+<Callout type="info">
+  If you sense strong reusability with your modules, please consider submitting
+  a pull request!
+</Callout>

@@ -14,11 +14,11 @@ from .containers.drop import Dropout
 class TokenMixer(MixModule):
     """Token mixer layer from MLP-Mixer
 
-    Example:
-        >>> model = TokenMixer(nn.GELU.partial(), 196, 0.5, 0.1)
-        >>> inputs = torch.randn(32, 196, 768)
-        >>> model(inputs).shape
-        torch.Size([32, 196, 768])
+    Examples:
+        TokenMixer(
+            act_layer=nn.GELU.partial(), seq_length=196, expansion_factor=0.5, p=0.1
+        )
+
     """
 
     def __init__(

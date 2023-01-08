@@ -8,9 +8,15 @@ from torchmix.core._module import MixModule
 class Repeat(MixModule):
     """Repeat given module.
 
-    Inputs:
-        block: modules to be repeated.
-        depth: number of repeat.
+    Examples:
+        Repeat(
+            nn.Sequential(
+                nn.Linear(100, 200),
+                nn.GELU(),
+                nn.Linear(200, 100)
+            ),
+            depth=12
+        )
     """
 
     def __init__(

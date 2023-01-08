@@ -1,0 +1,22 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# ChannelMixer
+
+Channel mixer that performs token-wise transformations on
+
+```python copy
+ChannelMixer(act_layer=nn.GELU.partial(), dim=768, expansion_factor=4)
+```
+
+## Parameters
+
+- `act_layer = None`: Activation layer to be inserted
+between the two EinMix layers.
+- `dim = 1024`: Number of channels in the input tensor. Defaults to 1024.
+- `expansion_factor = None`: Factor by which to expand
+the number of channels in the first EinMix layer. Defaults to 4.
+
+## Signatures
+```ts
+(self, x: jaxtyping.Float[Tensor, '... d']) -> jaxtyping.Float[Tensor, '... d']

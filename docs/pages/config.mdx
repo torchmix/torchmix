@@ -1,0 +1,38 @@
+import { Callout } from "nextra-theme-docs";
+
+# Global Configurations
+
+`config` context allows you to set global configurations that can be shared across multiple components.
+
+```python copy
+from torchmix import PreNorm, SelfAttention
+
+PreNorm(
+    SelfAttention(
+        dim=1024,
+        num_heads=8,
+        head_dim=64,
+    )
+    dim=1024,
+)
+```
+
+is equivalent to
+
+```python copy
+import torchmix
+from torchmix import PreNorm, SelfAttention
+
+with torchmix.config(dim=1024):
+    PreNorm(
+        SelfAttention(
+            num_heads=8,
+            head_dim=64,
+        )
+    )
+```
+
+<Callout type="warning" emoji="💡">
+  Excessive use of config may hinder readability and make the code less
+  explicit. Use with caution.
+</Callout>

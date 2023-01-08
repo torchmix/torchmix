@@ -7,6 +7,16 @@ from torchmix.core._module import MixModule
 
 
 class Add(MixModule):
+    """A container that progressively adds the forward results of its blocks.
+
+    Examples:
+        Add(
+            nn.Linear(100, 200),
+            nn.Linear(100, 200),
+            nn.Linear(100, 200)
+        )
+    """
+
     build_mode = BuildMode.WITH_ARGS
 
     def __init__(self, *blocks: MixModule):

@@ -7,10 +7,17 @@ from torchmix.core._module import MixModule
 
 
 class PositionEmbed(MixModule):
+    """Learnable positional embeddings
+
+    Examples:
+        PositionEmbed(seq_length=196, dim=768)
+
+    """
+
     def __init__(
         self,
-        seq_length: int = 197,
-        dim: int = 1024,
+        seq_length: int = 196,
+        dim: int = 768,
     ):
         self.pos_embed = nn.Parameter(torch.randn(seq_length, dim)) * 0.02
 

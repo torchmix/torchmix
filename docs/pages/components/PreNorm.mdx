@@ -1,0 +1,24 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# PreNorm
+
+Apply Pre-Layer normalization to a block
+
+```python copy
+PreNorm(
+    nn.Sequential(
+        nn.Linear(100, 200),
+        nn.GELU(),
+        nn.Linear(200, 100)
+    ),
+    dim=100
+)
+```
+
+## Parameters
+
+
+## Signatures
+```ts
+(self, x: torch.Tensor) -> torch.Tensor
