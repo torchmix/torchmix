@@ -11,8 +11,8 @@ from docstring_parser import parse
 import torchmix
 from torchmix import MixModule
 
-root = Path("docs/pages")
-root.mkdir(parents=True, exist_ok=True)
+# root = Path("docs/pages")
+# root.mkdir(parents=True, exist_ok=True)
 
 components = Path("docs/pages/components")
 shutil.rmtree(components)
@@ -29,8 +29,8 @@ def write(file: TextIOWrapper):
     return _write
 
 
-index = root / "index.mdx"
-index.write_text("Welcome to torchmix!")
+# index = root / "index.mdx"
+# index.write_text("Welcome to torchmix!")
 
 # with open(root / "_meta.json", "w") as f:
 
