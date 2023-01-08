@@ -4,7 +4,7 @@
 
 <br />
 
-Welcome to `torchmix`, a collection of PyTorch modules that aims to make your code more efficient and modular. We've included a range of operations, from basic ones like `Repeat` and `Add`, to more complex ones like `WindowAttention` in the [Swin-Transformer](https://arxiv.org/abs/2103.14030). Our goal is to make it easy for you to use these various operations with minimal code, so you can focus on building your project rather than writing boilerplate.
+`torchmix` is a collection of PyTorch modules that aims to simplify your model development process with pre-made PyTorch components. We've included a range of operations, from basic ones like `Repeat` and `Add`, to more complex ones like `WindowAttention` in the [Swin-Transformer](https://arxiv.org/abs/2103.14030). Our goal is to make it easy for you to use these various operations with minimal code, so you can focus on building your project rather than writing boilerplate.
 
 We've designed `torchmix` to be as user-friendly as possible. Each implementation is kept minimal and easy to understand, using [`einops`](https://github.com/arogozhnikov/einops) to avoid confusing tensor manipulation (such as `permute`, `transpose`, and `reshape`) and [`jaxtyping`](https://github.com/google/jaxtyping) to clearly document the shapes of the input and output tensors. This means that you can use `torchmix` with confidence, knowing that the components you're working with are clean and reliable.
 
@@ -133,10 +133,10 @@ model = nn.Sequential(
     nn.Dropout(0.1),
 )
 
-model.config  # DictConfig which contains full signatures 🤯
+model.config  # already contains full signatures 🤯
 ```
 
-You can then store the configuration in the [`hydra`'s `ConfigStore`](https://hydra.cc/docs/tutorials/structured_config/config_store/) using:
+You can then register the configuration in the [`hydra`'s `ConfigStore`](https://hydra.cc/docs/tutorials/structured_config/config_store/) using:
 
 ```python
 model.store(group="model", name="mlp")

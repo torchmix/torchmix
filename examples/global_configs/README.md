@@ -4,7 +4,7 @@
 
 ### Using the `config` Context Manager
 
-Using `torchmix`'s `config` context manager allows you to specify common arguments that will be applied to every component within its scope. This can be especially useful for reducing repetitive code when creating deep learning models with many layers that have comm arguments.
+Using `torchmix`'s `config` context manager allows you to specify common arguments that will be applied to every component within its scope. This can be especially useful for reducing repetitive code when creating deep learning models with many layers that have common arguments.
 
 For example, consider the following code:
 
