@@ -8,7 +8,7 @@ from torchmix import nn
 from torchmix.core._module import MixModule
 from torchmix.third_party.einops import Rearrange
 
-from .drop import Dropout
+from .containers.drop import Dropout
 
 
 class TokenMixer(MixModule):
