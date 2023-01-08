@@ -5,7 +5,7 @@ import re
 from collections.abc import Mapping, Sequence
 from inspect import Signature
 from pathlib import Path
-from typing import Optional
+from typing import Any, Dict, Optional
 
 from hydra.core.config_store import ConfigStore
 from hydra_zen import instantiate
@@ -17,6 +17,7 @@ from typing_extensions import Self
 from torchmix.core._builds import BuildMode, builds
 
 NO_PARAMS = False
+GLOBAL_KWARGS: Dict[str, Any] = {}
 
 
 def _extract_args_from_signature(sig: Signature):
@@ -151,7 +152,7 @@ class MixModule(nn.Module):
                         else:
                             raise TypeError(
                                 f"{cls.__name__}.__init__() missing "
-                                "{-args_offset} "
+                                f"{-args_offset} "
                                 "required positional arguments: "
                                 f"""'{"', '".join(default_args[args_offset:])}'"""
                             )
@@ -174,6 +175,13 @@ class MixModule(nn.Module):
 
                 args = args[:num_args_to_be_provided]
                 kwargs = default_kwargs
+
+            args_list = list(args)
+            for key in GLOBAL_KWARGS:
+                if key in default_args[: len(args)]:
+                    args_list[default_args.index(key)] = GLOBAL_KWARGS[key]
+                elif key in kwargs:
+                    kwargs[key] = GLOBAL_KWARGS[key]
 
             _args = ()
             _kwargs = {}
@@ -220,7 +228,9 @@ class MixModule(nn.Module):
         elif cls.build_mode is BuildMode.WITH_ARGS:
             return builds(cls, *args, **kwargs)
         else:
-            raise ValueError("build_mode must be one of WITHOUT_ARGS or WITH_ARGS")
+            raise ValueError(
+                "build_mode must be one of WITHOUT_ARGS or WITH_ARGS"
+            )
 
     @classmethod
     def partial(cls, *args, **kwargs):

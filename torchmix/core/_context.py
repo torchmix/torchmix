@@ -20,3 +20,15 @@ def no_parameters():
     """
     with unittest.mock.patch("torchmix.core._module.NO_PARAMS", True):
         yield
+
+
+@contextlib.contextmanager
+def config(*_args, **kwargs):
+    if _args:
+        raise ValueError(
+            "Positional arguments are not supported, got "
+            f"""'{"', '".join(map(str, _args))}'"""
+        )
+
+    with unittest.mock.patch("torchmix.core._module.GLOBAL_KWARGS", kwargs):
+        yield

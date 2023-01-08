@@ -16,12 +16,13 @@ from torchmix.components import (
     TokenMixer,
     WindowAttention,
 )
-from torchmix.core._context import no_parameters
+from torchmix.core._context import config, no_parameters
 from torchmix.core._module import MixModule
 
 __all__ = [
     "MixModule",
     "no_parameters",
+    "config",
     "nn",
     "Attach",
     "Add",

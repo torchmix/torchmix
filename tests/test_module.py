@@ -131,5 +131,11 @@ def test_arg_14():
     x = Dummy4()
     assert type(x.a) == nn.Sequential
     assert type(instantiate(x.config).a) == nn.Sequential
-    assert x.config.__dict__["a"].__dict__["_args_"][0].__dict__["in_features"] == 1
-    assert x.config.__dict__["a"].__dict__["_args_"][0].__dict__["out_features"] == 2
+    assert (
+        x.config.__dict__["a"].__dict__["_args_"][0].__dict__["in_features"]
+        == 1
+    )
+    assert (
+        x.config.__dict__["a"].__dict__["_args_"][0].__dict__["out_features"]
+        == 2
+    )

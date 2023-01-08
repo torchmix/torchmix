@@ -894,7 +894,9 @@ with suppress(AttributeError):
 
 with suppress(AttributeError):
 
-    class TripletMarginWithDistanceLoss(MixModule, nn.TripletMarginWithDistanceLoss):
+    class TripletMarginWithDistanceLoss(
+        MixModule, nn.TripletMarginWithDistanceLoss
+    ):
         __init__ = functools.partial(nn.TripletMarginWithDistanceLoss.__init__)
 
 
