@@ -12,11 +12,8 @@ from torchmix.core._module import MixModule
 class SelfAttention(MixModule):
     """A multi-head self attention layer.
 
-    Example:
-        >>> model = SelfAttention(768, 8, 64)
-        >>> inputs = torch.randn(32, 196, 768)
-        >>> model(inputs).shape
-        torch.Size([32, 196, 768])
+    Examples:
+        model = SelfAttention(dim=768, num_heads=8, head_dim64)
     """
 
     def __init__(
@@ -112,11 +109,8 @@ class SelfAttention(MixModule):
 class WindowAttention(SelfAttention):
     """Local window attention layer from Swin-transformer
 
-    Example:
-        >>> model = WindowAttention(96, 8, 64)
-        >>> inputs = torch.randn(32, 56*56, 96)
-        >>> model(inputs).shape
-        torch.Size([32, 3136, 96])
+    Examples:
+        WindowAttention(dim=96, window_size=8, num_heads=8, head_dim=64)
     """
 
     def __init__(

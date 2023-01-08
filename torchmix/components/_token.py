@@ -9,15 +9,13 @@ from torchmix.core._module import MixModule
 class Token(MixModule):
     """A single token
 
-    Example:
-        >>> model = Token(1024)
-        >>> model().shape
-        torch.Size([1024])
+    Examples:
+        Token(dim=768)
     """
 
     def __init__(
         self,
-        dim: int = 1024,
+        dim: int = 768,
     ):
         self.class_token = nn.Parameter(torch.zeros(dim))
 

@@ -10,11 +10,8 @@ from torchmix.core._module import MixModule
 class Dropout(MixModule):
     """A dropout layer that wraps a given MixModule.
 
-    Example:
-        >>> model = Dropout(nn.Linear(128, 256), p=0.2)
-        >>> inputs = torch.randn(32, 128)
-        >>> model(inputs).shape
-        torch.Size([32, 256])
+    Examples:
+        Dropout(block=nn.Linear(128, 256), p=0.2)
     """
 
     def __init__(self, block: MixModule, p: float = 0.1):
@@ -35,11 +32,8 @@ class Dropout(MixModule):
 class StochasticDepth(MixModule):
     """A stochastic depth layer that wraps a given MixModule.
 
-    Example:
-        >>> model = StochasticDepth(nn.Linear(128, 256), p=0.2)
-        >>> inputs = torch.randn(32, 128)
-        >>> model(inputs).shape
-        torch.Size([32, 256])
+    Examples:
+        StochasticDepth(block=nn.Linear(128, 256), p=0.2)
     """
 
     def __init__(self, block: MixModule, p: float = 0.1):
@@ -61,11 +55,8 @@ class DropPath(MixModule):
 
     Can be understood as stochastic depth per sample.
 
-    Example:
-        >>> model = DropPath(nn.Linear(128, 256), p=0.2)
-        >>> inputs = torch.randn(32, 128)
-        >>> model(inputs).shape
-        torch.Size([32, 256])
+    Examples:
+        DropPath(block=nn.Linear(128, 256), p=0.2)
     """
 
     def __init__(self, block: MixModule, p: float = 0.1):

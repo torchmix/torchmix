@@ -19,10 +19,7 @@ class Extract(MixModule):
             extracted token.
 
     Examples:
-        >>> model = Extract(0)
-        >>> inputs = torch.randn(32, 196, 1024)
-        >>> model(inputs).shape
-        torch.Size([32, 1024])
+        model = Extract(index=0)
     """
 
     def __init__(self, index: int):

@@ -1,0 +1,17 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# TokenMixer
+
+Token mixer layer from MLP-Mixer
+
+```python copy
+TokenMixer(act_layer=nn.GELU.partial(), seq_length=196, expansion_factor=0.5, p=0.1)
+```
+
+## Parameters
+
+
+## Signatures
+```ts
+(self, x: jaxtyping.Float[Tensor, '... n d']) -> jaxtyping.Float[Tensor, '... n d']

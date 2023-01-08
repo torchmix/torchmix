@@ -1,0 +1,17 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# PatchEmbed
+
+A layer that convert image into patch embeddings.
+
+```python copy
+PatchEmbed(patch_size=16, channels=3, dim=768)
+```
+
+## Parameters
+
+
+## Signatures
+```ts
+(self, x: jaxtyping.Float[Tensor, '... c h w']) -> jaxtyping.Float[Tensor, '... n d']

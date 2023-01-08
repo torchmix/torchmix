@@ -1,0 +1,94 @@
+# Hydra Integration
+
+Consider the following example of writing configurations for `YourModel`:
+
+```python
+from torchmix import MixModule
+
+class YourModel(MixModule):
+    def __init__(self, a: int, b: str, c: list[str]):
+        pass
+```
+
+Without `torchmix`, you would have to manually write and register the desired configurations, like this:
+
+```python
+from hydra.core.config_store import ConfigStore
+
+cs = ConfigStore.instance()
+
+@dataclass
+class ModelA:
+    a: int = 1
+    b: str = "x"
+    c: list[str] = ["foo"]
+
+@dataclass
+class ModelB:
+    a: int = 2
+    b: str = "y"
+    c: list[str] = ["foo", "bar"]
+
+@dataclass
+class ModelC:
+    a: int = 3
+    b: str = "z"
+    c: list[str] = ["foo", "bar", "baz"]
+
+
+cs.store(group="model", name="a", node=ModelA)
+cs.store(group="model", name="b", node=ModelB)
+cs.store(group="model", name="c", node=ModelC)
+```
+
+With `torchmix`, you can simply **instantiate and register** your models like this:
+
+```python
+YourModel(a=1, b="x", c=["foo"]).store(group="model", name="a")
+YourModel(a=2, b="y", c=["foo", "bar"]).store(group="model", name="b")
+YourModel(a=3, b="z", c=["foo", "bar", "baz"]).store(group="model", name="c")
+```
+
+## Nested Modules
+
+In deep learning, we always write nested modules.
+However, writing configurations for these nested modules can be even more confusing and time-consuming.
+Fortunately, `torchmix` makes it easy to handle this process.
+The same pattern applies as before: simply **instantiate and register!**
+
+```python
+nn.Sequential(
+    Add(
+        PatchEmbed(dim=1024),
+        PositionEmbed(
+            seq_length=196,
+            dim=1024,
+        ),
+    ),
+    Repeat(
+        nn.Sequential(
+            PreNorm(
+                ChannelMixer(
+                    dim=1024,
+                    expansion_factor=4,
+                    act_layer=nn.GELU.partial(),
+                ),
+                dim=1024,
+            ),
+            PreNorm(
+                SelfAttention(
+                    dim=1024,
+                    num_heads=8,
+                    head_dim=64,
+                ),
+                dim=1024,
+            ),
+        ),
+        depth=24,
+    ),
+    AvgPool(),
+).store(group="model", name="vit")
+```
+
+As you can see, `torchmix` eliminates the need to write configuration-specific boilerplate code,
+ensures seamless `hydra`-tion of your favorite PyTorch modules.

@@ -12,7 +12,7 @@ def no_parameters():
     solely for the purpose of generating its configuration, without actually
     instantiating the module.
 
-    Example:
+    Examples:
         >>> with torchmix.no_parameters():
         ...     model = torchmix.nn.Linear(100, 200)
         >>> print(model._parameters)

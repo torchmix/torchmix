@@ -18,24 +18,20 @@ class ChannelMixer(MixModule):
     An activation layer can be inserted between the two EinMix layers.
 
     Args:
-        act_layer (Partial[MixModule]): Activation layer to be inserted
+        act_layer: Activation layer to be inserted
             between the two EinMix layers.
-        dim (int): Number of channels in the input tensor.
-            Default: 1024.
-        expansion_factor (float): Factor by which to expand
-            the number of channels in the first EinMix layer. Default: 4.
+        dim: Number of channels in the input tensor. Defaults to 1024.
+        expansion_factor: Factor by which to expand
+            the number of channels in the first EinMix layer. Defaults to 4.
 
     Examples:
-        >>> channel_mixer = ChannelMixer()
-        >>> model = torch.randn(32, 196, 1024)
-        >>> model(x).shape
-        torch.Size([32, 196, 1024])
+        ChannelMixer(act_layer=nn.GELU.partial(), dim=768, expansion_factor=4)
     """
 
     def __init__(
         self,
         act_layer: Partial[MixModule],
-        dim: int = 1024,
+        dim: int = 768,
         expansion_factor: float = 4,
     ):
         # einops.EinopsError: Ellipsis is not supported in EinMix (right now)

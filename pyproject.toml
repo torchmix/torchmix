@@ -22,7 +22,7 @@ commitizen = "^2.38.0"
 taskipy = "^1.10.3"
 pyright = "^1.1.286"
 beartype = "^0.11.0"
-refurb = "^1.9.1"
+docstring-parser = "^0.15"
 
 [build-system]
 requires = ["poetry-core"]
@@ -33,6 +33,7 @@ commit = { cmd = "cz commit", help = "commitizen" }
 lint = { cmd = "pre-commit run --all-files", help = "pre-commit lint" }
 profile = { cmd = "py-spy record -o profile.svg -- python benchmark.py", help = "tracing" }
 codegen = { cmd = "python torchmix/nn/__codegen.py", help = "codegen"}
+docgen = { cmd = "python docs/components.py", help = "generate documentations" }
 
 [tool.black]
 line-length = 80
@@ -46,6 +47,7 @@ ignore = [107]
 [tool.ruff]
 line-length = 88
 ignore = ["F722"]
+exclude = ["docs/*"]
 
 [tool.pytest.ini_options]
 markers = [

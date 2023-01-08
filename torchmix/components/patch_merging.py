@@ -11,11 +11,8 @@ from torchmix.third_party.einops import Rearrange
 class PatchMerging(MixModule):
     """A patch merging from Swin-Transformer
 
-    Example:
-        >>> model = PatchMerging(96)
-        >>> inputs = torch.randn(32, 56*56, 96)
-        >>> model(inputs).shape
-        torch.Size([32, 784, 192])
+    Examples:
+        model = PatchMerging(dim=96)
     """
 
     def __init__(self, dim: int = 96):
@@ -40,7 +37,9 @@ class PatchMerging(MixModule):
             nn.Linear(dim * 4, dim * 2),
         )
 
-    def forward(self, x: Float[Tensor, "... n d"]) -> Float[Tensor, "... n/4 d*2"]:
+    def forward(
+        self, x: Float[Tensor, "... n d"]
+    ) -> Float[Tensor, "... n/4 d*2"]:
         _batch_size, _seq_length, _dim = x.shape
 
         x = self.merge(

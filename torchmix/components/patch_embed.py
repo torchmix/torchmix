@@ -8,11 +8,8 @@ from torchmix.third_party.einops import Rearrange
 class PatchEmbed(MixModule):
     """A layer that convert image into patch embeddings.
 
-    Example:
-        >>> model = PatchEmbed(16, 3, 768)
-        >>> inputs = torch.randn(32, 3, 224, 224)
-        >>> model(inputs).shape
-        torch.Size([32, 196, 768])
+    Examples:
+        PatchEmbed(patch_size=16, channels=3, dim=768)
     """
 
     def __init__(
@@ -41,5 +38,7 @@ class PatchEmbed(MixModule):
             nn.Linear(patch_size * patch_size * channels, dim),
         )
 
-    def forward(self, x: Float[Tensor, "... c h w"]) -> Float[Tensor, "... n d"]:
+    def forward(
+        self, x: Float[Tensor, "... c h w"]
+    ) -> Float[Tensor, "... n d"]:
         return self.proj(x)

@@ -172,3 +172,4 @@ poetry.toml
 .vscode/
 
 .DS_Store
+.vercel

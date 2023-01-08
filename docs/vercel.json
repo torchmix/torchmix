@@ -1,0 +1,9 @@
+{
+    "github": {
+      "enabled": false
+    },
+    "regions": ["icn1"],
+    "public": false,
+    "cleanUrls": true,
+    "trailingSlash": false
+}

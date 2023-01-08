@@ -1,0 +1,17 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# PatchMerging
+
+A patch merging from Swin-Transformer
+
+```python copy
+model = PatchMerging(dim=96)
+```
+
+## Parameters
+
+
+## Signatures
+```ts
+(self, x: jaxtyping.Float[Tensor, '... n d']) -> jaxtyping.Float[Tensor, '... n/4 d*2']

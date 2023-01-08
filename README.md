@@ -20,6 +20,10 @@ To use `torchmix`, you will need to have `torch` already installed on your envir
 pip install torchmix
 ```
 
+## Documentation
+
+[Documentation](https://torchmix.vercel.app) is currently in progress. Please stay tuned! 🚀
+
 ## Usage
 
 To use `torchmix`, simply import the desired components:
@@ -196,10 +200,6 @@ For more information on using `torchmix`'s functionality, see the following exam
 
 - [Using the `no_parameters` Context Manager](https://github.com/torchmix/torchmix/tree/main/examples/no_parameters)
 - [Using the `partial` Method](https://github.com/torchmix/torchmix/tree/main/examples/partial)
-
-## Documentation
-
-Documentation is currently in progress. Please stay tuned! 🚀
 
 ## Contributing
 
