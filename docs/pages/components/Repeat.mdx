@@ -6,3 +6,19 @@ import { Tab, Tabs } from "nextra-theme-docs"
 Repeat given module.
 
 ```python copy
+Repeat(
+    nn.Sequential(
+        nn.Linear(100, 200),
+        nn.GELU(),
+        nn.Linear(200, 100)
+    ),
+    depth=12
+)
+```
+
+## Parameters
+
+
+## Signatures
+```ts
+(self, x: torch.Tensor) -> torch.Tensor

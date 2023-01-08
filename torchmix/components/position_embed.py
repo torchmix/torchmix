@@ -10,14 +10,14 @@ class PositionEmbed(MixModule):
     """Learnable positional embeddings
 
     Examples:
-        PositionEmbed(196, 1024)
+        PositionEmbed(seq_length=196, dim=768)
 
     """
 
     def __init__(
         self,
         seq_length: int = 196,
-        dim: int = 1024,
+        dim: int = 768,
     ):
         self.pos_embed = nn.Parameter(torch.randn(seq_length, dim)) * 0.02
 

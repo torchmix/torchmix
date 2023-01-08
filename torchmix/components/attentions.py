@@ -13,7 +13,7 @@ class SelfAttention(MixModule):
     """A multi-head self attention layer.
 
     Examples:
-        model = SelfAttention(dim=768, num_heads=8, head_dim64)
+        model = SelfAttention(dim=768, num_heads=8, head_dim=64)
     """
 
     def __init__(
