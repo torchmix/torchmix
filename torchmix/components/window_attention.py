@@ -9,6 +9,15 @@ from .self_attention import SelfAttention
 
 
 class WindowAttention(SelfAttention):
+    """Local window attention layer from Swin-transformer
+
+    Example:
+        >>> model = WindowAttention(96, 8, 64)
+        >>> inputs = torch.randn(32, 56*56, 96)
+        >>> model(inputs).shape
+        torch.Size([32, 3136, 96])
+    """
+
     def __init__(
         self,
         dim: int = 96,

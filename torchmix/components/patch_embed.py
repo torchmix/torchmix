@@ -6,6 +6,15 @@ from torchmix.third_party.einops import Rearrange
 
 
 class PatchEmbed(MixModule):
+    """A layer that convert image into patch embeddings.
+
+    Example:
+        >>> model = PatchEmbed(16, 3, 768)
+        >>> inputs = torch.randn(32, 3, 224, 224)
+        >>> model(inputs).shape
+        torch.Size([32, 196, 768])
+    """
+
     def __init__(
         self,
         patch_size: int = 16,

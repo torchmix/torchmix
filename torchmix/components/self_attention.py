@@ -9,6 +9,15 @@ from torchmix.core._module import MixModule
 
 
 class SelfAttention(MixModule):
+    """A multi-head self attention layer.
+
+    Example:
+        >>> model = SelfAttention(768, 8, 64)
+        >>> inputs = torch.randn(32, 196, 768)
+        >>> model(inputs).shape
+        torch.Size([32, 196, 768])
+    """
+
     def __init__(
         self,
         dim: int,

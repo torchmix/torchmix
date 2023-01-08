@@ -9,6 +9,15 @@ from torchmix.third_party.einops import Rearrange
 
 
 class PatchMerging(MixModule):
+    """A patch merging from Swin-Transformer
+
+    Example:
+        >>> model = PatchMerging(96)
+        >>> inputs = torch.randn(32, 56*56, 96)
+        >>> model(inputs).shape
+        torch.Size([32, 784, 192])
+    """
+
     def __init__(self, dim: int = 96):
         self.merge = Rearrange.partial(
             "... (h ph w pw) d -> ... (h w) (ph pw d)",

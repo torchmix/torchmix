@@ -7,6 +7,14 @@ from torchmix.core._module import MixModule
 
 
 class Token(MixModule):
+    """A single token
+
+    Example:
+        >>> model = Token(1024)
+        >>> model().shape
+        torch.Size([1024])
+    """
+
     def __init__(
         self,
         dim: int = 1024,

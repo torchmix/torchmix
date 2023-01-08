@@ -20,17 +20,16 @@ class ChannelMixer(MixModule):
     Args:
         act_layer (Partial[MixModule]): Activation layer to be inserted
             between the two EinMix layers.
-        dim (int, optional): Number of channels in the input tensor.
+        dim (int): Number of channels in the input tensor.
             Default: 1024.
-        expansion_factor (float, optional): Factor by which to expand
+        expansion_factor (float): Factor by which to expand
             the number of channels in the first EinMix layer. Default: 4.
 
     Examples:
         >>> channel_mixer = ChannelMixer()
-        >>> x = torch.randn(32, 196, 1024)
-        >>> y = channel_mixer(x)
-        >>> x.shape == y.shape
-        True
+        >>> model = torch.randn(32, 196, 1024)
+        >>> model(x).shape
+        torch.Size([32, 196, 1024])
     """
 
     def __init__(
