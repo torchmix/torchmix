@@ -9,9 +9,7 @@ A layer that convert image into patch embeddings.
 PatchEmbed(patch_size=16, channels=3, dim=768)
 ```
 
-## Parameters
-
-
 ## Signatures
-```ts
-(self, x: jaxtyping.Float[Tensor, '... c h w']) -> jaxtyping.Float[Tensor, '... n d']
+```rust
+(x: jaxtyping.Float[Tensor, '... c h w']) -> jaxtyping.Float[Tensor, '... n d']
+```

@@ -12,8 +12,8 @@ For example, consider the following code:
 nn.Sequential(
     Add(
         Attach(
-            PatchEmbed(dim=1024),
             Token(dim=1024),
+            PatchEmbed(dim=1024),
         ),
         PositionEmbed(
             seq_length=196 + 1,
@@ -52,8 +52,8 @@ with torchmix.config(dim=1024):
     nn.Sequential(
         Add(
             Attach(
-                PatchEmbed(),
                 Token(),
+                PatchEmbed(),
             ),
             PositionEmbed(
                 seq_length=196 + 1,

@@ -17,8 +17,8 @@ with torchmix.config(dim=1024):
     model = nn.Sequential(
         Add(
             Attach(
-                PatchEmbed(),
                 Token(),
+                PatchEmbed(),
             ),
             PositionEmbed(
                 seq_length=196 + 1,

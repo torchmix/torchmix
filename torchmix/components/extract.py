@@ -19,7 +19,7 @@ class Extract(Component):
             extracted token.
 
     Examples:
-        model = Extract(index=0)
+        Extract(index=0)
     """
 
     def __init__(self, index: int):

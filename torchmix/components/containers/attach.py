@@ -8,6 +8,15 @@ from torchmix.core._module import Component
 
 
 class Attach(Component):
+    """Concatenate results over penultimate dimension.
+
+    Example:
+        Attach(
+            Token(dim=1024),
+            PatchEmbed(dim=1024),
+        )
+    """
+
     build_mode = BuildMode.WITH_ARGS
 
     def __init__(self, *blocks: Component):

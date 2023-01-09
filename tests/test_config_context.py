@@ -33,8 +33,8 @@ def test_config_context_2(helpers):
     model_1 = nn.Sequential(
         Add(
             Attach(
-                PatchEmbed(dim=1024),
                 Token(dim=1024),
+                PatchEmbed(dim=1024),
             ),
             PositionEmbed(
                 seq_length=196 + 1,
@@ -69,8 +69,8 @@ def test_config_context_2(helpers):
         model_2 = nn.Sequential(
             Add(
                 Attach(
-                    PatchEmbed(),
                     Token(),
+                    PatchEmbed(),
                 ),
                 PositionEmbed(
                     seq_length=196 + 1,

@@ -9,9 +9,7 @@ A droppath layer that wraps a given `Component`.
 DropPath(block=nn.Linear(128, 256), p=0.2)
 ```
 
-## Parameters
-
-
 ## Signatures
-```ts
-(self, x: jaxtyping.Float[Tensor, ' *shape']) -> jaxtyping.Float[Tensor, ' *shape']
+```rust
+(x: jaxtyping.Float[Tensor, ' *shape']) -> jaxtyping.Float[Tensor, ' *shape']
+```

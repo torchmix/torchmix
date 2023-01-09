@@ -30,6 +30,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.taskipy.tasks]
 commit = { cmd = "cz commit", help = "commitizen" }
+test = { cmd ="pytest", help = "test" }
 lint = { cmd = "pre-commit run --all-files", help = "pre-commit lint" }
 profile = { cmd = "py-spy record -o profile.svg -- python benchmark.py", help = "tracing" }
 codegen = { cmd = "python torchmix/nn/__codegen.py", help = "codegen"}

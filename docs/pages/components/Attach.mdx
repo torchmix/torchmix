@@ -3,6 +3,16 @@ import { Tab, Tabs } from "nextra-theme-docs"
 
 # Attach
 
-
+Concatenate results over penultimate dimension.
 
 ```python copy
+Attach(
+    Token(dim=1024),
+    PatchEmbed(dim=1024),
+)
+```
+
+## Signatures
+```rust
+(x: torch.Tensor) -> torch.Tensor
+```

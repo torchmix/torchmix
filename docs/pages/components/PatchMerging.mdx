@@ -9,9 +9,7 @@ A patch merging from Swin-Transformer
 model = PatchMerging(dim=96)
 ```
 
-## Parameters
-
-
 ## Signatures
-```ts
-(self, x: jaxtyping.Float[Tensor, '... n d']) -> jaxtyping.Float[Tensor, '... n/4 d*2']
+```rust
+(x: jaxtyping.Float[Tensor, '... n d']) -> jaxtyping.Float[Tensor, '... n/4 d*2']
+```

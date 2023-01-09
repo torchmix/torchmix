@@ -1,0 +1,20 @@
+{
+    "Add": "Add",
+    "Attach": "Attach",
+    "AvgPool": "AvgPool",
+    "ChannelMixer": "ChannelMixer",
+    "DropPath": "DropPath",
+    "Dropout": "Dropout",
+    "Extract": "Extract",
+    "PatchEmbed": "PatchEmbed",
+    "PatchMerging": "PatchMerging",
+    "PositionEmbed": "PositionEmbed",
+    "PostNorm": "PostNorm",
+    "PreNorm": "PreNorm",
+    "Repeat": "Repeat",
+    "SelfAttention": "SelfAttention",
+    "StochasticDepth": "StochasticDepth",
+    "Token": "Token",
+    "TokenMixer": "TokenMixer",
+    "WindowAttention": "WindowAttention"
+}

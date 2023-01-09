@@ -6,7 +6,7 @@ import { Tab, Tabs } from "nextra-theme-docs"
 Extract layer that selects a single token from an input tensor.
 
 ```python copy
-model = Extract(index=0)
+Extract(index=0)
 ```
 
 ## Parameters
@@ -14,5 +14,6 @@ model = Extract(index=0)
 - `index = None`: Index of the token to be extracted from the input tensor.
 
 ## Signatures
-```ts
-(self, x: jaxtyping.Float[Tensor, '... n d']) -> jaxtyping.Float[Tensor, '... d']
+```rust
+(x: jaxtyping.Float[Tensor, '... n d']) -> jaxtyping.Float[Tensor, '... d']
+```

@@ -21,7 +21,7 @@ const config: DocsThemeConfig = {
     const { route } = useRouter()
     if (route !== "/"){
       return {
-        titleTemplate:  '%s - torchmix'
+        titleTemplate:  '%s · TorchMix'
       }
     }
     return {}
@@ -35,7 +35,7 @@ const config: DocsThemeConfig = {
       <meta property="og:description" content={frontMatter.description || 'The pytorch component library'} />
     </>
   },
-  primaryHue: 196
+  primaryHue: 178
 }
 
 export default config

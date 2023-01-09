@@ -6,12 +6,10 @@ import { Tab, Tabs } from "nextra-theme-docs"
 A multi-head self attention layer.
 
 ```python copy
-model = SelfAttention(dim=768, num_heads=8, head_dim=64)
+SelfAttention(dim=768, num_heads=8, head_dim=64)
 ```
 
-## Parameters
-
-
 ## Signatures
-```ts
-(self, x: jaxtyping.Float[Tensor, '... d']) -> jaxtyping.Float[Tensor, '... d']
+```rust
+(x: jaxtyping.Float[Tensor, '... d']) -> jaxtyping.Float[Tensor, '... d']
+```

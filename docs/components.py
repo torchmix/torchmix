@@ -1,10 +1,8 @@
-#
-
 import inspect
 import shutil
 from io import TextIOWrapper
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 from docstring_parser import parse
 
@@ -17,6 +15,22 @@ from torchmix import Component
 components = Path("docs/pages/components")
 shutil.rmtree(components)
 components.mkdir(parents=True, exist_ok=True)
+
+
+def signature(method: Any):
+    signature = inspect.signature(method)
+    params = signature.parameters
+
+    method_signature = ", ".join(
+        f"{param.name}: {param.annotation.__module__}.{param.annotation.__name__}"
+        for param in params.values()
+        if param.name not in ("self", "_")
+    )
+
+    return (
+        f"({method_signature}) -> {signature.return_annotation.__module__}."
+        f"{signature.return_annotation.__name__}"
+    )
 
 
 def write(file: TextIOWrapper):
@@ -35,6 +49,7 @@ def write(file: TextIOWrapper):
 # with open(root / "_meta.json", "w") as f:
 
 
+names = []
 for name, obj in inspect.getmembers(torchmix.components):
     try:
         if issubclass(obj, Component):
@@ -52,15 +67,30 @@ for name, obj in inspect.getmembers(torchmix.components):
                 _w(doc.examples[0].description)
                 _w("```")
                 _w()
-                _w("## Parameters")
-                _w()
-                for p in doc.params:
-                    _w(f"- `{p.arg_name} = {p.default}`: {p.description}")
-                _w()
+
+                if doc.params:
+                    _w("## Parameters")
+                    _w()
+                    for p in doc.params:
+                        _w(f"- `{p.arg_name} = {p.default}`: {p.description}")
+                    _w()
+
                 _w("## Signatures")
-                _w("```ts")
-                _w(f"{inspect.signature(obj.forward)}")
+                _w("```rust")  # Hack for syntax highlighting
+                _w(f"{signature(obj.forward)}")
+                _w("```")
                 _w()
+            names.append((name, obj))
 
     except:
         pass
+
+with open(components / f"_meta.json", "w") as f:
+    _w = write(f)
+    _w("{")
+    for i, (name, obj) in enumerate(names):
+        if i != len(names) - 1:
+            _w(f'    "{name}": "{obj.__name__}",')
+        else:
+            _w(f'    "{name}": "{obj.__name__}"')
+    _w("}")

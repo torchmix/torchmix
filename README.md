@@ -52,8 +52,8 @@ You can simply compose this components to build more complex architecture:
 vit_cls = nn.Sequential(
     Add(
         Attach(
-            PatchEmbed(dim=1024),
             Token(dim=1024),
+            PatchEmbed(dim=1024),
         ),
         PositionEmbed(
             seq_length=196 + 1,
