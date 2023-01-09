@@ -21,13 +21,13 @@ class Repeat(Component):
 
     def __init__(
         self,
-        block: Component,
+        children: Component,
         depth: int = 8,
     ) -> None:
         for idx in range(depth):
             self.add_module(
                 str(idx),
-                block.instantiate(),
+                children.instantiate(),
             )
 
     def __len__(self) -> int:

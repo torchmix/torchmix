@@ -5,7 +5,7 @@ from torchmix.core._module import Component
 
 
 class PostNorm(Component):
-    """Apply Post-Layer normalization to a block
+    """Apply Post-Layer normalization to a children
 
     Example:
         PreNorm(
@@ -18,16 +18,16 @@ class PostNorm(Component):
         )
     """
 
-    def __init__(self, block: Component, dim: int = 1024):
-        self.block = block
+    def __init__(self, children: Component, dim: int = 1024):
+        self.children = children
         self.norm = nn.LayerNorm(dim)
 
     def forward(self, x: Tensor) -> Tensor:
-        return self.norm(x + self.block(x))
+        return self.norm(x + self.children(x))
 
 
 class PreNorm(Component):
-    """Apply Pre-Layer normalization to a block
+    """Apply Pre-Layer normalization to a children
 
     Examples:
         PreNorm(
@@ -40,9 +40,9 @@ class PreNorm(Component):
         )
     """
 
-    def __init__(self, block: Component, dim: int = 1024):
-        self.block = block
+    def __init__(self, children: Component, dim: int = 1024):
+        self.children = children
         self.norm = nn.LayerNorm(dim)
 
     def forward(self, x: Tensor) -> Tensor:
-        return x + self.block(self.norm(x))
+        return x + self.children(self.norm(x))

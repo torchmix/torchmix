@@ -7,7 +7,7 @@ from torchmix.core._module import Component
 
 
 class Add(Component):
-    """A container that progressively adds the forward results of its blocks.
+    """A container that progressively adds the forward results of its children.
 
     Examples:
         Add(
@@ -19,9 +19,9 @@ class Add(Component):
 
     build_mode = BuildMode.WITH_ARGS
 
-    def __init__(self, *blocks: Component):
-        for idx, block in enumerate(blocks):
-            self.add_module(str(idx), block)
+    def __init__(self, *children: Component):
+        for idx, module in enumerate(children):
+            self.add_module(str(idx), module)
 
     def __len__(self) -> int:
         return len(self._modules)
