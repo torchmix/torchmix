@@ -1,10 +1,10 @@
 import pytest
 from hydra.utils import instantiate
 
-from torchmix import MixModule, nn
+from torchmix import Component, nn
 
 
-class Dummy(MixModule):
+class Dummy(Component):
     def __init__(self, a, b=nn.Linear(1, 1)):
         pass
 
@@ -42,7 +42,7 @@ def test_arg_5():
         Dummy(b=nn.Linear(2, 2))
 
 
-class Dummy2(MixModule):
+class Dummy2(Component):
     def __init__(self, a=1, b=2, c=3):
         pass
 
@@ -75,7 +75,7 @@ def test_arg_9():
     assert x.config.__dict__["c"] == 4
 
 
-class Dummy3(MixModule):
+class Dummy3(Component):
     def __init__(self, a, b, c, d=4, e=5):
         pass
 
@@ -116,7 +116,7 @@ def test_arg_13():
     assert x.config.__dict__["e"] == 6
 
 
-class Dummy4(MixModule):
+class Dummy4(Component):
     def __init__(
         self,
         a=nn.Sequential(

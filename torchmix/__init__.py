@@ -17,10 +17,10 @@ from torchmix.components import (
     WindowAttention,
 )
 from torchmix.core._context import config, no_parameters
-from torchmix.core._module import MixModule
+from torchmix.core._module import Component
 
 __all__ = [
-    "MixModule",
+    "Component",
     "no_parameters",
     "config",
     "nn",

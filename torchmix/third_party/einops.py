@@ -5,16 +5,16 @@ from einops.layers.torch import RearrangeMixin as _RearrangeMixin
 from einops.layers.torch import Reduce as _Reduce
 from einops.layers.torch import ReduceMixin as _ReduceMixin
 
-from torchmix.core._module import MixModule
+from torchmix.core._module import Component
 
 
-class EinMix(MixModule, _EinMix):
+class EinMix(Component, _EinMix):
     __init__ = _EinmixMixin.__init__  # type: ignore
 
 
-class Rearrange(MixModule, _Rearrange):
+class Rearrange(Component, _Rearrange):
     __init__ = _RearrangeMixin.__init__  # type: ignore
 
 
-class Reduce(MixModule, _Reduce):
+class Reduce(Component, _Reduce):
     __init__ = _ReduceMixin.__init__  # type: ignore

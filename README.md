@@ -181,12 +181,12 @@ _args_:
 
 You can always get the actual PyTorch module from its configuration using [`hydra`'s `instantiate`.](https://hydra.cc/docs/advanced/instantiate_objects/overview/)
 
-To create custom modules with this functionality, simply subclass `MixModule` and define your module as you normally would:
+To create custom modules with this functionality, simply subclass `Component` and define your module as you normally would:
 
 ```python
-from torchmix import MixModule
+from torchmix import Component
 
-class CustomModule(MixModule):
+class CustomModule(Component):
     def __init__(self, num_heads, dim, depth):
         pass
 

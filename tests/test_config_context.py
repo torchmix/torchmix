@@ -4,8 +4,8 @@ from torchmix import (
     Add,
     Attach,
     ChannelMixer,
+    Component,
     Extract,
-    MixModule,
     PatchEmbed,
     PositionEmbed,
     PreNorm,
@@ -17,7 +17,7 @@ from torchmix import (
 from torchmix.core._context import config
 
 
-class Dummy(MixModule):
+class Dummy(Component):
     def __init__(self, dim=1):
         self.dim = dim
 

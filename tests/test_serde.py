@@ -6,10 +6,10 @@ from hydra_zen import instantiate
 from hydra_zen.typing import Partial
 from omegaconf import OmegaConf
 
-from torchmix import MixModule, nn
+from torchmix import Component, nn
 
 
-class CustomModule1(MixModule):
+class CustomModule1(Component):
     def __init__(self, dim: int = 100):
         self.stem = nn.Sequential(
             *[
@@ -26,8 +26,8 @@ class CustomModule1(MixModule):
         return self.stem(x)
 
 
-class CustomModule2(MixModule):
-    def __init__(self, partial_module: Partial[MixModule]):
+class CustomModule2(Component):
+    def __init__(self, partial_module: Partial[Component]):
         self.module = partial_module()
 
     def forward(self, x):
@@ -59,7 +59,7 @@ testdata = [
 
 
 @pytest.mark.parametrize("module", testdata)
-def test_export(module: MixModule):
+def test_export(module: Component):
     temp_dir = tempfile.TemporaryDirectory()
     file_path = os.path.join(temp_dir.name, "sequential.yaml")
     module.export(file_path)
@@ -70,5 +70,5 @@ def test_export(module: MixModule):
 
 
 @pytest.mark.parametrize("module", testdata)
-def test_instantiate(module: MixModule, helpers):
+def test_instantiate(module: Component, helpers):
     assert helpers.is_module_equal(module, instantiate(module.config))

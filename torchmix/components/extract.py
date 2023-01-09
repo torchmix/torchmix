@@ -1,10 +1,10 @@
 from jaxtyping import Float
 from torch import Tensor
 
-from torchmix.core._module import MixModule
+from torchmix.core._module import Component
 
 
-class Extract(MixModule):
+class Extract(Component):
     """Extract layer that selects a single token from an input tensor.
 
     This layer selects a single token from the input tensor and returns it

@@ -1,10 +1,10 @@
 # Welcome to torchmix!
 
-`torchmix` is a library that provides a collection of PyTorch modules that aims to make your code more efficient and modular. In this example, we'll show you how to use `torchmix`'s partial method to create partially instantiated `MixModule` objects and how to use them as arguments for other `MixModule` objects.
+`torchmix` is a library that provides a collection of PyTorch modules that aims to make your code more efficient and modular. In this example, we'll show you how to use `torchmix`'s partial method to create partially instantiated `Component` objects and how to use them as arguments for other `Component` objects.
 
 ### Using the `partial` Method
 
-The `partial` method allows you to create a partially instantiated version of a `MixModule`. This means that some of its arguments have not yet been specified. For Examples:
+The `partial` method allows you to create a partially instantiated version of a `Component`. This means that some of its arguments have not yet been specified. For Examples:
 
 ```python
 from torchmix import nn
@@ -16,19 +16,19 @@ gelu_partial = nn.GELU.partial(approximate="tanh")
 
 ### Using Partially Instantiated Modules as Arguments
 
-You can use a partially instantiated `MixModule` as an argument for another `MixModule` just like any other argument. When the second `MixModule` is instantiated, it will recognize that the partially instantiated `MixModule` is a `MixModule` and parse its configurations accordingly.
+You can use a partially instantiated `Component` as an argument for another `Component` just like any other argument. When the second `Component` is instantiated, it will recognize that the partially instantiated `Component` is a `Component` and parse its configurations accordingly.
 
-Here's an example of how to use a partially instantiated `MixModule` as an argument:
+Here's an example of how to use a partially instantiated `Component` as an argument:
 
 ```python
 import torch
-from torchmix import nn, MixModule
+from torchmix import nn, Component
 
-class CustomModule(MixModule):
+class CustomModule(Component):
     def __init__(
         self,
-        proj_layer: Partial[MixModule],
-        act_layer: Partial[MixModule],
+        proj_layer: Partial[Component],
+        act_layer: Partial[Component],
     ):
         self.proj = proj_layer()
         self.act = act_layer()
@@ -42,20 +42,20 @@ custom_module = CustomModule(
 )
 ```
 
-Instead, you can provide fully instantiate `MixModule` and re-`instantiate` from its configuration. This pattern is useful in certain cases, such as when you need to instantiate the same module multiple times.
+Instead, you can provide fully instantiate `Component` and re-`instantiate` from its configuration. This pattern is useful in certain cases, such as when you need to instantiate the same module multiple times.
 
 ```python
 import torch
 
 from hydra.utils import instantiate
-from torchmix import MixModule, nn
+from torchmix import Component, nn
 
 
-class CustomModule(MixModule):
+class CustomModule(Component):
     def __init__(
         self,
-        proj_layer: MixModule,
-        act_layer: MixModule,
+        proj_layer: Component,
+        act_layer: Component,
     ):
         self.proj = proj_layer.instance() # equivalent to instantiate(proj_layer.config)
         self.act = act_layer.instance() # equivalent to instantiate(act_layer.config)
@@ -71,7 +71,7 @@ custom_module = CustomModule(
 
 ### Storing and Exporting Configurations
 
-Once you've created your `MixModule` object, you can use the store and export methods to store its configurations in hydra's `ConfigStore` and export them to a YAML file, respectively.
+Once you've created your `Component` object, you can use the store and export methods to store its configurations in hydra's `ConfigStore` and export them to a YAML file, respectively.
 
 For example:
 

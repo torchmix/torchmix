@@ -9,7 +9,7 @@ from typing import Optional
 from docstring_parser import parse
 
 import torchmix
-from torchmix import MixModule
+from torchmix import Component
 
 # root = Path("docs/pages")
 # root.mkdir(parents=True, exist_ok=True)
@@ -37,7 +37,7 @@ def write(file: TextIOWrapper):
 
 for name, obj in inspect.getmembers(torchmix.components):
     try:
-        if issubclass(obj, MixModule):
+        if issubclass(obj, Component):
             doc = parse(obj.__doc__)
             with open(components / f"{name}.mdx", "w") as f:
                 _w = write(f)

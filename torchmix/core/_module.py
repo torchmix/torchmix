@@ -52,7 +52,7 @@ def _underscore(name: str) -> str:
 
 
 def _parse(value):
-    if isinstance(value, MixModule):
+    if isinstance(value, Component):
         return value.config
     elif isinstance(value, Partial):
         return builds(
@@ -78,14 +78,14 @@ def _parse(value):
     return value
 
 
-class MixModule(nn.Module):
+class Component(nn.Module):
     """
     A PyTorch module wrapper that automates the process of generating and
     managing configurations for PyTorch modules.
 
     This class inherits from PyTorch's `nn.Module` and can be used as
     a drop-in replacement. It automatically generates configurations
-    for any instance of the `MixModule` class or its subclasses and
+    for any instance of the `Component` class or its subclasses and
     stores them in a `DictConfig` object.
 
     The generated configurations can be accessed via the `config` property and
@@ -102,17 +102,17 @@ class MixModule(nn.Module):
 
     def __new__(cls, *args, **kwargs):
         """
-        Overrides the default behavior of `MixModule`'s constructor. This
+        Overrides the default behavior of `Component`'s constructor. This
         method is called before the actual `__init__` method and is used to
-        build the `config` attribute of the `MixModule` instance.
+        build the `config` attribute of the `Component` instance.
 
         This method is responsible for generating the configuration for a
-        `MixModule` instance before calling the original `__init__` method.
+        `Component` instance before calling the original `__init__` method.
         It does this by creating a new `__init__` method that calls
         `self.builds` with the provided arguments after recursively parsing
         them with the `_parse` function.
 
-        The `_parse` function converts any `MixModule` instances found in
+        The `_parse` function converts any `Component` instances found in
         the arguments to their corresponding configurations, as well as
         handling any partial instances and wrapping dictionaries and sequences
         in their respective types.
@@ -122,17 +122,17 @@ class MixModule(nn.Module):
         provided arguments.
 
         When `no_parameters` context manager is active, this method will
-        skip calling the original `__init__` method, and the `MixModule`
+        skip calling the original `__init__` method, and the `Component`
         instance will not have any additional attributes or behavior beyond
         the `config` attribute.
 
-        This can be useful if you want to create a `MixModule` instance
+        This can be useful if you want to create a `Component` instance
         solely for the purpose of generating its configuration, without
         actually instantiating the module. For more details, see
         `torchmix.core._context.no_parameters` context manager.
 
         Returns:
-            The `MixModule` instance.
+            The `Component` instance.
         """
         old_init = cls.__init__
         old_sig = inspect.signature(old_init)
@@ -213,11 +213,11 @@ class MixModule(nn.Module):
     @classmethod
     def builds(cls, *args, **kwargs):
         """
-        Generates a configuration for an instance of the `MixModule` class
+        Generates a configuration for an instance of the `Component` class
         or its subclasses.
 
         This method is used internally to generate the configuration for
-        a `MixModule` instance. It should not be called directly.
+        a `Component` instance. It should not be called directly.
 
         Returns:
             A `DictConfig` object containing the generated configuration for
@@ -236,11 +236,11 @@ class MixModule(nn.Module):
     def partial(cls, *args, **kwargs):
         """
         Returns a `functools.partial` object that can be used to partially
-        instantiate the `MixModule` class or its subclasses.
+        instantiate the `Component` class or its subclasses.
 
         Returns:
             A `functools.partial` object that can be called like a function to
-            create a `MixModule` instance.
+            create a `Component` instance.
         """
         return functools.partial(cls, *args, **kwargs)
 
@@ -248,10 +248,10 @@ class MixModule(nn.Module):
     def config(self) -> Builds:
         """
         Returns the `DictConfig` object containing the configuration for the
-        `MixModule` instance.
+        `Component` instance.
 
         This property allows users to access the generated configuration for
-        the `MixModule` instance.
+        the `Component` instance.
         """
         return self._config
 
@@ -260,10 +260,10 @@ class MixModule(nn.Module):
         path: Optional[str] = None,
     ) -> Self:  # type: ignore
         """
-        Exports the configuration for the `MixModule` instance to a file.
+        Exports the configuration for the `Component` instance to a file.
 
         This method allows users to save the configuration for the
-        `MixModule` instance to a file in YAML format.
+        `Component` instance to a file in YAML format.
 
         If no path is provided, the configuration will be saved to
         a file with the name of the class in the current working directory.
@@ -272,7 +272,7 @@ class MixModule(nn.Module):
             path: Path to the file where the configuration should be saved.
 
         Returns:
-            The `MixModule` instance.
+            The `Component` instance.
         """
 
         if path:
@@ -304,7 +304,7 @@ class MixModule(nn.Module):
 
     def store(self, group: str, name: str) -> Self:  # type: ignore
         """
-        Stores the configuration for the `MixModule` instance in
+        Stores the configuration for the `Component` instance in
         `hydra`'s ConfigStore.
         """
         self._option_name = name
@@ -316,16 +316,16 @@ class MixModule(nn.Module):
 
     def instantiate(self) -> Self:  # type: ignore
         """
-        Recreates an instance of the MixModule from its configuration.
+        Recreates an instance of the Component from its configuration.
 
-        This method recreates an instance of the `MixModule` by calling
+        This method recreates an instance of the `Component` by calling
         `hydra_zen.instantiate` on the `config` attribute of the
-        `MixModule` instance. It returns the recreated instance.
+        `Component` instance. It returns the recreated instance.
 
-        This can be useful if you want to instantiate a `MixModule`
+        This can be useful if you want to instantiate a `Component`
         multiple times using the same configuration.
 
         Returns:
-            The recreated instance of the `MixModule`.
+            The recreated instance of the `Component`.
         """
         return instantiate(self.config)

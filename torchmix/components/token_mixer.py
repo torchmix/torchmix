@@ -5,13 +5,13 @@ from jaxtyping import Float
 from torch import Tensor
 
 from torchmix import nn
-from torchmix.core._module import MixModule
+from torchmix.core._module import Component
 from torchmix.third_party.einops import Rearrange
 
 from .containers.drop import Dropout
 
 
-class TokenMixer(MixModule):
+class TokenMixer(Component):
     """Token mixer layer from MLP-Mixer
 
     Examples:
@@ -23,7 +23,7 @@ class TokenMixer(MixModule):
 
     def __init__(
         self,
-        act_layer: Partial[MixModule],
+        act_layer: Partial[Component],
         seq_length: int = 196,
         expansion_factor: float = 0.5,
         p: Optional[float] = 0.1,

@@ -1,10 +1,10 @@
 # Welcome to torchmix!
 
-`torchmix` is a library that provides a collection of PyTorch modules that aims to make your code more efficient and modular. In this example, we'll show you how to use `torchmix`'s `no_parameters` context manager to speed up the creation of `MixModule` objects.
+`torchmix` is a library that provides a collection of PyTorch modules that aims to make your code more efficient and modular. In this example, we'll show you how to use `torchmix`'s `no_parameters` context manager to speed up the creation of `Component` objects.
 
 ### Using the `no_parameters` Context Manager
 
-If you are creating a large `MixModule` objects and don't need their actual parameters (e.g. weights and biases), you can use `torchmix`'s `no_parameters` context manager to speed up the creation process. This can be especially useful when you only need the `MixModule` objects for generating configurations and not for training or inference.
+If you are creating a large `Component` objects and don't need their actual parameters (e.g. weights and biases), you can use `torchmix`'s `no_parameters` context manager to speed up the creation process. This can be especially useful when you only need the `Component` objects for generating configurations and not for training or inference.
 
 ```python
 import time

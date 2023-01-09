@@ -6,10 +6,10 @@ from jaxtyping import Float
 from torch import Tensor
 
 from torchmix import nn
-from torchmix.core._module import MixModule
+from torchmix.core._module import Component
 
 
-class SelfAttention(MixModule):
+class SelfAttention(Component):
     """A multi-head self attention layer.
 
     Examples:

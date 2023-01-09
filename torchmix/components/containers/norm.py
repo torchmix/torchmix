@@ -1,10 +1,10 @@
 from torch import Tensor
 
 from torchmix import nn
-from torchmix.core._module import MixModule
+from torchmix.core._module import Component
 
 
-class PostNorm(MixModule):
+class PostNorm(Component):
     """Apply Post-Layer normalization to a block
 
     Example:
@@ -18,7 +18,7 @@ class PostNorm(MixModule):
         )
     """
 
-    def __init__(self, block: MixModule, dim: int = 1024):
+    def __init__(self, block: Component, dim: int = 1024):
         self.block = block
         self.norm = nn.LayerNorm(dim)
 
@@ -26,7 +26,7 @@ class PostNorm(MixModule):
         return self.norm(x + self.block(x))
 
 
-class PreNorm(MixModule):
+class PreNorm(Component):
     """Apply Pre-Layer normalization to a block
 
     Examples:
@@ -40,7 +40,7 @@ class PreNorm(MixModule):
         )
     """
 
-    def __init__(self, block: MixModule, dim: int = 1024):
+    def __init__(self, block: Component, dim: int = 1024):
         self.block = block
         self.norm = nn.LayerNorm(dim)
 

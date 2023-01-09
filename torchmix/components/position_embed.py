@@ -3,10 +3,10 @@ from jaxtyping import Float
 from torch import Tensor
 
 from torchmix import nn
-from torchmix.core._module import MixModule
+from torchmix.core._module import Component
 
 
-class PositionEmbed(MixModule):
+class PositionEmbed(Component):
     """Learnable positional embeddings
 
     Examples:

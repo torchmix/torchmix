@@ -3,10 +3,10 @@ from typing import Iterator
 from torch import Tensor
 
 from torchmix.core._builds import BuildMode
-from torchmix.core._module import MixModule
+from torchmix.core._module import Component
 
 
-class Add(MixModule):
+class Add(Component):
     """A container that progressively adds the forward results of its blocks.
 
     Examples:
@@ -19,14 +19,14 @@ class Add(MixModule):
 
     build_mode = BuildMode.WITH_ARGS
 
-    def __init__(self, *blocks: MixModule):
+    def __init__(self, *blocks: Component):
         for idx, block in enumerate(blocks):
             self.add_module(str(idx), block)
 
     def __len__(self) -> int:
         return len(self._modules)
 
-    def __iter__(self) -> Iterator[MixModule]:
+    def __iter__(self) -> Iterator[Component]:
         return iter(self._modules.values())  # type: ignore
 
     def forward(self, x: Tensor) -> Tensor:

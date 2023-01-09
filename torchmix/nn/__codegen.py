@@ -21,20 +21,20 @@ through the config attribute.
 
 def lazy_conv_template(name):
     f"""with suppress(AttributeError):
-    class {name}(MixModule, nn.{name}):
+    class {name}(Component, nn.{name}):
         __init__ = functools.partial(nn.{name}.__init__)  # type: ignore[misc]"""
 
 
 def sequential_template(name):
     return f"""with suppress(AttributeError):
-    class {name}(MixModule, nn.{name}):
+    class {name}(Component, nn.{name}):
         build_mode = BuildMode.WITH_ARGS
         __init__ = functools.partial(nn.{name}.__init__)  # type: ignore"""
 
 
 def module_template(name):
     return f"""with suppress(AttributeError):
-    class {name}(MixModule, nn.{name}):
+    class {name}(Component, nn.{name}):
         __init__ = functools.partial(nn.{name}.__init__)"""
 
 
@@ -52,7 +52,7 @@ with open("torchmix/nn/__init__.py", "w") as f:
     write("from torch import nn")
     write()
     write("from torchmix.core._builds import BuildMode")
-    write("from torchmix.core._module import MixModule")
+    write("from torchmix.core._module import Component")
     write()
     write()
     write("Module = nn.Module")

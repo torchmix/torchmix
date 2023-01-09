@@ -2,10 +2,10 @@ from typing import Iterator
 
 from torch import Tensor
 
-from torchmix.core._module import MixModule
+from torchmix.core._module import Component
 
 
-class Repeat(MixModule):
+class Repeat(Component):
     """Repeat given module.
 
     Examples:
@@ -21,7 +21,7 @@ class Repeat(MixModule):
 
     def __init__(
         self,
-        block: MixModule,
+        block: Component,
         depth: int = 8,
     ) -> None:
         for idx in range(depth):
@@ -33,7 +33,7 @@ class Repeat(MixModule):
     def __len__(self) -> int:
         return len(self._modules)
 
-    def __iter__(self) -> Iterator[MixModule]:
+    def __iter__(self) -> Iterator[Component]:
         return iter(self._modules.values())  # type: ignore
 
     def forward(self, x: Tensor) -> Tensor:

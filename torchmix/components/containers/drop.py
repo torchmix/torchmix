@@ -4,17 +4,17 @@ from jaxtyping import Float
 from torch import Tensor
 
 from torchmix import nn
-from torchmix.core._module import MixModule
+from torchmix.core._module import Component
 
 
-class Dropout(MixModule):
-    """A dropout layer that wraps a given MixModule.
+class Dropout(Component):
+    """A dropout layer that wraps a given `Component`.
 
     Examples:
         Dropout(block=nn.Linear(128, 256), p=0.2)
     """
 
-    def __init__(self, block: MixModule, p: float = 0.1):
+    def __init__(self, block: Component, p: float = 0.1):
         self.block = block
         self.p = p
 
@@ -29,14 +29,14 @@ class Dropout(MixModule):
         return x
 
 
-class StochasticDepth(MixModule):
-    """A stochastic depth layer that wraps a given MixModule.
+class StochasticDepth(Component):
+    """A stochastic depth layer that wraps a given `Component`.
 
     Examples:
         StochasticDepth(block=nn.Linear(128, 256), p=0.2)
     """
 
-    def __init__(self, block: MixModule, p: float = 0.1):
+    def __init__(self, block: Component, p: float = 0.1):
         self.block = block
         self.p = p
 
@@ -50,16 +50,16 @@ class StochasticDepth(MixModule):
         return self.block(x) / (1 - self.p)
 
 
-class DropPath(MixModule):
-    """A droppath layer that wraps a given MixModule.
+class DropPath(Component):
+    """A droppath layer that wraps a given `Component`.
 
-    Can be understood as stochastic depth per sample.
+    Can be understood as [stochastic depth](/components/stochasticdepth) per sample.
 
     Examples:
         DropPath(block=nn.Linear(128, 256), p=0.2)
     """
 
-    def __init__(self, block: MixModule, p: float = 0.1):
+    def __init__(self, block: Component, p: float = 0.1):
         self.block = block
         self.p = p
 

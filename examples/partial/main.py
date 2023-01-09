@@ -1,14 +1,14 @@
 import torch
 from hydra_zen.typing import Partial
 
-from torchmix import MixModule, nn
+from torchmix import Component, nn
 
 
-class CustomModule(MixModule):
+class CustomModule(Component):
     def __init__(
         self,
-        proj_layer: Partial[MixModule],
-        act_layer: Partial[MixModule],
+        proj_layer: Partial[Component],
+        act_layer: Partial[Component],
     ):
         self.proj = proj_layer
         self.act = act_layer()

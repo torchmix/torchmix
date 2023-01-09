@@ -1,11 +1,11 @@
 from jaxtyping import Float
 from torch import Tensor
 
-from torchmix.core._module import MixModule
+from torchmix.core._module import Component
 from torchmix.third_party.einops import Reduce
 
 
-class AvgPool(MixModule):
+class AvgPool(Component):
     """Average pooling layer that averages over the penultimate dimension
     of an input tensor.
 

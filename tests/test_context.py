@@ -1,6 +1,6 @@
 import pytest
 
-from torchmix import MixModule, nn, no_parameters
+from torchmix import Component, nn, no_parameters
 
 with no_parameters():
     testdata = [
@@ -20,6 +20,6 @@ with no_parameters():
 
 
 @pytest.mark.parametrize("module", testdata)
-def test_context(module: MixModule):
+def test_context(module: Component):
     with pytest.raises(AttributeError):
         getattr(module, "_parameters")

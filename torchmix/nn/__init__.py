@@ -16,7 +16,7 @@ from contextlib import suppress
 from torch import nn
 
 from torchmix.core._builds import BuildMode
-from torchmix.core._module import MixModule
+from torchmix.core._module import Component
 
 Module = nn.Module
 Parameter = nn.Parameter
@@ -47,890 +47,890 @@ with suppress(AttributeError):
 
 with suppress(AttributeError):
 
-    class AdaptiveAvgPool1d(MixModule, nn.AdaptiveAvgPool1d):
+    class AdaptiveAvgPool1d(Component, nn.AdaptiveAvgPool1d):
         __init__ = functools.partial(nn.AdaptiveAvgPool1d.__init__)
 
 
 with suppress(AttributeError):
 
-    class AdaptiveAvgPool2d(MixModule, nn.AdaptiveAvgPool2d):
+    class AdaptiveAvgPool2d(Component, nn.AdaptiveAvgPool2d):
         __init__ = functools.partial(nn.AdaptiveAvgPool2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class AdaptiveAvgPool3d(MixModule, nn.AdaptiveAvgPool3d):
+    class AdaptiveAvgPool3d(Component, nn.AdaptiveAvgPool3d):
         __init__ = functools.partial(nn.AdaptiveAvgPool3d.__init__)
 
 
 with suppress(AttributeError):
 
-    class AdaptiveLogSoftmaxWithLoss(MixModule, nn.AdaptiveLogSoftmaxWithLoss):
+    class AdaptiveLogSoftmaxWithLoss(Component, nn.AdaptiveLogSoftmaxWithLoss):
         __init__ = functools.partial(nn.AdaptiveLogSoftmaxWithLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class AdaptiveMaxPool1d(MixModule, nn.AdaptiveMaxPool1d):
+    class AdaptiveMaxPool1d(Component, nn.AdaptiveMaxPool1d):
         __init__ = functools.partial(nn.AdaptiveMaxPool1d.__init__)
 
 
 with suppress(AttributeError):
 
-    class AdaptiveMaxPool2d(MixModule, nn.AdaptiveMaxPool2d):
+    class AdaptiveMaxPool2d(Component, nn.AdaptiveMaxPool2d):
         __init__ = functools.partial(nn.AdaptiveMaxPool2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class AdaptiveMaxPool3d(MixModule, nn.AdaptiveMaxPool3d):
+    class AdaptiveMaxPool3d(Component, nn.AdaptiveMaxPool3d):
         __init__ = functools.partial(nn.AdaptiveMaxPool3d.__init__)
 
 
 with suppress(AttributeError):
 
-    class AlphaDropout(MixModule, nn.AlphaDropout):
+    class AlphaDropout(Component, nn.AlphaDropout):
         __init__ = functools.partial(nn.AlphaDropout.__init__)
 
 
 with suppress(AttributeError):
 
-    class AvgPool1d(MixModule, nn.AvgPool1d):
+    class AvgPool1d(Component, nn.AvgPool1d):
         __init__ = functools.partial(nn.AvgPool1d.__init__)
 
 
 with suppress(AttributeError):
 
-    class AvgPool2d(MixModule, nn.AvgPool2d):
+    class AvgPool2d(Component, nn.AvgPool2d):
         __init__ = functools.partial(nn.AvgPool2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class AvgPool3d(MixModule, nn.AvgPool3d):
+    class AvgPool3d(Component, nn.AvgPool3d):
         __init__ = functools.partial(nn.AvgPool3d.__init__)
 
 
 with suppress(AttributeError):
 
-    class BCELoss(MixModule, nn.BCELoss):
+    class BCELoss(Component, nn.BCELoss):
         __init__ = functools.partial(nn.BCELoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class BCEWithLogitsLoss(MixModule, nn.BCEWithLogitsLoss):
+    class BCEWithLogitsLoss(Component, nn.BCEWithLogitsLoss):
         __init__ = functools.partial(nn.BCEWithLogitsLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class BatchNorm1d(MixModule, nn.BatchNorm1d):
+    class BatchNorm1d(Component, nn.BatchNorm1d):
         __init__ = functools.partial(nn.BatchNorm1d.__init__)
 
 
 with suppress(AttributeError):
 
-    class BatchNorm2d(MixModule, nn.BatchNorm2d):
+    class BatchNorm2d(Component, nn.BatchNorm2d):
         __init__ = functools.partial(nn.BatchNorm2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class BatchNorm3d(MixModule, nn.BatchNorm3d):
+    class BatchNorm3d(Component, nn.BatchNorm3d):
         __init__ = functools.partial(nn.BatchNorm3d.__init__)
 
 
 with suppress(AttributeError):
 
-    class Bilinear(MixModule, nn.Bilinear):
+    class Bilinear(Component, nn.Bilinear):
         __init__ = functools.partial(nn.Bilinear.__init__)
 
 
 with suppress(AttributeError):
 
-    class CELU(MixModule, nn.CELU):
+    class CELU(Component, nn.CELU):
         __init__ = functools.partial(nn.CELU.__init__)
 
 
 with suppress(AttributeError):
 
-    class CTCLoss(MixModule, nn.CTCLoss):
+    class CTCLoss(Component, nn.CTCLoss):
         __init__ = functools.partial(nn.CTCLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class ChannelShuffle(MixModule, nn.ChannelShuffle):
+    class ChannelShuffle(Component, nn.ChannelShuffle):
         __init__ = functools.partial(nn.ChannelShuffle.__init__)
 
 
 with suppress(AttributeError):
 
-    class ConstantPad1d(MixModule, nn.ConstantPad1d):
+    class ConstantPad1d(Component, nn.ConstantPad1d):
         __init__ = functools.partial(nn.ConstantPad1d.__init__)
 
 
 with suppress(AttributeError):
 
-    class ConstantPad2d(MixModule, nn.ConstantPad2d):
+    class ConstantPad2d(Component, nn.ConstantPad2d):
         __init__ = functools.partial(nn.ConstantPad2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class ConstantPad3d(MixModule, nn.ConstantPad3d):
+    class ConstantPad3d(Component, nn.ConstantPad3d):
         __init__ = functools.partial(nn.ConstantPad3d.__init__)
 
 
 with suppress(AttributeError):
 
-    class Container(MixModule, nn.Container):
+    class Container(Component, nn.Container):
         __init__ = functools.partial(nn.Container.__init__)
 
 
 with suppress(AttributeError):
 
-    class Conv1d(MixModule, nn.Conv1d):
+    class Conv1d(Component, nn.Conv1d):
         __init__ = functools.partial(nn.Conv1d.__init__)
 
 
 with suppress(AttributeError):
 
-    class Conv2d(MixModule, nn.Conv2d):
+    class Conv2d(Component, nn.Conv2d):
         __init__ = functools.partial(nn.Conv2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class Conv3d(MixModule, nn.Conv3d):
+    class Conv3d(Component, nn.Conv3d):
         __init__ = functools.partial(nn.Conv3d.__init__)
 
 
 with suppress(AttributeError):
 
-    class ConvTranspose1d(MixModule, nn.ConvTranspose1d):
+    class ConvTranspose1d(Component, nn.ConvTranspose1d):
         __init__ = functools.partial(nn.ConvTranspose1d.__init__)
 
 
 with suppress(AttributeError):
 
-    class ConvTranspose2d(MixModule, nn.ConvTranspose2d):
+    class ConvTranspose2d(Component, nn.ConvTranspose2d):
         __init__ = functools.partial(nn.ConvTranspose2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class ConvTranspose3d(MixModule, nn.ConvTranspose3d):
+    class ConvTranspose3d(Component, nn.ConvTranspose3d):
         __init__ = functools.partial(nn.ConvTranspose3d.__init__)
 
 
 with suppress(AttributeError):
 
-    class CosineEmbeddingLoss(MixModule, nn.CosineEmbeddingLoss):
+    class CosineEmbeddingLoss(Component, nn.CosineEmbeddingLoss):
         __init__ = functools.partial(nn.CosineEmbeddingLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class CosineSimilarity(MixModule, nn.CosineSimilarity):
+    class CosineSimilarity(Component, nn.CosineSimilarity):
         __init__ = functools.partial(nn.CosineSimilarity.__init__)
 
 
 with suppress(AttributeError):
 
-    class CrossEntropyLoss(MixModule, nn.CrossEntropyLoss):
+    class CrossEntropyLoss(Component, nn.CrossEntropyLoss):
         __init__ = functools.partial(nn.CrossEntropyLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class CrossMapLRN2d(MixModule, nn.CrossMapLRN2d):
+    class CrossMapLRN2d(Component, nn.CrossMapLRN2d):
         __init__ = functools.partial(nn.CrossMapLRN2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class DataParallel(MixModule, nn.DataParallel):
+    class DataParallel(Component, nn.DataParallel):
         __init__ = functools.partial(nn.DataParallel.__init__)
 
 
 with suppress(AttributeError):
 
-    class Dropout(MixModule, nn.Dropout):
+    class Dropout(Component, nn.Dropout):
         __init__ = functools.partial(nn.Dropout.__init__)
 
 
 with suppress(AttributeError):
 
-    class Dropout1d(MixModule, nn.Dropout1d):
+    class Dropout1d(Component, nn.Dropout1d):
         __init__ = functools.partial(nn.Dropout1d.__init__)
 
 
 with suppress(AttributeError):
 
-    class Dropout2d(MixModule, nn.Dropout2d):
+    class Dropout2d(Component, nn.Dropout2d):
         __init__ = functools.partial(nn.Dropout2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class Dropout3d(MixModule, nn.Dropout3d):
+    class Dropout3d(Component, nn.Dropout3d):
         __init__ = functools.partial(nn.Dropout3d.__init__)
 
 
 with suppress(AttributeError):
 
-    class ELU(MixModule, nn.ELU):
+    class ELU(Component, nn.ELU):
         __init__ = functools.partial(nn.ELU.__init__)
 
 
 with suppress(AttributeError):
 
-    class Embedding(MixModule, nn.Embedding):
+    class Embedding(Component, nn.Embedding):
         __init__ = functools.partial(nn.Embedding.__init__)
 
 
 with suppress(AttributeError):
 
-    class EmbeddingBag(MixModule, nn.EmbeddingBag):
+    class EmbeddingBag(Component, nn.EmbeddingBag):
         __init__ = functools.partial(nn.EmbeddingBag.__init__)
 
 
 with suppress(AttributeError):
 
-    class FeatureAlphaDropout(MixModule, nn.FeatureAlphaDropout):
+    class FeatureAlphaDropout(Component, nn.FeatureAlphaDropout):
         __init__ = functools.partial(nn.FeatureAlphaDropout.__init__)
 
 
 with suppress(AttributeError):
 
-    class Flatten(MixModule, nn.Flatten):
+    class Flatten(Component, nn.Flatten):
         __init__ = functools.partial(nn.Flatten.__init__)
 
 
 with suppress(AttributeError):
 
-    class Fold(MixModule, nn.Fold):
+    class Fold(Component, nn.Fold):
         __init__ = functools.partial(nn.Fold.__init__)
 
 
 with suppress(AttributeError):
 
-    class FractionalMaxPool2d(MixModule, nn.FractionalMaxPool2d):
+    class FractionalMaxPool2d(Component, nn.FractionalMaxPool2d):
         __init__ = functools.partial(nn.FractionalMaxPool2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class FractionalMaxPool3d(MixModule, nn.FractionalMaxPool3d):
+    class FractionalMaxPool3d(Component, nn.FractionalMaxPool3d):
         __init__ = functools.partial(nn.FractionalMaxPool3d.__init__)
 
 
 with suppress(AttributeError):
 
-    class GELU(MixModule, nn.GELU):
+    class GELU(Component, nn.GELU):
         __init__ = functools.partial(nn.GELU.__init__)
 
 
 with suppress(AttributeError):
 
-    class GLU(MixModule, nn.GLU):
+    class GLU(Component, nn.GLU):
         __init__ = functools.partial(nn.GLU.__init__)
 
 
 with suppress(AttributeError):
 
-    class GRU(MixModule, nn.GRU):
+    class GRU(Component, nn.GRU):
         __init__ = functools.partial(nn.GRU.__init__)
 
 
 with suppress(AttributeError):
 
-    class GRUCell(MixModule, nn.GRUCell):
+    class GRUCell(Component, nn.GRUCell):
         __init__ = functools.partial(nn.GRUCell.__init__)
 
 
 with suppress(AttributeError):
 
-    class GaussianNLLLoss(MixModule, nn.GaussianNLLLoss):
+    class GaussianNLLLoss(Component, nn.GaussianNLLLoss):
         __init__ = functools.partial(nn.GaussianNLLLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class GroupNorm(MixModule, nn.GroupNorm):
+    class GroupNorm(Component, nn.GroupNorm):
         __init__ = functools.partial(nn.GroupNorm.__init__)
 
 
 with suppress(AttributeError):
 
-    class Hardshrink(MixModule, nn.Hardshrink):
+    class Hardshrink(Component, nn.Hardshrink):
         __init__ = functools.partial(nn.Hardshrink.__init__)
 
 
 with suppress(AttributeError):
 
-    class Hardsigmoid(MixModule, nn.Hardsigmoid):
+    class Hardsigmoid(Component, nn.Hardsigmoid):
         __init__ = functools.partial(nn.Hardsigmoid.__init__)
 
 
 with suppress(AttributeError):
 
-    class Hardswish(MixModule, nn.Hardswish):
+    class Hardswish(Component, nn.Hardswish):
         __init__ = functools.partial(nn.Hardswish.__init__)
 
 
 with suppress(AttributeError):
 
-    class Hardtanh(MixModule, nn.Hardtanh):
+    class Hardtanh(Component, nn.Hardtanh):
         __init__ = functools.partial(nn.Hardtanh.__init__)
 
 
 with suppress(AttributeError):
 
-    class HingeEmbeddingLoss(MixModule, nn.HingeEmbeddingLoss):
+    class HingeEmbeddingLoss(Component, nn.HingeEmbeddingLoss):
         __init__ = functools.partial(nn.HingeEmbeddingLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class HuberLoss(MixModule, nn.HuberLoss):
+    class HuberLoss(Component, nn.HuberLoss):
         __init__ = functools.partial(nn.HuberLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class Identity(MixModule, nn.Identity):
+    class Identity(Component, nn.Identity):
         __init__ = functools.partial(nn.Identity.__init__)
 
 
 with suppress(AttributeError):
 
-    class InstanceNorm1d(MixModule, nn.InstanceNorm1d):
+    class InstanceNorm1d(Component, nn.InstanceNorm1d):
         __init__ = functools.partial(nn.InstanceNorm1d.__init__)
 
 
 with suppress(AttributeError):
 
-    class InstanceNorm2d(MixModule, nn.InstanceNorm2d):
+    class InstanceNorm2d(Component, nn.InstanceNorm2d):
         __init__ = functools.partial(nn.InstanceNorm2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class InstanceNorm3d(MixModule, nn.InstanceNorm3d):
+    class InstanceNorm3d(Component, nn.InstanceNorm3d):
         __init__ = functools.partial(nn.InstanceNorm3d.__init__)
 
 
 with suppress(AttributeError):
 
-    class KLDivLoss(MixModule, nn.KLDivLoss):
+    class KLDivLoss(Component, nn.KLDivLoss):
         __init__ = functools.partial(nn.KLDivLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class L1Loss(MixModule, nn.L1Loss):
+    class L1Loss(Component, nn.L1Loss):
         __init__ = functools.partial(nn.L1Loss.__init__)
 
 
 with suppress(AttributeError):
 
-    class LPPool1d(MixModule, nn.LPPool1d):
+    class LPPool1d(Component, nn.LPPool1d):
         __init__ = functools.partial(nn.LPPool1d.__init__)
 
 
 with suppress(AttributeError):
 
-    class LPPool2d(MixModule, nn.LPPool2d):
+    class LPPool2d(Component, nn.LPPool2d):
         __init__ = functools.partial(nn.LPPool2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class LSTM(MixModule, nn.LSTM):
+    class LSTM(Component, nn.LSTM):
         __init__ = functools.partial(nn.LSTM.__init__)
 
 
 with suppress(AttributeError):
 
-    class LSTMCell(MixModule, nn.LSTMCell):
+    class LSTMCell(Component, nn.LSTMCell):
         __init__ = functools.partial(nn.LSTMCell.__init__)
 
 
 with suppress(AttributeError):
 
-    class LayerNorm(MixModule, nn.LayerNorm):
+    class LayerNorm(Component, nn.LayerNorm):
         __init__ = functools.partial(nn.LayerNorm.__init__)
 
 
 with suppress(AttributeError):
 
-    class LazyBatchNorm1d(MixModule, nn.LazyBatchNorm1d):
+    class LazyBatchNorm1d(Component, nn.LazyBatchNorm1d):
         __init__ = functools.partial(nn.LazyBatchNorm1d.__init__)
 
 
 with suppress(AttributeError):
 
-    class LazyBatchNorm2d(MixModule, nn.LazyBatchNorm2d):
+    class LazyBatchNorm2d(Component, nn.LazyBatchNorm2d):
         __init__ = functools.partial(nn.LazyBatchNorm2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class LazyBatchNorm3d(MixModule, nn.LazyBatchNorm3d):
+    class LazyBatchNorm3d(Component, nn.LazyBatchNorm3d):
         __init__ = functools.partial(nn.LazyBatchNorm3d.__init__)
 
 
 with suppress(AttributeError):
 
-    class LazyInstanceNorm1d(MixModule, nn.LazyInstanceNorm1d):
+    class LazyInstanceNorm1d(Component, nn.LazyInstanceNorm1d):
         __init__ = functools.partial(nn.LazyInstanceNorm1d.__init__)
 
 
 with suppress(AttributeError):
 
-    class LazyInstanceNorm2d(MixModule, nn.LazyInstanceNorm2d):
+    class LazyInstanceNorm2d(Component, nn.LazyInstanceNorm2d):
         __init__ = functools.partial(nn.LazyInstanceNorm2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class LazyInstanceNorm3d(MixModule, nn.LazyInstanceNorm3d):
+    class LazyInstanceNorm3d(Component, nn.LazyInstanceNorm3d):
         __init__ = functools.partial(nn.LazyInstanceNorm3d.__init__)
 
 
 with suppress(AttributeError):
 
-    class LazyLinear(MixModule, nn.LazyLinear):
+    class LazyLinear(Component, nn.LazyLinear):
         __init__ = functools.partial(nn.LazyLinear.__init__)
 
 
 with suppress(AttributeError):
 
-    class LeakyReLU(MixModule, nn.LeakyReLU):
+    class LeakyReLU(Component, nn.LeakyReLU):
         __init__ = functools.partial(nn.LeakyReLU.__init__)
 
 
 with suppress(AttributeError):
 
-    class Linear(MixModule, nn.Linear):
+    class Linear(Component, nn.Linear):
         __init__ = functools.partial(nn.Linear.__init__)
 
 
 with suppress(AttributeError):
 
-    class LocalResponseNorm(MixModule, nn.LocalResponseNorm):
+    class LocalResponseNorm(Component, nn.LocalResponseNorm):
         __init__ = functools.partial(nn.LocalResponseNorm.__init__)
 
 
 with suppress(AttributeError):
 
-    class LogSigmoid(MixModule, nn.LogSigmoid):
+    class LogSigmoid(Component, nn.LogSigmoid):
         __init__ = functools.partial(nn.LogSigmoid.__init__)
 
 
 with suppress(AttributeError):
 
-    class LogSoftmax(MixModule, nn.LogSoftmax):
+    class LogSoftmax(Component, nn.LogSoftmax):
         __init__ = functools.partial(nn.LogSoftmax.__init__)
 
 
 with suppress(AttributeError):
 
-    class MSELoss(MixModule, nn.MSELoss):
+    class MSELoss(Component, nn.MSELoss):
         __init__ = functools.partial(nn.MSELoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class MarginRankingLoss(MixModule, nn.MarginRankingLoss):
+    class MarginRankingLoss(Component, nn.MarginRankingLoss):
         __init__ = functools.partial(nn.MarginRankingLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class MaxPool1d(MixModule, nn.MaxPool1d):
+    class MaxPool1d(Component, nn.MaxPool1d):
         __init__ = functools.partial(nn.MaxPool1d.__init__)
 
 
 with suppress(AttributeError):
 
-    class MaxPool2d(MixModule, nn.MaxPool2d):
+    class MaxPool2d(Component, nn.MaxPool2d):
         __init__ = functools.partial(nn.MaxPool2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class MaxPool3d(MixModule, nn.MaxPool3d):
+    class MaxPool3d(Component, nn.MaxPool3d):
         __init__ = functools.partial(nn.MaxPool3d.__init__)
 
 
 with suppress(AttributeError):
 
-    class MaxUnpool1d(MixModule, nn.MaxUnpool1d):
+    class MaxUnpool1d(Component, nn.MaxUnpool1d):
         __init__ = functools.partial(nn.MaxUnpool1d.__init__)
 
 
 with suppress(AttributeError):
 
-    class MaxUnpool2d(MixModule, nn.MaxUnpool2d):
+    class MaxUnpool2d(Component, nn.MaxUnpool2d):
         __init__ = functools.partial(nn.MaxUnpool2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class MaxUnpool3d(MixModule, nn.MaxUnpool3d):
+    class MaxUnpool3d(Component, nn.MaxUnpool3d):
         __init__ = functools.partial(nn.MaxUnpool3d.__init__)
 
 
 with suppress(AttributeError):
 
-    class Mish(MixModule, nn.Mish):
+    class Mish(Component, nn.Mish):
         __init__ = functools.partial(nn.Mish.__init__)
 
 
 with suppress(AttributeError):
 
-    class ModuleDict(MixModule, nn.ModuleDict):
+    class ModuleDict(Component, nn.ModuleDict):
         __init__ = functools.partial(nn.ModuleDict.__init__)
 
 
 with suppress(AttributeError):
 
-    class ModuleList(MixModule, nn.ModuleList):
+    class ModuleList(Component, nn.ModuleList):
         __init__ = functools.partial(nn.ModuleList.__init__)
 
 
 with suppress(AttributeError):
 
-    class MultiLabelMarginLoss(MixModule, nn.MultiLabelMarginLoss):
+    class MultiLabelMarginLoss(Component, nn.MultiLabelMarginLoss):
         __init__ = functools.partial(nn.MultiLabelMarginLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class MultiLabelSoftMarginLoss(MixModule, nn.MultiLabelSoftMarginLoss):
+    class MultiLabelSoftMarginLoss(Component, nn.MultiLabelSoftMarginLoss):
         __init__ = functools.partial(nn.MultiLabelSoftMarginLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class MultiMarginLoss(MixModule, nn.MultiMarginLoss):
+    class MultiMarginLoss(Component, nn.MultiMarginLoss):
         __init__ = functools.partial(nn.MultiMarginLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class MultiheadAttention(MixModule, nn.MultiheadAttention):
+    class MultiheadAttention(Component, nn.MultiheadAttention):
         __init__ = functools.partial(nn.MultiheadAttention.__init__)
 
 
 with suppress(AttributeError):
 
-    class NLLLoss(MixModule, nn.NLLLoss):
+    class NLLLoss(Component, nn.NLLLoss):
         __init__ = functools.partial(nn.NLLLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class NLLLoss2d(MixModule, nn.NLLLoss2d):
+    class NLLLoss2d(Component, nn.NLLLoss2d):
         __init__ = functools.partial(nn.NLLLoss2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class PReLU(MixModule, nn.PReLU):
+    class PReLU(Component, nn.PReLU):
         __init__ = functools.partial(nn.PReLU.__init__)
 
 
 with suppress(AttributeError):
 
-    class PairwiseDistance(MixModule, nn.PairwiseDistance):
+    class PairwiseDistance(Component, nn.PairwiseDistance):
         __init__ = functools.partial(nn.PairwiseDistance.__init__)
 
 
 with suppress(AttributeError):
 
-    class ParameterDict(MixModule, nn.ParameterDict):
+    class ParameterDict(Component, nn.ParameterDict):
         __init__ = functools.partial(nn.ParameterDict.__init__)
 
 
 with suppress(AttributeError):
 
-    class ParameterList(MixModule, nn.ParameterList):
+    class ParameterList(Component, nn.ParameterList):
         __init__ = functools.partial(nn.ParameterList.__init__)
 
 
 with suppress(AttributeError):
 
-    class PixelShuffle(MixModule, nn.PixelShuffle):
+    class PixelShuffle(Component, nn.PixelShuffle):
         __init__ = functools.partial(nn.PixelShuffle.__init__)
 
 
 with suppress(AttributeError):
 
-    class PixelUnshuffle(MixModule, nn.PixelUnshuffle):
+    class PixelUnshuffle(Component, nn.PixelUnshuffle):
         __init__ = functools.partial(nn.PixelUnshuffle.__init__)
 
 
 with suppress(AttributeError):
 
-    class PoissonNLLLoss(MixModule, nn.PoissonNLLLoss):
+    class PoissonNLLLoss(Component, nn.PoissonNLLLoss):
         __init__ = functools.partial(nn.PoissonNLLLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class RNN(MixModule, nn.RNN):
+    class RNN(Component, nn.RNN):
         __init__ = functools.partial(nn.RNN.__init__)
 
 
 with suppress(AttributeError):
 
-    class RNNBase(MixModule, nn.RNNBase):
+    class RNNBase(Component, nn.RNNBase):
         __init__ = functools.partial(nn.RNNBase.__init__)
 
 
 with suppress(AttributeError):
 
-    class RNNCell(MixModule, nn.RNNCell):
+    class RNNCell(Component, nn.RNNCell):
         __init__ = functools.partial(nn.RNNCell.__init__)
 
 
 with suppress(AttributeError):
 
-    class RNNCellBase(MixModule, nn.RNNCellBase):
+    class RNNCellBase(Component, nn.RNNCellBase):
         __init__ = functools.partial(nn.RNNCellBase.__init__)
 
 
 with suppress(AttributeError):
 
-    class RReLU(MixModule, nn.RReLU):
+    class RReLU(Component, nn.RReLU):
         __init__ = functools.partial(nn.RReLU.__init__)
 
 
 with suppress(AttributeError):
 
-    class ReLU(MixModule, nn.ReLU):
+    class ReLU(Component, nn.ReLU):
         __init__ = functools.partial(nn.ReLU.__init__)
 
 
 with suppress(AttributeError):
 
-    class ReLU6(MixModule, nn.ReLU6):
+    class ReLU6(Component, nn.ReLU6):
         __init__ = functools.partial(nn.ReLU6.__init__)
 
 
 with suppress(AttributeError):
 
-    class ReflectionPad1d(MixModule, nn.ReflectionPad1d):
+    class ReflectionPad1d(Component, nn.ReflectionPad1d):
         __init__ = functools.partial(nn.ReflectionPad1d.__init__)
 
 
 with suppress(AttributeError):
 
-    class ReflectionPad2d(MixModule, nn.ReflectionPad2d):
+    class ReflectionPad2d(Component, nn.ReflectionPad2d):
         __init__ = functools.partial(nn.ReflectionPad2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class ReflectionPad3d(MixModule, nn.ReflectionPad3d):
+    class ReflectionPad3d(Component, nn.ReflectionPad3d):
         __init__ = functools.partial(nn.ReflectionPad3d.__init__)
 
 
 with suppress(AttributeError):
 
-    class ReplicationPad1d(MixModule, nn.ReplicationPad1d):
+    class ReplicationPad1d(Component, nn.ReplicationPad1d):
         __init__ = functools.partial(nn.ReplicationPad1d.__init__)
 
 
 with suppress(AttributeError):
 
-    class ReplicationPad2d(MixModule, nn.ReplicationPad2d):
+    class ReplicationPad2d(Component, nn.ReplicationPad2d):
         __init__ = functools.partial(nn.ReplicationPad2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class ReplicationPad3d(MixModule, nn.ReplicationPad3d):
+    class ReplicationPad3d(Component, nn.ReplicationPad3d):
         __init__ = functools.partial(nn.ReplicationPad3d.__init__)
 
 
 with suppress(AttributeError):
 
-    class SELU(MixModule, nn.SELU):
+    class SELU(Component, nn.SELU):
         __init__ = functools.partial(nn.SELU.__init__)
 
 
 with suppress(AttributeError):
 
-    class Sequential(MixModule, nn.Sequential):
+    class Sequential(Component, nn.Sequential):
         build_mode = BuildMode.WITH_ARGS
         __init__ = functools.partial(nn.Sequential.__init__)  # type: ignore
 
 
 with suppress(AttributeError):
 
-    class SiLU(MixModule, nn.SiLU):
+    class SiLU(Component, nn.SiLU):
         __init__ = functools.partial(nn.SiLU.__init__)
 
 
 with suppress(AttributeError):
 
-    class Sigmoid(MixModule, nn.Sigmoid):
+    class Sigmoid(Component, nn.Sigmoid):
         __init__ = functools.partial(nn.Sigmoid.__init__)
 
 
 with suppress(AttributeError):
 
-    class SmoothL1Loss(MixModule, nn.SmoothL1Loss):
+    class SmoothL1Loss(Component, nn.SmoothL1Loss):
         __init__ = functools.partial(nn.SmoothL1Loss.__init__)
 
 
 with suppress(AttributeError):
 
-    class SoftMarginLoss(MixModule, nn.SoftMarginLoss):
+    class SoftMarginLoss(Component, nn.SoftMarginLoss):
         __init__ = functools.partial(nn.SoftMarginLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class Softmax(MixModule, nn.Softmax):
+    class Softmax(Component, nn.Softmax):
         __init__ = functools.partial(nn.Softmax.__init__)
 
 
 with suppress(AttributeError):
 
-    class Softmax2d(MixModule, nn.Softmax2d):
+    class Softmax2d(Component, nn.Softmax2d):
         __init__ = functools.partial(nn.Softmax2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class Softmin(MixModule, nn.Softmin):
+    class Softmin(Component, nn.Softmin):
         __init__ = functools.partial(nn.Softmin.__init__)
 
 
 with suppress(AttributeError):
 
-    class Softplus(MixModule, nn.Softplus):
+    class Softplus(Component, nn.Softplus):
         __init__ = functools.partial(nn.Softplus.__init__)
 
 
 with suppress(AttributeError):
 
-    class Softshrink(MixModule, nn.Softshrink):
+    class Softshrink(Component, nn.Softshrink):
         __init__ = functools.partial(nn.Softshrink.__init__)
 
 
 with suppress(AttributeError):
 
-    class Softsign(MixModule, nn.Softsign):
+    class Softsign(Component, nn.Softsign):
         __init__ = functools.partial(nn.Softsign.__init__)
 
 
 with suppress(AttributeError):
 
-    class SyncBatchNorm(MixModule, nn.SyncBatchNorm):
+    class SyncBatchNorm(Component, nn.SyncBatchNorm):
         __init__ = functools.partial(nn.SyncBatchNorm.__init__)
 
 
 with suppress(AttributeError):
 
-    class Tanh(MixModule, nn.Tanh):
+    class Tanh(Component, nn.Tanh):
         __init__ = functools.partial(nn.Tanh.__init__)
 
 
 with suppress(AttributeError):
 
-    class Tanhshrink(MixModule, nn.Tanhshrink):
+    class Tanhshrink(Component, nn.Tanhshrink):
         __init__ = functools.partial(nn.Tanhshrink.__init__)
 
 
 with suppress(AttributeError):
 
-    class Threshold(MixModule, nn.Threshold):
+    class Threshold(Component, nn.Threshold):
         __init__ = functools.partial(nn.Threshold.__init__)
 
 
 with suppress(AttributeError):
 
-    class Transformer(MixModule, nn.Transformer):
+    class Transformer(Component, nn.Transformer):
         __init__ = functools.partial(nn.Transformer.__init__)
 
 
 with suppress(AttributeError):
 
-    class TransformerDecoder(MixModule, nn.TransformerDecoder):
+    class TransformerDecoder(Component, nn.TransformerDecoder):
         __init__ = functools.partial(nn.TransformerDecoder.__init__)
 
 
 with suppress(AttributeError):
 
-    class TransformerDecoderLayer(MixModule, nn.TransformerDecoderLayer):
+    class TransformerDecoderLayer(Component, nn.TransformerDecoderLayer):
         __init__ = functools.partial(nn.TransformerDecoderLayer.__init__)
 
 
 with suppress(AttributeError):
 
-    class TransformerEncoder(MixModule, nn.TransformerEncoder):
+    class TransformerEncoder(Component, nn.TransformerEncoder):
         __init__ = functools.partial(nn.TransformerEncoder.__init__)
 
 
 with suppress(AttributeError):
 
-    class TransformerEncoderLayer(MixModule, nn.TransformerEncoderLayer):
+    class TransformerEncoderLayer(Component, nn.TransformerEncoderLayer):
         __init__ = functools.partial(nn.TransformerEncoderLayer.__init__)
 
 
 with suppress(AttributeError):
 
-    class TripletMarginLoss(MixModule, nn.TripletMarginLoss):
+    class TripletMarginLoss(Component, nn.TripletMarginLoss):
         __init__ = functools.partial(nn.TripletMarginLoss.__init__)
 
 
 with suppress(AttributeError):
 
     class TripletMarginWithDistanceLoss(
-        MixModule, nn.TripletMarginWithDistanceLoss
+        Component, nn.TripletMarginWithDistanceLoss
     ):
         __init__ = functools.partial(nn.TripletMarginWithDistanceLoss.__init__)
 
 
 with suppress(AttributeError):
 
-    class Unflatten(MixModule, nn.Unflatten):
+    class Unflatten(Component, nn.Unflatten):
         __init__ = functools.partial(nn.Unflatten.__init__)
 
 
 with suppress(AttributeError):
 
-    class Unfold(MixModule, nn.Unfold):
+    class Unfold(Component, nn.Unfold):
         __init__ = functools.partial(nn.Unfold.__init__)
 
 
 with suppress(AttributeError):
 
-    class Upsample(MixModule, nn.Upsample):
+    class Upsample(Component, nn.Upsample):
         __init__ = functools.partial(nn.Upsample.__init__)
 
 
 with suppress(AttributeError):
 
-    class UpsamplingBilinear2d(MixModule, nn.UpsamplingBilinear2d):
+    class UpsamplingBilinear2d(Component, nn.UpsamplingBilinear2d):
         __init__ = functools.partial(nn.UpsamplingBilinear2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class UpsamplingNearest2d(MixModule, nn.UpsamplingNearest2d):
+    class UpsamplingNearest2d(Component, nn.UpsamplingNearest2d):
         __init__ = functools.partial(nn.UpsamplingNearest2d.__init__)
 
 
 with suppress(AttributeError):
 
-    class ZeroPad2d(MixModule, nn.ZeroPad2d):
+    class ZeroPad2d(Component, nn.ZeroPad2d):
         __init__ = functools.partial(nn.ZeroPad2d.__init__)

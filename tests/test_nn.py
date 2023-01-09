@@ -1,10 +1,10 @@
 import pytest
 from hydra_zen.typing import Partial
 
-from torchmix import MixModule, nn
+from torchmix import Component, nn
 
 
-class CustomModule1(MixModule):
+class CustomModule1(Component):
     def __init__(self, dim: int = 100):
         self.stem = nn.Sequential(
             *[
@@ -21,8 +21,8 @@ class CustomModule1(MixModule):
         return self.stem(x)
 
 
-class CustomModule2(MixModule):
-    def __init__(self, partial_module: Partial[MixModule]):
+class CustomModule2(Component):
+    def __init__(self, partial_module: Partial[Component]):
         self.module = partial_module()
 
     def forward(self, x):
@@ -57,5 +57,5 @@ testdata = [
 
 
 @pytest.mark.parametrize("module,num_parameters", testdata)
-def test_export(module: MixModule, num_parameters: int):
+def test_export(module: Component, num_parameters: int):
     assert sum(p.numel() for p in module.parameters()) == num_parameters

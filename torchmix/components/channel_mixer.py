@@ -3,10 +3,10 @@ from jaxtyping import Float
 from torch import Tensor
 
 from torchmix import nn
-from torchmix.core._module import MixModule
+from torchmix.core._module import Component
 
 
-class ChannelMixer(MixModule):
+class ChannelMixer(Component):
     """Channel mixer that performs token-wise transformations on
     an input tensor.
 
@@ -30,7 +30,7 @@ class ChannelMixer(MixModule):
 
     def __init__(
         self,
-        act_layer: Partial[MixModule],
+        act_layer: Partial[Component],
         dim: int = 768,
         expansion_factor: float = 4,
     ):

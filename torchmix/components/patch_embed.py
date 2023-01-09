@@ -1,11 +1,11 @@
 from jaxtyping import Float
 from torch import Tensor, nn
 
-from torchmix.core._module import MixModule
+from torchmix.core._module import Component
 from torchmix.third_party.einops import Rearrange
 
 
-class PatchEmbed(MixModule):
+class PatchEmbed(Component):
     """A layer that convert image into patch embeddings.
 
     Examples:
