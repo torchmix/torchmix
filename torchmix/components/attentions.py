@@ -47,11 +47,11 @@ class SelfAttention(Component):
         self._proj = nn.Linear(self.inner_dim, dim)
 
     def to_qkv(
-        self, x: Float[Tensor, "... d"]
+        self, x: Float[Tensor, "... n d"]
     ) -> Tuple[
-        Float[Tensor, "... d"],
-        Float[Tensor, "... d"],
-        Float[Tensor, "... d"],
+        Float[Tensor, "... n d"],
+        Float[Tensor, "... n d"],
+        Float[Tensor, "... n d"],
     ]:
         query, key, value = unpack(
             self._to_qkv(x),
@@ -129,13 +129,13 @@ class WindowAttention(SelfAttention):
 
     def split_qkv(
         self,
-        query: Float[Tensor, "b n d_in"],
-        key: Float[Tensor, "b n d_in"],
-        value: Float[Tensor, "b n d_in"],
+        query: Float[Tensor, "... n d_in"],
+        key: Float[Tensor, "... n d_in"],
+        value: Float[Tensor, "... n d_in"],
     ) -> Tuple[
-        Float[Tensor, "b h w head window d_out"],
-        Float[Tensor, "b h w head window d_out"],
-        Float[Tensor, "b h w head window d_out"],
+        Float[Tensor, "... h w head window d_out"],
+        Float[Tensor, "... h w head window d_out"],
+        Float[Tensor, "... h w head window d_out"],
     ]:
         _batch_size, _seq_length, _inner_dim = query.shape
         patch_size = round(math.sqrt(_seq_length))

@@ -7,8 +7,7 @@ from torchmix.core._module import Component
 
 
 class ChannelMixer(Component):
-    """Channel mixer that performs token-wise transformations on
-    an input tensor.
+    """Channel mixer that performs token-wise transformations on an input tensor.
 
     This layer applies two EinMix layers in sequence to perform token-wise
     transformations on the input tensor. The first EinMix layer expands

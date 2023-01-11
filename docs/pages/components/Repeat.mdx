@@ -3,7 +3,7 @@ import { Tab, Tabs } from "nextra-theme-docs"
 
 # Repeat
 
-Repeat given module.
+Repeat the given module `depth` times.
 
 ```python copy
 Repeat(
@@ -16,7 +16,18 @@ Repeat(
 )
 ```
 
-## Signatures
+`Repeat` creates multiple copies of the `children` and
+applies them sequentially. Every copy of `children` will
+be re-instantiated based on its configuration. The input
+and output shapes of the `children` must be the same in
+order to be applied in this way.
+
+## Parameters
+
+- `children`: The module to be repeated.
+- `depth`: The number of copies of `children` to create.
+
+## Forward
 ```rust
-(x: torch.Tensor) -> torch.Tensor
+(input: inspect._empty) -> inspect._empty
 ```

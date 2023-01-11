@@ -5,7 +5,7 @@ import { useConfig } from 'nextra-theme-docs'
 import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
-  logo: <span><strong>TORCHMIX</strong></span>,
+  logo: <span><strong>TORCHMIX 🧩</strong></span>,
   project: {
     link: 'https://github.com/torchmix/torchmix',
   },
@@ -35,7 +35,13 @@ const config: DocsThemeConfig = {
       <meta property="og:description" content={frontMatter.description || 'The pytorch component library'} />
     </>
   },
-  primaryHue: 178
+  primaryHue: 178,
+  gitTimestamp: ({timestamp}) => {
+    const month = timestamp.toLocaleString('default', { month: 'long' })
+    const date = timestamp.getDate()
+    const year = timestamp.getFullYear()
+    return <>Last updated on {month} {date}, {year}</>
+  }
 }
 
 export default config

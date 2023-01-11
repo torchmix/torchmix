@@ -12,7 +12,7 @@ class PatchMerging(Component):
     """A patch merging from Swin-Transformer
 
     Examples:
-        model = PatchMerging(dim=96)
+        PatchMerging(dim=96)
     """
 
     def __init__(self, dim: int = 96):

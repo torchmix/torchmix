@@ -67,19 +67,29 @@ for name, obj in inspect.getmembers(torchmix.components):
                 _w(doc.examples[0].description)
                 _w("```")
                 _w()
+                _w(doc.long_description)
+                _w()
 
                 if doc.params:
                     _w("## Parameters")
                     _w()
                     for p in doc.params:
-                        _w(f"- `{p.arg_name} = {p.default}`: {p.description}")
+                        if p.default:
+                            _w(
+                                f"- `{p.arg_name} = {p.default}`: {p.description}"
+                            )
+                        else:
+                            _w(f"- `{p.arg_name}`: {p.description}")
+
                     _w()
 
-                _w("## Signatures")
-                _w("```rust")  # Hack for syntax highlighting
-                _w(f"{signature(obj.forward)}")
-                _w("```")
-                _w()
+                if hasattr(obj, "forward"):
+                    _w("## Forward")
+                    _w("```rust")  # Hack for syntax highlighting
+                    _w(f"{signature(obj.forward)}")
+                    _w("```")
+                    _w()
+
             names.append((name, obj))
 
     except:

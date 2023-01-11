@@ -6,10 +6,12 @@ import { Tab, Tabs } from "nextra-theme-docs"
 A stochastic depth layer that wraps a given `Component`.
 
 ```python copy
-StochasticDepth(children=nn.Linear(128, 256), p=0.2)
+StochasticDepth(nn.Linear(128, 256), p=0.2)
 ```
 
-## Signatures
+
+
+## Forward
 ```rust
 (x: jaxtyping.Float[Tensor, ' *shape']) -> jaxtyping.Float[Tensor, ' *shape']
 ```

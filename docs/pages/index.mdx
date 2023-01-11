@@ -2,21 +2,31 @@ import { Callout } from "nextra-theme-docs";
 
 # Welcome to TorchMix!
 
-**TorchMix** is a collection of PyTorch modules that aims to simplify
-your model development process with pre-made PyTorch components. We've
-included a range of operations, from basic ones like
+**TorchMix** is a collection of pre-built and ready to use PyTorch components that
+simplifies the model building process.
+We've included a range of operations, from basic ones like
 [`Repeat`](/components/Repeat) and [`Add`](/components/Add),
 to more complex ones like [`WindowAttention`](/components/WindowAttention)
 in the [Swin-Transformer](https://arxiv.org/abs/2103.14030).
 
-We've designed `torchmix` to be as user-friendly as possible. Each implementation
+One of the key priorities of **TorchMix** is reproducibility.
+All components offered by us, as well as those you create, will have the ability
+to self-document and can always be serialized into their [`hydra`](https://hydra.cc) compatible configurations.
+See [Hydra Integration](/hydra) section for more details.
+
+We've designed **TorchMix** to be as user-friendly as possible. Each implementation
 is kept minimal and easy to understand, using [`einops`](https://github.com/arogozhnikov/einops) to avoid
 confusing tensor manipulation (such as `permute`, `transpose`, and `reshape`) and
 [`jaxtyping`](https://github.com/google/jaxtyping) to clearly document the shapes of the input and
-output tensors. This means that you can use `torchmix` with confidence, knowing
+output tensors. This means that you can use **TorchMix** with confidence, knowing
 that the components you're working with are clean and reliable.
 
 <Callout type="info">
   If you sense strong reusability with your modules, please consider submitting
   a pull request!
+</Callout>
+
+<Callout type="warning">
+  `torchmix` is a prototype that is currently in development. The API may change
+  at any time.
 </Callout>

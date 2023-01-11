@@ -11,7 +11,7 @@ class Dropout(Component):
     """A dropout layer that wraps a given `Component`.
 
     Examples:
-        Dropout(children=nn.Linear(128, 256), p=0.2)
+        Dropout(nn.Linear(128, 256), p=0.2)
     """
 
     def __init__(self, children: Component, p: float = 0.1):
@@ -33,7 +33,7 @@ class StochasticDepth(Component):
     """A stochastic depth layer that wraps a given `Component`.
 
     Examples:
-        StochasticDepth(children=nn.Linear(128, 256), p=0.2)
+        StochasticDepth(nn.Linear(128, 256), p=0.2)
     """
 
     def __init__(self, children: Component, p: float = 0.1):
@@ -53,10 +53,10 @@ class StochasticDepth(Component):
 class DropPath(Component):
     """A droppath layer that wraps a given `Component`.
 
-    Can be understood as [stochastic depth](/components/stochasticdepth) per sample.
+    Can be understood as [stochastic depth](/components/StochasticDepth) per sample.
 
     Examples:
-        DropPath(children=nn.Linear(128, 256), p=0.2)
+        DropPath(nn.Linear(128, 256), p=0.2)
     """
 
     def __init__(self, children: Component, p: float = 0.1):

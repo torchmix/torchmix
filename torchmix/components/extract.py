@@ -13,11 +13,6 @@ class Extract(Component):
     Args:
         index (int): Index of the token to be extracted from the input tensor.
 
-    Returns:
-        Float[Tensor, "... d"]: Output tensor with the same leading dimensions
-            as the input tensor, but with a single token representing the
-            extracted token.
-
     Examples:
         Extract(index=0)
     """

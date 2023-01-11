@@ -9,11 +9,14 @@ Extract layer that selects a single token from an input tensor.
 Extract(index=0)
 ```
 
+This layer selects a single token from the input tensor and returns it
+as the output tensor. The token to be extracted is specified by its index.
+
 ## Parameters
 
-- `index = None`: Index of the token to be extracted from the input tensor.
+- `index`: Index of the token to be extracted from the input tensor.
 
-## Signatures
+## Forward
 ```rust
 (x: jaxtyping.Float[Tensor, '... n d']) -> jaxtyping.Float[Tensor, '... d']
 ```

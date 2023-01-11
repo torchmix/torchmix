@@ -6,10 +6,12 @@ import { Tab, Tabs } from "nextra-theme-docs"
 A patch merging from Swin-Transformer
 
 ```python copy
-model = PatchMerging(dim=96)
+PatchMerging(dim=96)
 ```
 
-## Signatures
+
+
+## Forward
 ```rust
 (x: jaxtyping.Float[Tensor, '... n d']) -> jaxtyping.Float[Tensor, '... n/4 d*2']
 ```

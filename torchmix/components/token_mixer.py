@@ -18,7 +18,6 @@ class TokenMixer(Component):
         TokenMixer(
             act_layer=nn.GELU.partial(), seq_length=196, expansion_factor=0.5, p=0.1
         )
-
     """
 
     def __init__(

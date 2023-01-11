@@ -6,10 +6,12 @@ import { Tab, Tabs } from "nextra-theme-docs"
 A droppath layer that wraps a given `Component`.
 
 ```python copy
-DropPath(children=nn.Linear(128, 256), p=0.2)
+DropPath(nn.Linear(128, 256), p=0.2)
 ```
 
-## Signatures
+Can be understood as [stochastic depth](/components/StochasticDepth) per sample.
+
+## Forward
 ```rust
 (x: jaxtyping.Float[Tensor, ' *shape']) -> jaxtyping.Float[Tensor, ' *shape']
 ```

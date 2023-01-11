@@ -11,7 +11,6 @@ class PositionEmbed(Component):
 
     Examples:
         PositionEmbed(seq_length=196, dim=768)
-
     """
 
     def __init__(

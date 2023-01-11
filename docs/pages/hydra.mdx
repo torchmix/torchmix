@@ -1,21 +1,25 @@
+import { Callout } from "nextra-theme-docs";
+
 # Hydra Integration
 
-Consider the following example of writing configurations for `YourModel`:
+**TorchMix** provides the `Component` class, which a drop-in replacement for
+`nn.Module` with enhanced configuration support.
+Consider the following example:
 
 ```python
 from torchmix import Component
 
-class YourModel(Component):
+
+class Model(Component):
     def __init__(self, a: int, b: str, c: list[str]):
         pass
 ```
 
-Without `torchmix`, you would have to manually write and register the desired configurations, like this:
+Without `Component`, you would have to manually write
+configurations, like this:
 
 ```python
-from hydra.core.config_store import ConfigStore
-
-cs = ConfigStore.instance()
+from dataclasses import dataclass
 
 @dataclass
 class ModelA:
@@ -34,27 +38,115 @@ class ModelC:
     a: int = 3
     b: str = "z"
     c: list[str] = ["foo", "bar", "baz"]
-
-
-cs.store(group="model", name="a", node=ModelA)
-cs.store(group="model", name="b", node=ModelB)
-cs.store(group="model", name="c", node=ModelC)
 ```
 
-With `torchmix`, you can simply **instantiate and register** your models like this:
+These dataclasses as configurations is so-called **Structured Configs**.
+They enable both runtime and static type checking for more robust configuration management.
+See the [hydra docs](https://hydra.cc/docs/tutorials/structured_config/intro/) or
+[omegaconf docs](https://omegaconf.readthedocs.io/en/latest/structured_config.html) for more detail.
+
+However, Writing these configurations manually can be time-consuming and often result in
+redundant code. With `Component`, you can just simply **instantiate** your desired state -
+and the configs will be just there for you:
 
 ```python
-YourModel(a=1, b="x", c=["foo"]).store(group="model", name="a")
-YourModel(a=2, b="y", c=["foo", "bar"]).store(group="model", name="b")
-YourModel(a=3, b="z", c=["foo", "bar", "baz"]).store(group="model", name="c")
+Model(a=1, b="x", c=["foo"]).config
+Model(a=2, b="y", c=["foo", "bar"]).config
+Model(a=3, b="z", c=["foo", "bar", "baz"]).config
 ```
 
-## Nested Modules
+You can then directly register this structured configs into `hydra`'s `ConfigStore`
+via the `store` method.
 
-In deep learning, we always write nested modules.
-However, writing configurations for these nested modules can be even more confusing and time-consuming.
-Fortunately, `torchmix` makes it easy to handle this process.
-The same pattern applies as before: simply **instantiate and register!**
+```python
+Model(a=1, b="x", c=["foo"]).store(group="model", name="a")
+Model(a=2, b="y", c=["foo", "bar"]).store(group="model", name="b")
+Model(a=3, b="z", c=["foo", "bar", "baz"]).store(group="model", name="c")
+```
+
+## Nested Components
+
+In deep learning, models are always composed of multiple nested sub-models.
+However, writing configurations for these nested modules can be
+even more confusing and time-consuming. Let's say we have these models
+
+```python
+from torchmix import Component
+
+
+class Model(Component):
+    def __init__(self, a: Component, b: str, c: str):
+        pass
+
+class SubModel(Component):
+    def __init__(self, i: Component, j: float, k: int):
+        pass
+
+class SubSubModel(Component):
+    def __init__(self, p: int, q: int):
+        pass
+```
+
+and would use these models like this:
+
+```python
+model = Model(
+    SubModel(
+        SubSubModel(1, 2),
+        3e-4,
+        32,
+    ),
+    "adam",
+    "imagenet",
+)
+```
+
+Let me write the configurations for this setting:
+
+```python
+@dataclass
+class SubSubModelConfig:
+    p: int = 1
+    q: int = 2
+
+@dataclass
+class SubModelConfig:
+    i: SubSubModelConfig = SubSubModelConfig()
+    j: float = 3e-4
+    k: int = 32
+
+@dataclass
+class ModelConfig:
+    a: SubModelConfig = SubModelConfig()
+    b: float = 3e-4
+    c: int = 32
+```
+
+This does not seem good, right? `Component` come to the rescue.
+The truth is, it was there all along!
+
+```python
+model.config  # 🤯
+```
+
+This would result in the following configuration:
+
+```yaml
+_target_: your_library.Model
+a:
+  _target_: your_library.SubModel
+  i:
+    _target_: your_library.SubSubModel
+    p: 1
+    q: 2
+  j: 1.2
+  k: -2.9
+b: adam
+c: imagenet
+```
+
+So, `Component` allows you to confidently write arbitrarily nested modules
+and easily integrate them into the `hydra` ecosystem, as demonstrated below:
 
 ```python
 nn.Sequential(
@@ -90,5 +182,17 @@ nn.Sequential(
 ).store(group="model", name="vit")
 ```
 
-As you can see, `torchmix` eliminates the need to write configuration-specific boilerplate code,
-ensures seamless `hydra`-tion of your favorite PyTorch modules.
+All components provided by **TorchMix** are subclasses of the `Component` class.
+We also offer `Component` version of PyTorch's `nn` module.
+Just import `nn` from **TorchMix**!
+
+```python
+from torchmix import nn
+```
+
+<Callout type="info">
+  This feature is built on top of
+  [`hydra-zen`](https://github.com/mit-ll-responsible-ai/hydra-zen). Check
+  [their docs](https://mit-ll-responsible-ai.github.io/hydra-zen/) for more
+  information!
+</Callout>

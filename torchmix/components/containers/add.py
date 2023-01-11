@@ -1,13 +1,17 @@
-from typing import Iterator
-
 from torch import Tensor
 
-from torchmix.core._builds import BuildMode
-from torchmix.core._module import Component
+from torchmix.nn import Sequential
 
 
-class Add(Component):
-    """A container that progressively adds the forward results of its children.
+class Add(Sequential):
+    """Cumulatively add the forward results of the given modules in parallel.
+
+    `Add` inherits from the `Sequential` class and applies a list of modules
+    in parallel, adding their forward results cumulatively. The output shapes
+    of the given modules must be the same or broadcastable in order to be added.
+
+    Args:
+        *args: `Component` instances whose forward results will be added cumulatively.
 
     Examples:
         Add(
@@ -16,18 +20,6 @@ class Add(Component):
             nn.Linear(100, 200)
         )
     """
-
-    build_mode = BuildMode.WITH_ARGS
-
-    def __init__(self, *children: Component):
-        for idx, module in enumerate(children):
-            self.add_module(str(idx), module)
-
-    def __len__(self) -> int:
-        return len(self._modules)
-
-    def __iter__(self) -> Iterator[Component]:
-        return iter(self._modules.values())  # type: ignore
 
     def forward(self, x: Tensor) -> Tensor:
         _x: Tensor

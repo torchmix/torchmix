@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "torchmix"
-version = "0.1.0rc3"
+version = "0.1.0rc5"
 description = "A collection of useful PyTorch modules"
 authors = ["junhsss <junhsssr@gmail.com>"]
 readme = "README.md"
