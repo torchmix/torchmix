@@ -16,7 +16,7 @@ from contextlib import suppress
 from torch import nn
 
 from torchmix.core._builds import BuildMode
-from torchmix.core._module import Component
+from torchmix.core._component import Component
 
 Module = nn.Module
 Parameter = nn.Parameter

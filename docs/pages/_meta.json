@@ -1,6 +1,6 @@
 {
     "index": "Introduction",
-    "hydra": "Hydra Integration",
-    "config": "Global Configurations",
-    "no_parameters": "Config-only Mode"
+    "component": "Component Class",
+    "global-configs": "Global Configurations",
+    "no-parameters": "Config-only Mode"
 }

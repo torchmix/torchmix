@@ -3,7 +3,7 @@ from jaxtyping import Float
 from torch import Tensor
 
 from torchmix import nn
-from torchmix.core._module import Component
+from torchmix.core._component import Component
 
 
 class Token(Component):

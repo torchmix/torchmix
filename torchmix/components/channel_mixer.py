@@ -3,7 +3,7 @@ from jaxtyping import Float
 from torch import Tensor
 
 from torchmix import nn
-from torchmix.core._module import Component
+from torchmix.core._component import Component
 
 
 class ChannelMixer(Component):
@@ -33,24 +33,6 @@ class ChannelMixer(Component):
         dim: int = 768,
         expansion_factor: float = 4,
     ):
-        # einops.EinopsError: Ellipsis is not supported in EinMix (right now)
-        # self.block = nn.Sequential(
-        #     EinMix(
-        #         "... d_in -> ... d_out",
-        #         weight_shape="d_in d_out",
-        #         bias_shape="d_out",
-        #         d_in=dim,
-        #         d_out=int(dim * expansion_factor),
-        #     ),
-        #     act_layer(),
-        #     EinMix(
-        #         "... d_out -> ... d_in",
-        #         weight_shape="d_out d_in",
-        #         bias_shape="d_in",
-        #         d_in=dim,
-        #         d_out=int(dim * expansion_factor),
-        #     ),
-        # )
         self.block = nn.Sequential(
             nn.Linear(dim, int(dim * expansion_factor)),
             act_layer(),

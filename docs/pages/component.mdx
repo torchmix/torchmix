@@ -1,8 +1,8 @@
 import { Callout } from "nextra-theme-docs";
 
-# Hydra Integration
+# Component Class
 
-**TorchMix** provides the `Component` class, which a drop-in replacement for
+**TorchMix** provides the `Component` class, which is a drop-in replacement for
 `nn.Module` with enhanced configuration support.
 Consider the following example:
 
@@ -40,7 +40,7 @@ class ModelC:
     c: list[str] = ["foo", "bar", "baz"]
 ```
 
-These dataclasses as configurations is so-called **Structured Configs**.
+These dataclasses as configurations are so-called **Structured Configs**.
 They enable both runtime and static type checking for more robust configuration management.
 See the [hydra docs](https://hydra.cc/docs/tutorials/structured_config/intro/) or
 [omegaconf docs](https://omegaconf.readthedocs.io/en/latest/structured_config.html) for more detail.
@@ -55,7 +55,7 @@ Model(a=2, b="y", c=["foo", "bar"]).config
 Model(a=3, b="z", c=["foo", "bar", "baz"]).config
 ```
 
-You can then directly register this structured configs into `hydra`'s `ConfigStore`
+You can then directly register these structured configs into `hydra`'s `ConfigStore`
 via the `store` method.
 
 ```python
@@ -66,9 +66,9 @@ Model(a=3, b="z", c=["foo", "bar", "baz"]).store(group="model", name="c")
 
 ## Nested Components
 
-In deep learning, models are always composed of multiple nested sub-models.
-However, writing configurations for these nested modules can be
-even more confusing and time-consuming. Let's say we have these models
+In deep learning, models are always composed of multiple sub-modules.
+However, writing configurations for those nested modules can be
+even more confusing and repetitive. Let's say we have these models:
 
 ```python
 from torchmix import Component
@@ -101,29 +101,32 @@ model = Model(
 )
 ```
 
-Let me write the configurations for this setting:
+Let me write the `hydra` compatible configurations for this setting:
 
 ```python
 @dataclass
 class SubSubModelConfig:
+    _target_: str = "your_library.SubSubModel"
     p: int = 1
     q: int = 2
 
 @dataclass
 class SubModelConfig:
+    _target_: str = "your_library.SubModel"
     i: SubSubModelConfig = SubSubModelConfig()
     j: float = 3e-4
     k: int = 32
 
 @dataclass
 class ModelConfig:
+    _target_: str = "your_library.Model"
     a: SubModelConfig = SubModelConfig()
     b: float = 3e-4
     c: int = 32
 ```
 
 This does not seem good, right? `Component` come to the rescue.
-The truth is, it was there all along!
+The truth is, it was already there!
 
 ```python
 model.config  # 🤯
@@ -139,13 +142,13 @@ a:
     _target_: your_library.SubSubModel
     p: 1
     q: 2
-  j: 1.2
-  k: -2.9
+  j: 0.0003
+  k: 32
 b: adam
 c: imagenet
 ```
 
-So, `Component` allows you to confidently write arbitrarily nested modules
+`Component` allows you to confidently write arbitrarily nested modules
 and easily integrate them into the `hydra` ecosystem, as demonstrated below:
 
 ```python

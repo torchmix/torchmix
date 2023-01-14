@@ -1,0 +1,31 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# RelativePositionBias
+
+Computes the Relative Position Bias for the [Swin Transformer](https://arxiv.org/abs/2103.14030)'s attention mechanism.
+
+```python copy
+>>> m = RelativePositionBias(window_size=8, num_heads=8)
+>>> m().shape
+torch.Size([8, 64, 64])
+```
+
+The relative position bias is intended to be added to the attention before
+the softmax is applied. It helps to improve the attention mechanism by
+incorporating the relative positions of the elements in the input.
+
+Note that the number of parameters is `O(window_size)`, not `O(window_size**2)`.
+
+## Parameters
+
+- `window_size`: The window size for which attention is computed.
+- `num_heads`: Number of heads for the multi-head attention mechanism.
+
+## Forward
+```rust
+() -> jaxtyping.Float[Tensor, 'head q k']
+```
+
+### Returns
+Tensor of shape `(num_heads, window_size ** 2, window_size ** 2)` containing the relative position bias for each head and each query-key pair.

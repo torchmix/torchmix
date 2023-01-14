@@ -1,7 +1,7 @@
 from torch import Tensor
 
 from torchmix import nn
-from torchmix.core._module import Component
+from torchmix.core._component import Component
 
 
 class PostNorm(Component):
@@ -19,11 +19,11 @@ class PostNorm(Component):
     """
 
     def __init__(self, children: Component, dim: int = 1024):
-        self.children = children
+        self._children = children
         self.norm = nn.LayerNorm(dim)
 
     def forward(self, x: Tensor) -> Tensor:
-        return self.norm(x + self.children(x))
+        return self.norm(x + self._children(x))
 
 
 class PreNorm(Component):
@@ -41,8 +41,8 @@ class PreNorm(Component):
     """
 
     def __init__(self, children: Component, dim: int = 1024):
-        self.children = children
+        self._children = children
         self.norm = nn.LayerNorm(dim)
 
     def forward(self, x: Tensor) -> Tensor:
-        return x + self.children(self.norm(x))
+        return x + self._children(self.norm(x))

@@ -11,6 +11,7 @@ from .extract import Extract
 from .patch_embed import PatchEmbed
 from .patch_merging import PatchMerging
 from .position_embed import PositionEmbed
+from .relative_position_bias import RelativePositionBias
 from .token_mixer import TokenMixer
 
 __all__ = [
@@ -26,6 +27,7 @@ __all__ = [
     "PatchEmbed",
     "PatchMerging",
     "PositionEmbed",
+    "RelativePositionBias",
     "ChannelMixer",
     "TokenMixer",
     "SelfAttention",

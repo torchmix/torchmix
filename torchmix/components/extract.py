@@ -1,7 +1,9 @@
+from typing import Optional, Union
+
 from jaxtyping import Float
 from torch import Tensor
 
-from torchmix.core._module import Component
+from torchmix.core._component import Component
 
 
 class Extract(Component):
@@ -17,8 +19,10 @@ class Extract(Component):
         Extract(index=0)
     """
 
-    def __init__(self, index: int):
-        self.index = index
+    def __init__(self, start: int, stop: Optional[int] = None):
+        self.index = slice(start, stop) if stop else start
 
-    def forward(self, x: Float[Tensor, "... n d"]) -> Float[Tensor, "... d"]:
+    def forward(
+        self, x: Float[Tensor, "... n d"]
+    ) -> Union[Float[Tensor, "... d"], Float[Tensor, "... n_out d"]]:
         return x[..., self.index, :]

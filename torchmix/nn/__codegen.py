@@ -52,7 +52,7 @@ with open("torchmix/nn/__init__.py", "w") as f:
     write("from torch import nn")
     write()
     write("from torchmix.core._builds import BuildMode")
-    write("from torchmix.core._module import Component")
+    write("from torchmix.core._component import Component")
     write()
     write()
     write("Module = nn.Module")

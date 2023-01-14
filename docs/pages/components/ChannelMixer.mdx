@@ -28,3 +28,8 @@ the number of channels in the first EinMix layer. Defaults to 4.
 ```rust
 (x: jaxtyping.Float[Tensor, '... d']) -> jaxtyping.Float[Tensor, '... d']
 ```
+
+### Returns
+Output tensor with the same dimensions
+as the input tensor, but with the channels transformed by
+the channel mixer.

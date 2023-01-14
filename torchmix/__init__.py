@@ -10,14 +10,15 @@ from torchmix.components import (
     PositionEmbed,
     PostNorm,
     PreNorm,
+    RelativePositionBias,
     Repeat,
     SelfAttention,
     Token,
     TokenMixer,
     WindowAttention,
 )
+from torchmix.core._component import Component
 from torchmix.core._context import config, no_parameters
-from torchmix.core._module import Component
 
 __all__ = [
     "Component",
@@ -35,6 +36,7 @@ __all__ = [
     "PositionEmbed",
     "ChannelMixer",
     "TokenMixer",
+    "RelativePositionBias",
     "SelfAttention",
     "WindowAttention",
     "Token",

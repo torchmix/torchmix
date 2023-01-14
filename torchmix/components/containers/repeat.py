@@ -1,5 +1,5 @@
 from torchmix.core._builds import BuildMode
-from torchmix.core._module import Component
+from torchmix.core._component import Component
 from torchmix.nn import Sequential
 
 

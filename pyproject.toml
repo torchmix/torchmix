@@ -48,7 +48,7 @@ ignore = [107]
 
 [tool.ruff]
 line-length = 88
-ignore = ["F722"]
+ignore = ["F722", "E501"]
 exclude = ["docs/*"]
 
 [tool.pytest.ini_options]

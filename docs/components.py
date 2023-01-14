@@ -89,10 +89,14 @@ for name, obj in inspect.getmembers(torchmix.components):
                     _w(f"{signature(obj.forward)}")
                     _w("```")
                     _w()
+                    forward_doc = parse(obj.forward.__doc__)
+                    if forward_doc.returns:
+                        _w("### Returns")
+                        _w(forward_doc.returns.description)
 
             names.append((name, obj))
 
-    except:
+    except Exception as e:
         pass
 
 with open(components / f"_meta.json", "w") as f:

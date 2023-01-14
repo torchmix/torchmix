@@ -1,13 +1,12 @@
 from jaxtyping import Float
 from torch import Tensor
 
-from torchmix.core._module import Component
+from torchmix.core._component import Component
 from torchmix.third_party.einops import Reduce
 
 
 class AvgPool(Component):
-    """Average pooling layer that averages over the penultimate dimension
-    of an input tensor.
+    """Average pooling layer that averages over the penultimate dimension of an input tensor.
 
     Examples:
         AvgPool()

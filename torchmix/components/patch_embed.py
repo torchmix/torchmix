@@ -1,7 +1,7 @@
 from jaxtyping import Float
 from torch import Tensor, nn
 
-from torchmix.core._module import Component
+from torchmix.core._component import Component
 from torchmix.third_party.einops import Rearrange
 
 

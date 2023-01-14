@@ -4,7 +4,7 @@ from jaxtyping import Float
 from torch import Tensor
 
 from torchmix import nn
-from torchmix.core._module import Component
+from torchmix.core._component import Component
 from torchmix.third_party.einops import Rearrange
 
 
@@ -15,7 +15,11 @@ class PatchMerging(Component):
         PatchMerging(dim=96)
     """
 
-    def __init__(self, dim: int = 96):
+    def __init__(
+        self,
+        dim: int = 96,
+        expansion_factor: float = 2.0,
+    ):
         self.merge = Rearrange.partial(
             "... (h ph w pw) d -> ... (h w) (ph pw d)",
             ph=2,
@@ -26,20 +30,12 @@ class PatchMerging(Component):
 
         self.proj = nn.Sequential(
             nn.LayerNorm(dim * 4),
-            # einops.EinopsError: Ellipsis is not supported in EinMix (right now)
-            # EinMix(
-            #     "... d_in -> ... d_out",
-            #     weight_shape="d_in d_out",
-            #     bias_shape="d_out",
-            #     d_in=dim * 4,
-            #     d_out=dim * 2,
-            # ),
-            nn.Linear(dim * 4, dim * 2),
+            nn.Linear(dim * 4, int(dim * expansion_factor)),
         )
 
     def forward(
-        self, x: Float[Tensor, "... n d"]
-    ) -> Float[Tensor, "... n/4 d*2"]:
+        self, x: Float[Tensor, "... n d_in"]
+    ) -> Float[Tensor, "... n/4 d_out"]:
         _batch_size, _seq_length, _dim = x.shape
 
         x = self.merge(

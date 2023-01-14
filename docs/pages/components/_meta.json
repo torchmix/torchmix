@@ -11,6 +11,7 @@
     "PositionEmbed": "PositionEmbed",
     "PostNorm": "PostNorm",
     "PreNorm": "PreNorm",
+    "RelativePositionBias": "RelativePositionBias",
     "Repeat": "Repeat",
     "SelfAttention": "SelfAttention",
     "StochasticDepth": "StochasticDepth",
