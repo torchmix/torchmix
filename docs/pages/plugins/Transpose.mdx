@@ -1,0 +1,17 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# Transpose (MLP)
+
+Applies MLP for penultimate dimension.
+
+```python copy
+MLP(
+    dim=768,
+    plugins=[
+        Transpose(),
+    ],
+)
+```
+
+This plugin can be used to implement token-mixer from [MLP-Mixer](https://arxiv.org/abs/2105.01601)

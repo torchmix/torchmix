@@ -1,0 +1,20 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# RelativePositionBias (Attention)
+
+Relative Position Bias for [T5](https://arxiv.org/abs/1910.10683).
+
+```python copy
+Attention(
+    dim=768,
+    num_heads=12,
+    plugins=[
+        RelativePositionBias(
+            seq_length=1024,
+            num_buckets=256,
+            num_heads=12,
+        )
+    ],
+)
+```

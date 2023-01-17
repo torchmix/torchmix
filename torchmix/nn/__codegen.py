@@ -86,7 +86,7 @@ with open("torchmix/nn/__init__.py", "w") as f:
 
         try:
             template: str
-            if name == "Sequential":
+            if name in ("Sequential", "Identity"):
                 template = sequential_template(name)
             elif name.startswith("LazyConv"):
                 template = lazy_conv_template(name)

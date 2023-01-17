@@ -329,3 +329,8 @@ class Component(nn.Module):
             The recreated instance of the `Component`.
         """
         return instantiate(self.config)
+
+    def drop(self, p: float = 0.1):
+        from torchmix.components import Dropout
+
+        return Dropout(self, p)

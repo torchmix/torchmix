@@ -5,10 +5,10 @@ import { Callout } from "nextra-theme-docs";
 `config` context allows you to set global configurations that can be shared across multiple components.
 
 ```python copy
-from torchmix import PreNorm, SelfAttention
+from torchmix import PreNorm, Attention
 
 PreNorm(
-    SelfAttention(
+    Attention(
         dim=1024,
         num_heads=8,
         head_dim=64,
@@ -21,11 +21,11 @@ is equivalent to
 
 ```python copy
 import torchmix
-from torchmix import PreNorm, SelfAttention
+from torchmix import PreNorm, Attention
 
 with torchmix.config(dim=1024):
     PreNorm(
-        SelfAttention(
+        Attention(
             num_heads=8,
             head_dim=64,
         )

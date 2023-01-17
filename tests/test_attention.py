@@ -1,13 +1,13 @@
 import pytest
 import torch
 
-from torchmix.components import SelfAttention, WindowAttention
+from torchmix import Attention, WindowAttention
 
 
 @pytest.mark.slow
 def test_self_attention():
     x = torch.randn(2, 196, 128)
-    module = SelfAttention(
+    module = Attention(
         dim=128,
         num_heads=8,
         head_dim=64,

@@ -1,0 +1,15 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# DropAttention (Attention)
+
+Apply dropout for attentions.
+
+```python copy
+Attention(
+    dim=768,
+    plugins=[
+        DropAttention(p=0.1)
+    ],
+)
+```

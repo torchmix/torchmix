@@ -1,0 +1,5 @@
+{
+    "VisionTransformer": "VisionTransformer",
+    "BERT": "BERT",
+    "GPT": "GPT"
+}

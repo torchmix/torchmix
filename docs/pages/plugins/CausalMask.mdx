@@ -1,0 +1,18 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# CausalMask (Attention)
+
+Mask query-key dot products for causal attention.
+
+```python copy
+Attention(
+    dim=768,
+    plugins=[
+        CausalMask(
+            block_size=1024,
+            mode="static",
+        )
+    ],
+)
+```

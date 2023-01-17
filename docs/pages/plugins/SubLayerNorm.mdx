@@ -1,0 +1,21 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# SubLayerNorm (Attention)
+
+Apply layer normalization before projection.
+
+```python copy
+PreNorm(
+    Attention(
+        dim=768,
+        plugins=[
+            SubLayerNorm(dim=768)
+        ],
+    ),
+    dim=768,
+)
+```
+
+This plugin implements Sub-LN for [Foundation Transformers](https://arxiv.org/pdf/2210.06423.pdf).
+Note that Sub-LN presumes Pre-LN rather than Post-LN

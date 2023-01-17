@@ -1,12 +1,12 @@
 import { Callout } from "nextra-theme-docs"
 import { Tab, Tabs } from "nextra-theme-docs"
 
-# WindowAttention
+# Attention
 
-Local window attention layer from [Swin Transformer](https://arxiv.org/abs/2103.14030).
+Base class for all multi-head self attentions.
 
 ```python copy
-WindowAttention(dim=96, window_size=8, num_heads=8, head_dim=64)
+Attention(dim=768, num_heads=8, head_dim=64, plugins=[])
 ```
 
 
@@ -16,7 +16,6 @@ WindowAttention(dim=96, window_size=8, num_heads=8, head_dim=64)
 - `dim`: The dimension size.
 - `num_heads`: The number of attention heads.
 - `head_dim`: The dimension size for each attention head.
-- `window_size`: The window size for local attentions.
 - `plugins`: A list of [`AttentionPlugin`](/plugins/AttentionPlugin)s to use.
 
 ## Forward
