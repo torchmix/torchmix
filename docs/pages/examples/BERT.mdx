@@ -3,15 +3,15 @@
 ```python copy
 from torchmix import (
     MLP,
-    PreNorm,
-    Repeat,
-    nn,
+    Attention,
+    DropActivation,
     DropAttention,
     DropProjection,
-    DropActivation,
     DropProjectionOut,
-    Attention,
+    PreNorm,
     RelativePositionBias,
+    Repeat,
+    nn,
 )
 
 BERT = nn.Sequential(

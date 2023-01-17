@@ -64,6 +64,13 @@ Model(a=2, b="y", c=["foo", "bar"]).store(group="model", name="b")
 Model(a=3, b="z", c=["foo", "bar", "baz"]).store(group="model", name="c")
 ```
 
+<Callout type="info">
+  This feature is built on top of
+  [`hydra-zen`](https://github.com/mit-ll-responsible-ai/hydra-zen). Check
+  [their docs](https://mit-ll-responsible-ai.github.io/hydra-zen/) for more
+  information!
+</Callout>
+
 ## Nested Components
 
 In deep learning, models are always composed of multiple sub-modules.
@@ -153,35 +160,36 @@ and easily integrate them into the `hydra` ecosystem, as demonstrated below:
 
 ```python
 nn.Sequential(
-    Add(
-        PatchEmbed(dim=1024),
-        PositionEmbed(
-            seq_length=196,
-            dim=1024,
+    Attach(
+        Token(dim=768),
+        Add(
+            PatchEmbed(patch_size=16),
+            PositionEmbed(seq_length=196, dim=768),
         ),
     ),
     Repeat(
         nn.Sequential(
             PreNorm(
-                MLP(
-                    dim=1024,
-                    expansion_factor=4,
-                    act_layer=nn.GELU,
-                ),
-                dim=1024,
-            ),
-            PreNorm(
                 Attention(
-                    dim=1024,
-                    num_heads=8,
+                    dim=768,
+                    num_heads=12,
                     head_dim=64,
                 ),
-                dim=1024,
+                dim=768,
+            ),
+            PreNorm(
+                MLP(
+                    dim=768,
+                    act_layer=nn.GELU(),
+                    expansion_factor=4,
+                ),
+                dim=768,
             ),
         ),
-        depth=24,
+        depth=12,
     ),
-    AvgPool(),
+    Extract(0),
+    nn.Linear(768, 1000),
 ).store(group="model", name="vit")
 ```
 
@@ -193,9 +201,51 @@ Just import `nn` from **TorchMix**!
 from torchmix import nn
 ```
 
-<Callout type="info">
-  This feature is built on top of
-  [`hydra-zen`](https://github.com/mit-ll-responsible-ai/hydra-zen). Check
-  [their docs](https://mit-ll-responsible-ai.github.io/hydra-zen/) for more
-  information!
-</Callout>
+## Duplicating Components
+
+This auto-magic configuration generation feature has a handy side effect: you
+can easily duplicate components with the exactly same configuration:
+
+```python
+from hydra.utils import instantiate
+from torchmix import Component
+
+model: Component = ...  # some complex component
+
+model_new = instantiate(model.config)
+```
+
+You can just use the `instantiate` method of the `Component` class.
+
+```python
+model_new = model.instantiate()
+```
+
+A direct application of this feature is the [`Repeat`](/components/Repeat) container,
+which creates an `nn.Sequential` with multiple instances of the same component.
+
+In the example below, not only the `Attention` is duplicated, but also the plugins
+passed as arguments, such as `CausalMask`, `RelativePositionBias`, `DropAttention`, and
+`DropProjection`, are also duplicated 12 times:
+
+```python
+Repeat(
+    Attention(
+        dim=768,
+        num_heads=12,
+        head_dim=64,
+        plugins=[
+            CausalMask(mode="dynamic"),
+            RelativePositionBias(
+                seq_length=1024,
+                num_buckets=256,
+                num_heads=12,
+                causal=True,
+            ),
+            DropAttention(p=0.1),
+            DropProjection(p=0.1),
+        ],
+    ),
+    depth=12
+)
+```
