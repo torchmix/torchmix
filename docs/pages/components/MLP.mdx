@@ -1,0 +1,24 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# MLP
+
+Base class for all MLPs.
+
+```python copy
+MLP(act_layer=nn.GELU(), dim=768, expansion_factor=4, plugins=[])
+```
+
+
+
+## Parameters
+
+- `dim`: Dimension size.
+- `act_layer`: Activation layer to be inserted between the two Linear layers.
+- `expansion_factor`: Factor by which to expand `dim` in the first Linear layer.
+- `plugins`: A list of [`MLPPlugin`](/plugins/MLPPlugin)s to use.
+
+## Forward
+```rust
+(x: jaxtyping.Float[Tensor, '... d']) -> jaxtyping.Float[Tensor, '... d']
+```

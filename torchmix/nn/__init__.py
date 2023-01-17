@@ -402,7 +402,8 @@ with suppress(AttributeError):
 with suppress(AttributeError):
 
     class Identity(Component, nn.Identity):
-        __init__ = functools.partial(nn.Identity.__init__)
+        build_mode = BuildMode.WITH_ARGS
+        __init__ = functools.partial(nn.Identity.__init__)  # type: ignore
 
 
 with suppress(AttributeError):

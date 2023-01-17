@@ -163,15 +163,15 @@ nn.Sequential(
     Repeat(
         nn.Sequential(
             PreNorm(
-                ChannelMixer(
+                MLP(
                     dim=1024,
                     expansion_factor=4,
-                    act_layer=nn.GELU.partial(),
+                    act_layer=nn.GELU,
                 ),
                 dim=1024,
             ),
             PreNorm(
-                SelfAttention(
+                Attention(
                     dim=1024,
                     num_heads=8,
                     head_dim=64,

@@ -1,22 +1,15 @@
 import torchmix.nn as nn
 from torchmix.components import (
-    Add,
-    Attach,
     AvgPool,
-    ChannelMixer,
     Extract,
     PatchEmbed,
     PatchMerging,
     PositionEmbed,
-    PostNorm,
-    PreNorm,
-    RelativePositionBias,
-    Repeat,
-    SelfAttention,
     Token,
-    TokenMixer,
-    WindowAttention,
 )
+from torchmix.components.attention import *
+from torchmix.components.containers import *
+from torchmix.components.mlp import *
 from torchmix.core._component import Component
 from torchmix.core._context import config, no_parameters
 
@@ -25,20 +18,38 @@ __all__ = [
     "no_parameters",
     "config",
     "nn",
-    "Attach",
-    "Add",
-    "Repeat",
-    "PreNorm",
-    "PostNorm",
+    # torchmix.component
+    "Token",
     "AvgPool",
+    "Extract",
     "PatchEmbed",
     "PatchMerging",
     "PositionEmbed",
-    "ChannelMixer",
-    "TokenMixer",
+    # torchmix.component.attention
+    "Attention",
+    "AttentionPlugin",
+    "CausalMask",
+    "DropAttention",
+    "DropProjection",
     "RelativePositionBias",
-    "SelfAttention",
+    "RelativePositionBiasViT",
+    "SubLayerNorm",
     "WindowAttention",
-    "Token",
-    "Extract",
+    # torchmix.component.mlp
+    "MLP",
+    "DropActivation",
+    "DropProjectionIn",
+    "DropProjectionOut",
+    "MLPPlugin",
+    "Transpose",
+    # torchmix.component.containers
+    "Add",
+    "Mul",
+    "Attach",
+    "Dropout",
+    "DropPath",
+    "StochasticDepth",
+    "PreNorm",
+    "PostNorm",
+    "Repeat",
 ]

@@ -29,3 +29,31 @@ class Add(Sequential):
             else:
                 _x.add_(module(x))
         return _x
+
+
+class Mul(Sequential):
+    """Cumulatively multiply the forward results of the given modules in parallel.
+
+    `Mul` inherits from the `Sequential` class and applies a list of modules
+    in parallel, multiplying their forward results cumulatively. The output shapes
+    of the given modules must be the same or broadcastable in order to be multiplied.
+
+    Args:
+        *args: `Component` instances whose forward results will be multiplied cumulatively.
+
+    Examples:
+        Mul(
+            nn.Linear(100, 200),
+            nn.Linear(100, 200),
+            nn.Linear(100, 200)
+        )
+    """
+
+    def forward(self, x: Tensor) -> Tensor:
+        _x: Tensor
+        for idx, module in enumerate(self):
+            if idx == 0:
+                _x = module(x)
+            else:
+                _x.mul_(module(x))
+        return _x

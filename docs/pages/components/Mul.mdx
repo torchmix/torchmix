@@ -1,0 +1,27 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# Mul
+
+Cumulatively multiply the forward results of the given modules in parallel.
+
+```python copy
+Mul(
+    nn.Linear(100, 200),
+    nn.Linear(100, 200),
+    nn.Linear(100, 200)
+)
+```
+
+`Mul` inherits from the `Sequential` class and applies a list of modules
+in parallel, multiplying their forward results cumulatively. The output shapes
+of the given modules must be the same or broadcastable in order to be multiplied.
+
+## Parameters
+
+- `*args`: `Component` instances whose forward results will be multiplied cumulatively.
+
+## Forward
+```rust
+(x: torch.Tensor) -> torch.Tensor
+```

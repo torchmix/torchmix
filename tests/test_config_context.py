@@ -1,16 +1,16 @@
 import pytest
 
 from torchmix import (
+    MLP,
     Add,
     Attach,
-    ChannelMixer,
+    Attention,
     Component,
     Extract,
     PatchEmbed,
     PositionEmbed,
     PreNorm,
     Repeat,
-    SelfAttention,
     Token,
     nn,
 )
@@ -44,15 +44,15 @@ def test_config_context_2(helpers):
         Repeat(
             nn.Sequential(
                 PreNorm(
-                    ChannelMixer(
+                    MLP(
                         dim=1024,
                         expansion_factor=4,
-                        act_layer=nn.GELU.partial(),
+                        act_layer=nn.GELU(),
                     ),
                     dim=1024,
                 ),
                 PreNorm(
-                    SelfAttention(
+                    Attention(
                         dim=1024,
                         num_heads=8,
                         head_dim=64,
@@ -79,13 +79,13 @@ def test_config_context_2(helpers):
             Repeat(
                 nn.Sequential(
                     PreNorm(
-                        ChannelMixer(
+                        MLP(
                             expansion_factor=4,
-                            act_layer=nn.GELU.partial(),
+                            act_layer=nn.GELU(),
                         ),
                     ),
                     PreNorm(
-                        SelfAttention(
+                        Attention(
                             num_heads=8,
                             head_dim=64,
                         ),

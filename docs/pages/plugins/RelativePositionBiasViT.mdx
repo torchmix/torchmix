@@ -1,14 +1,21 @@
 import { Callout } from "nextra-theme-docs"
 import { Tab, Tabs } from "nextra-theme-docs"
 
-# RelativePositionBias
+# RelativePositionBiasViT (Attention)
 
-Computes the Relative Position Bias for the [Swin Transformer](https://arxiv.org/abs/2103.14030)'s attention mechanism.
+Relative Position Bias for [Swin Transformer](https://arxiv.org/abs/2103.14030).
 
 ```python copy
->>> m = RelativePositionBias(window_size=8, num_heads=8)
->>> m().shape
-torch.Size([8, 64, 64])
+WindowAttention(
+    dim=768,
+    num_heads=12,
+    plugins=[
+        RelativePositionBiasViT(
+            window_size=8,
+            num_heads=12,
+        )
+    ],
+)
 ```
 
 The relative position bias is intended to be added to the attention before
@@ -21,11 +28,3 @@ Note that the number of parameters is `O(window_size)`, not `O(window_size**2)`.
 
 - `window_size`: The window size for which attention is computed.
 - `num_heads`: Number of heads for the multi-head attention mechanism.
-
-## Forward
-```rust
-() -> jaxtyping.Float[Tensor, 'head q k']
-```
-
-### Returns
-Tensor of shape `(num_heads, window_size ** 2, window_size ** 2)` containing the relative position bias for each head and each query-key pair.

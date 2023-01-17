@@ -2,5 +2,8 @@
     "index": "Introduction",
     "component": "Component Class",
     "global-configs": "Global Configurations",
-    "no-parameters": "Config-only Mode"
+    "no-parameters": "Config-only Mode",
+    "examples": "Examples",
+    "components": "Components",
+    "plugins": "Plugins"
 }

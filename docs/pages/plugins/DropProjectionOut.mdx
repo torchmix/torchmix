@@ -1,0 +1,15 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# DropProjectionOut (MLP)
+
+Apply dropout after activation layer.
+
+```python copy
+MLP(
+    dim=768,
+    plugins=[
+        DropProjectionOut(p=0.1),
+    ],
+)
+```

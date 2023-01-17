@@ -1,7 +1,6 @@
 import torch
 
-from torchmix import nn
-from torchmix.components import Add, Attach, Token
+from torchmix import Add, Attach, Token, nn
 
 
 def test_add():

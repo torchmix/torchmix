@@ -1,0 +1,15 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# DropProjection (Attention)
+
+Apply dropout after projection layer.
+
+```python copy
+Attention(
+    dim=768,
+    plugins=[
+        DropProjection(p=0.1)
+    ],
+)
+```

@@ -1,0 +1,15 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# DropProjectionIn (MLP)
+
+Apply dropout after first linear layer.
+
+```python copy
+MLP(
+    dim=768,
+    plugins=[
+        DropProjectionIn(p=0.1),
+    ],
+)
+```
