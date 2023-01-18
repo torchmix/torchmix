@@ -38,7 +38,7 @@ test = { cmd ="pytest", help = "test" }
 lint = { cmd = "pre-commit run --all-files", help = "pre-commit lint" }
 profile = { cmd = "py-spy record -o profile.svg -- python benchmark.py", help = "tracing" }
 codegen = { cmd = "python torchmix/nn/__codegen.py", help = "codegen"}
-docgen = { cmd = "python docs/src/components.py", help = "generate documentations" }
+docgen = { cmd = "python docs/run.py", help = "generate documentations" }
 start = { cmd = "(cd docs && pnpm next)", help = "start doc server" }
 
 [tool.black]

@@ -24,7 +24,7 @@ GPT = nn.Sequential(
                     plugins=[
                         CausalMask(mode="dynamic"),
                         RelativePositionBias(
-                            seq_length=1024,
+                            seq_len=1024,
                             num_buckets=256,
                             num_heads=12,
                             causal=True,

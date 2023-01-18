@@ -37,7 +37,7 @@ def test_config_context_2(helpers):
                 PatchEmbed(dim=1024),
             ),
             PositionEmbed(
-                seq_length=196 + 1,
+                seq_len=196 + 1,
                 dim=1024,
             ),
         ),
@@ -73,7 +73,7 @@ def test_config_context_2(helpers):
                     PatchEmbed(),
                 ),
                 PositionEmbed(
-                    seq_length=196 + 1,
+                    seq_len=196 + 1,
                 ),
             ),
             Repeat(

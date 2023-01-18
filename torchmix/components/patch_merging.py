@@ -36,11 +36,11 @@ class PatchMerging(Component):
     def forward(
         self, x: Float[Tensor, "... n d_in"]
     ) -> Float[Tensor, "... n/4 d_out"]:
-        _batch_size, _seq_length, _dim = x.shape
+        _batch_size, _seq_len, _dim = x.shape
 
         x = self.merge(
-            h=round(math.sqrt(_seq_length / 4)),
-            w=round(math.sqrt(_seq_length / 4)),
+            h=round(math.sqrt(_seq_len / 4)),
+            w=round(math.sqrt(_seq_len / 4)),
         )(x)
 
         return self.proj(x)

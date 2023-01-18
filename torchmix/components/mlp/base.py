@@ -13,7 +13,7 @@ class MLP(Component):
     """Base class for all MLPs.
 
     Args:
-        dim: Dimension size.
+        dim: The dimension size.
         act_layer: Activation layer to be inserted between the two Linear layers.
         expansion_factor: Factor by which to expand `dim` in the first Linear layer.
         plugins: A list of [`MLPPlugin`](/plugins/MLPPlugin)s to use.

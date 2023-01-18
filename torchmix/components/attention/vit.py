@@ -49,8 +49,8 @@ class WindowAttention(Attention):
         Float[Tensor, "... h w head window d_out"],
         Float[Tensor, "... h w head window d_out"],
     ]:
-        _batch_size, _seq_length, _proj_dim = query.shape
-        patch_size = round(math.sqrt(_seq_length))
+        _batch_size, _seq_len, _proj_dim = query.shape
+        patch_size = round(math.sqrt(_seq_len))
 
         query, key, value = map(
             lambda x: rearrange(

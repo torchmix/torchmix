@@ -22,7 +22,7 @@ BERT = nn.Sequential(
                     head_dim=64,
                     plugins=[
                         RelativePositionBias(
-                            seq_length=1024,
+                            seq_len=1024,
                             num_buckets=256,
                             num_heads=12,
                         ),

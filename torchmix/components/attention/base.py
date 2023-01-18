@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 import torch
 from einops import einsum, rearrange, unpack
@@ -28,9 +28,11 @@ class Attention(Component):
         self,
         dim: int = 768,
         num_heads: int = 8,
-        head_dim: int = 64,
+        head_dim: Optional[int] = None,
         plugins: List[AttentionPlugin] = [],
     ):
+        head_dim = head_dim or (dim // num_heads)
+
         self.proj_dim = num_heads * head_dim
         self.scale: float = head_dim**-0.5
         self.num_heads = num_heads

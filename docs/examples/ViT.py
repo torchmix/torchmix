@@ -1,6 +1,3 @@
-# VisionTransformer
-
-```python copy
 from torchmix import (
     MLP,
     Add,
@@ -24,7 +21,7 @@ ViT = nn.Sequential(
         Token(dim=768),
         Add(
             PatchEmbed(patch_size=16),
-            PositionEmbed(seq_length=196, dim=768),
+            PositionEmbed(seq_len=196, dim=768),
         ),
     ),
     Repeat(
@@ -59,4 +56,3 @@ ViT = nn.Sequential(
     Extract(0),
     nn.Linear(768, 1000),
 )
-```

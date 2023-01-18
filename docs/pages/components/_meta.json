@@ -1,10 +1,12 @@
 {
     "Add": "Add",
     "Attach": "Attach",
+    "Attention": "Attention",
     "AvgPool": "AvgPool",
     "DropPath": "DropPath",
     "Dropout": "Dropout",
     "Extract": "Extract",
+    "MLP": "MLP",
     "Mul": "Mul",
     "PatchEmbed": "PatchEmbed",
     "PatchMerging": "PatchMerging",
@@ -14,7 +16,5 @@
     "Repeat": "Repeat",
     "StochasticDepth": "StochasticDepth",
     "Token": "Token",
-    "Attention": "Attention",
-    "WindowAttention": "WindowAttention",
-    "MLP": "MLP"
+    "WindowAttention": "WindowAttention"
 }

@@ -1,5 +1,5 @@
 {
-    "VisionTransformer": "VisionTransformer",
+    "ViT": "ViT",
     "BERT": "BERT",
     "GPT": "GPT"
 }

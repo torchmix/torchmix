@@ -10,15 +10,15 @@ class PositionEmbed(Component):
     """Learnable positional embeddings
 
     Examples:
-        PositionEmbed(seq_length=196, dim=768)
+        PositionEmbed(seq_len=196, dim=768)
     """
 
     def __init__(
         self,
-        seq_length: int = 196,
+        seq_len: int = 196,
         dim: int = 768,
     ):
-        self.pos_embed = nn.Parameter(torch.randn(seq_length, dim)) * 0.02
+        self.pos_embed = nn.Parameter(torch.randn(seq_len, dim)) * 0.02
 
     def forward(self, *_) -> Float[Tensor, "n d"]:
         return self.pos_embed
