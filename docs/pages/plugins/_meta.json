@@ -1,14 +1,13 @@
 {
-    "AttentionPlugin": "AttentionPlugin",
     "CausalMask": "CausalMask",
     "DropAttention": "DropAttention",
     "DropProjection": "DropProjection",
     "RelativePositionBias": "RelativePositionBias",
     "RelativePositionBiasViT": "RelativePositionBiasViT",
+    "RotaryEmbedding": "RotaryEmbedding",
     "SubLayerNorm": "SubLayerNorm",
     "DropActivation": "DropActivation",
     "DropProjectionIn": "DropProjectionIn",
     "DropProjectionOut": "DropProjectionOut",
-    "MLPPlugin": "MLPPlugin",
     "Transpose": "Transpose"
 }

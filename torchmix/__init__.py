@@ -33,6 +33,7 @@ __all__ = [
     "DropProjection",
     "RelativePositionBias",
     "RelativePositionBiasViT",
+    "RotaryEmbedding",
     "SubLayerNorm",
     "WindowAttention",
     # torchmix.component.mlp

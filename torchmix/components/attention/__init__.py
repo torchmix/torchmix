@@ -6,6 +6,7 @@ from .plugin import (
     DropProjection,
     RelativePositionBias,
     RelativePositionBiasViT,
+    RotaryEmbedding,
     SubLayerNorm,
 )
 from .vit import WindowAttention
@@ -18,6 +19,7 @@ __all__ = [
     "DropProjection",
     "RelativePositionBias",
     "RelativePositionBiasViT",
+    "RotaryEmbedding",
     "SubLayerNorm",
     "WindowAttention",
 ]

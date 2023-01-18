@@ -1,0 +1,27 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# RotaryEmbedding (Attention)
+
+Rotary Position Embedding for [RoFormer](https://arxiv.org/abs/1910.10683).
+
+```python copy
+Attention(
+    dim=768,
+    num_heads=12,
+    head_dim= 64,
+    plugins=[
+        RotaryEmbedding(
+            head_dim=64,
+            seq_len=1024,
+        )
+    ],
+)
+```
+
+
+
+## Parameters
+
+- `head_dim`: The dimension size for each attention head.
+- `seq_len`: The length of given sequence.

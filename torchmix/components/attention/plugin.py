@@ -1,10 +1,15 @@
+# TODO: Implement caching mechanisms for non-trainable plugins
+# TODO: Implement dynamic length handling
+# TODO: Implement mode argument between ViT <-> LM
+
 import math
 from typing import Literal, Optional
 
 import torch
-from einops import rearrange
+from einops import einsum, rearrange, repeat
 from jaxtyping import Float
 from torch import Tensor
+from typing_extensions import Self
 
 from torchmix import nn
 from torchmix.core._component import Component
@@ -96,17 +101,17 @@ class CausalMask(AttentionPlugin):
                 ),
             )
 
-    def pre_softmax(self, dots):
-        _seq_length = dots.shape[-1]
+    def pre_softmax(self, dots: Tensor):
+        _seq_len = dots.shape[-1]
 
         if self.mode == "static":
             return dots.masked_fill(
-                self.mask[:_seq_length, :_seq_length], float("-inf")
+                self.mask[:_seq_len, :_seq_len], float("-inf")
             )
 
         return dots.masked_fill(
             ~torch.tril(
-                torch.ones(_seq_length, _seq_length, dtype=torch.bool),
+                torch.ones(_seq_len, _seq_len, dtype=torch.bool),
             ),
             float("-inf"),
         )
@@ -250,7 +255,7 @@ class RelativePositionBias(AttentionPlugin):
             num_heads=12,
             plugins=[
                 RelativePositionBias(
-                    seq_length=1024,
+                    seq_len=1024,
                     num_buckets=256,
                     num_heads=12,
                 )
@@ -260,7 +265,7 @@ class RelativePositionBias(AttentionPlugin):
 
     def __init__(
         self,
-        seq_length: int = 128,
+        seq_len: int = 128,
         num_buckets: int = 32,
         num_heads: int = 8,
         causal: bool = False,
@@ -268,7 +273,7 @@ class RelativePositionBias(AttentionPlugin):
         super().__init__()
         self.causal = causal
         self.num_buckets = num_buckets
-        self.seq_length = seq_length
+        self.seq_len = seq_len
         self.relative_attention_bias = nn.Parameter(
             torch.randn(num_heads, num_buckets)
         )
@@ -293,7 +298,7 @@ class RelativePositionBias(AttentionPlugin):
             max_exact
             + (
                 torch.log(n.float() / max_exact)
-                / math.log(self.seq_length / max_exact)
+                / math.log(self.seq_len / max_exact)
                 * (self.num_buckets - max_exact)
             ).long()
         )
@@ -315,3 +320,65 @@ class RelativePositionBias(AttentionPlugin):
         rp_bucket = self._relative_position_bucket(rel_pos)
         bias = self.relative_attention_bias[:, rp_bucket]
         return dots + bias
+
+
+class RotaryEmbedding(AttentionPlugin):
+    """Rotary Position Embedding for [RoFormer](https://arxiv.org/abs/1910.10683).
+
+    Args:
+        head_dim: The dimension size for each attention head.
+        seq_len: The length of given sequence.
+
+    Examples:
+        Attention(
+            dim=768,
+            num_heads=12,
+            head_dim= 64,
+            plugins=[
+                RotaryEmbedding(
+                    head_dim=64,
+                    seq_len=1024,
+                )
+            ],
+        )
+    """
+
+    inv_freq: Tensor
+
+    def __init__(
+        self,
+        head_dim: int = 64,
+        seq_len: int = 1024,
+    ):
+        print("Hi")
+        inv_freq = 1.0 / (
+            10000 ** (torch.arange(0, head_dim, 2).float() / head_dim)
+        )
+        self.register_buffer("inv_freq", inv_freq)
+        self.theta(seq_len)
+
+    def theta(self, seq_len: int = 1024):
+        index = torch.arange(seq_len)
+        freqs = einsum(index, self.inv_freq, "i, j -> i j")
+        freqs = repeat(freqs, "... theta -> ... (n theta)", n=2)
+
+        self.cos = freqs.cos()
+        self.sin = freqs.sin()
+
+    @staticmethod
+    def rotate(x):
+        x1, x2 = rearrange(x, "... (half d) -> ... half d", half=2).unbind(-2)
+        return rearrange([-x2, x1], "half ... d -> ... (half d)")
+
+    def apply_rotary_embedding(self, x: Tensor) -> Tensor:
+        return x * self.cos + self.rotate(x) * self.sin
+
+    def post_split_heads(self, q, k, v):
+        return (
+            self.apply_rotary_embedding(q),
+            self.apply_rotary_embedding(k),
+            v,
+        )
+
+    def instantiate(self) -> Self:
+        return self
