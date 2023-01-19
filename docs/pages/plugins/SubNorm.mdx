@@ -1,7 +1,7 @@
 import { Callout } from "nextra-theme-docs"
 import { Tab, Tabs } from "nextra-theme-docs"
 
-# SubLayerNorm (Attention)
+# SubNorm (Attention)
 
 Apply layer normalization before projection.
 
@@ -10,7 +10,7 @@ PreNorm(
     Attention(
         dim=768,
         plugins=[
-            SubLayerNorm(dim=768)
+            SubNorm(dim=768)
         ],
     ),
     dim=768,

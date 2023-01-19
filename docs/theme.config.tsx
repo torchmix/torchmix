@@ -12,7 +12,7 @@ const config: DocsThemeConfig = {
   // chat: {
   //   link: 'https://discord.com',
   // },
-  docsRepositoryBase: 'https://github.com/torchmix/torchmix/blob/core/docs/',
+  docsRepositoryBase: 'https://github.com/torchmix/torchmix/blob/main/docs/',
   footer: {
     text: '',
   },

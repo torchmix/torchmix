@@ -22,7 +22,7 @@ GPT = nn.Sequential(
                     num_heads=12,
                     head_dim=64,
                     plugins=[
-                        CausalMask(mode="dynamic"),
+                        CausalMask(),
                         RelativePositionBias(
                             seq_len=1024,
                             num_buckets=256,

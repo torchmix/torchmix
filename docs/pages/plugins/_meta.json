@@ -5,7 +5,7 @@
     "RelativePositionBias": "RelativePositionBias",
     "RelativePositionBiasViT": "RelativePositionBiasViT",
     "RotaryEmbedding": "RotaryEmbedding",
-    "SubLayerNorm": "SubLayerNorm",
+    "SubNorm": "SubNorm",
     "DropActivation": "DropActivation",
     "DropProjectionIn": "DropProjectionIn",
     "DropProjectionOut": "DropProjectionOut",

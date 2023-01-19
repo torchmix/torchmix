@@ -1,15 +1,14 @@
 # TODO: Implement caching mechanisms for non-trainable plugins
 # TODO: Implement dynamic length handling
 # TODO: Implement mode argument between ViT <-> LM
+# TODO: Maybe class level global cache?
 
 import math
-from typing import Literal, Optional
 
 import torch
 from einops import einsum, rearrange, repeat
 from jaxtyping import Float
 from torch import Tensor
-from typing_extensions import Self
 
 from torchmix import nn
 from torchmix.core._component import Component
@@ -72,48 +71,44 @@ class CausalMask(AttentionPlugin):
         Attention(
             dim=768,
             plugins=[
-                CausalMask(
-                    block_size=1024,
-                    mode="static",
-                )
+                CausalMask()
             ],
         )
     """
 
-    def __init__(
-        self,
-        block_size: Optional[int] = None,
-        mode: Literal["static", "dynamic"] = "dynamic",
+    def __init__(self):
+        self._seq_len_cached = None
+        self._mask_cached = None
+
+    def _update_cache(
+        self, dots: Float[Tensor, "... q k"], seq_dimension: int = -1
     ):
-        self.mode = mode
+        seq_len = dots.shape[seq_dimension]
 
-        if mode not in ("static", "dynamic"):
-            raise TypeError("mode must be one of 'dynamic' or 'static'")
+        if (
+            not self._seq_len_cached
+            or seq_len > self._seq_len_cached
+            or dots.device != self._mask_cached.device
+        ):
+            self._seq_len_cached = seq_len
 
-        if mode == "dynamic" and block_size:
-            raise TypeError("block_size must be None for dynamic mode.")
-
-        if mode == "static":
-            self.register_buffer(
-                "mask",
-                ~torch.tril(
-                    torch.ones(block_size, block_size, dtype=torch.bool),
+            self._mask_cached = ~torch.tril(
+                torch.ones(
+                    seq_len,
+                    seq_len,
+                    dtype=torch.bool,
+                    device=dots.device,
                 ),
             )
 
-    def pre_softmax(self, dots: Tensor):
-        _seq_len = dots.shape[-1]
+        return seq_len
 
-        if self.mode == "static":
-            return dots.masked_fill(
-                self.mask[:_seq_len, :_seq_len], float("-inf")
-            )
+    def pre_softmax(self, dots: Tensor):
+        seq_len = self._update_cache(dots)
 
         return dots.masked_fill(
-            ~torch.tril(
-                torch.ones(_seq_len, _seq_len, dtype=torch.bool),
-            ),
-            float("-inf"),
+            self._mask_cached[:seq_len, :seq_len],
+            -torch.finfo(dots.dtype).max,
         )
 
 
@@ -155,7 +150,7 @@ class DropAttention(AttentionPlugin):
         return self.dropout(attention)
 
 
-class SubLayerNorm(AttentionPlugin):
+class SubNorm(AttentionPlugin):
     """Apply layer normalization before projection.
 
     This plugin implements Sub-LN for [Foundation Transformers](https://arxiv.org/pdf/2210.06423.pdf).
@@ -166,7 +161,7 @@ class SubLayerNorm(AttentionPlugin):
             Attention(
                 dim=768,
                 plugins=[
-                    SubLayerNorm(dim=768)
+                    SubNorm(dim=768)
                 ],
             ),
             dim=768,
@@ -337,7 +332,6 @@ class RotaryEmbedding(AttentionPlugin):
             plugins=[
                 RotaryEmbedding(
                     head_dim=64,
-                    seq_len=1024,
                 )
             ],
         )
@@ -348,22 +342,15 @@ class RotaryEmbedding(AttentionPlugin):
     def __init__(
         self,
         head_dim: int = 64,
-        seq_len: int = 1024,
     ):
-        print("Hi")
         inv_freq = 1.0 / (
             10000 ** (torch.arange(0, head_dim, 2).float() / head_dim)
         )
         self.register_buffer("inv_freq", inv_freq)
-        self.theta(seq_len)
 
-    def theta(self, seq_len: int = 1024):
-        index = torch.arange(seq_len)
-        freqs = einsum(index, self.inv_freq, "i, j -> i j")
-        freqs = repeat(freqs, "... theta -> ... (n theta)", n=2)
-
-        self.cos = freqs.cos()
-        self.sin = freqs.sin()
+        self._seq_len_cached = None
+        self._cos_cached = None
+        self._sin_cached = None
 
     @staticmethod
     def rotate(x):
@@ -371,14 +358,30 @@ class RotaryEmbedding(AttentionPlugin):
         return rearrange([-x2, x1], "half ... d -> ... (half d)")
 
     def apply_rotary_embedding(self, x: Tensor) -> Tensor:
-        return x * self.cos + self.rotate(x) * self.sin
+        return x * self._cos_cached + self.rotate(x) * self._sin_cached
+
+    def _update_cache(
+        self, x: Float[Tensor, "... n d"], seq_dimension: int = -2
+    ):
+        seq_len = x.shape[seq_dimension]
+
+        if (
+            seq_len != self._seq_len_cached
+            or self._cos_cached.device != x.device
+            or self._cos_cached.dtype != x.dtype
+        ):
+            self._seq_len_cached = seq_len
+
+            index = torch.arange(seq_len)
+            freqs = einsum(index, self.inv_freq, "i, j -> i j")
+            emb = repeat(freqs, "... theta -> ... (n theta)", n=2)
+            self._cos_cached = emb.cos()
+            self._sin_cached = emb.sin()
 
     def post_split_heads(self, q, k, v):
+        self._update_cache(q)
         return (
             self.apply_rotary_embedding(q),
             self.apply_rotary_embedding(k),
             v,
         )
-
-    def instantiate(self) -> Self:
-        return self

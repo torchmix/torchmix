@@ -7,7 +7,7 @@ from .plugin import (
     RelativePositionBias,
     RelativePositionBiasViT,
     RotaryEmbedding,
-    SubLayerNorm,
+    SubNorm,
 )
 from .vit import WindowAttention
 
@@ -20,6 +20,6 @@ __all__ = [
     "RelativePositionBias",
     "RelativePositionBiasViT",
     "RotaryEmbedding",
-    "SubLayerNorm",
+    "SubNorm",
     "WindowAttention",
 ]
