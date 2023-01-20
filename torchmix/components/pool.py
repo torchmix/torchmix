@@ -31,7 +31,7 @@ class ClassPool(Component):
         index: Index of the CLS token to be extracted.
 
     Examples:
-        CLSTokenPool(0)
+        ClassPool(0)
     """
 
     def __init__(self, start: int = 0, stop: Optional[int] = None):
@@ -47,7 +47,7 @@ class PatchMerge(Component):
     """Patch merging layer from [Swin-Transformer](https://arxiv.org/abs/2103.14030).
 
     Examples:
-        PatchMerging(dim=96, expansion_factor=2.0)
+        PatchMerge(dim=96, expansion_factor=2.0)
     """
 
     def __init__(

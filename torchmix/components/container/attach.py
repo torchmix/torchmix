@@ -9,8 +9,8 @@ class Attach(Sequential):
 
     Example:
         Attach(
-            Token(dim=1024),
-            PatchEmbed(dim=1024),
+            ClassEmbedding(dim=1024),
+            PatchEmbedding(patch_size=16, dim=1024),
         )
     """
 

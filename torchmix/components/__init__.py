@@ -5,6 +5,11 @@ from .feedforward import Feedforward
 from .pool import *
 
 __all__ = [
+    # .attention
+    "Attention",
+    "WindowAttention",
+    # .feedforward
+    "Feedforward",
     # .embedding
     "PositionalEmbedding",
     "SinusoidalEmbedding",
@@ -25,9 +30,4 @@ __all__ = [
     "PreNorm",
     "PostNorm",
     "Repeat",
-    # .attention
-    "Attention",
-    "WindowAttention",
-    # .feedforward
-    "Feedforward",
 ]

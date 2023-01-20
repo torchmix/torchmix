@@ -5,7 +5,7 @@ from pathlib import Path
 from types import ModuleType
 from typing import Any, List, Optional, Tuple
 
-from docstring_parser import Docstring, parse
+from docstring_parser import parse
 from torch.nn.modules.module import _forward_unimplemented
 
 import torchmix
@@ -17,7 +17,7 @@ from torchmix.components.feedforward import FeedforwardPlugin
 def prepare_path(path: str):
     path = Path(f"docs/pages/{path}")
     path.mkdir(parents=True, exist_ok=True)
-    shutil.rmtree(path)
+    shutil.rmtree(path, ignore_errors=True)
     path.mkdir(parents=True)
     return path
 
@@ -92,7 +92,7 @@ class Write:
     def forward(self):
         if (
             hasattr(self.obj, "forward")
-            and self.obj.forward is not _forward_unimplemented
+            and getattr(self.obj, "forward") is not _forward_unimplemented
         ):
             self("## Forward")
             self("```rust")  # Hack for syntax highlighting
@@ -127,7 +127,8 @@ def write_main(
     if not names:
         names = []
 
-    for name, obj in inspect.getmembers(module):
+    for name in module.__all__:
+        obj = getattr(module, name)
         if inspect.isclass(obj) and issubclass(obj, base) and not obj is base:
             with open(path / f"{name}.mdx", "w") as f:
                 w = Write(f, obj)

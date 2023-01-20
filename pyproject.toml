@@ -33,14 +33,14 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.taskipy.tasks]
-commit = { cmd = "cz commit", help = "commitizen" }
 test = { cmd ="pytest", help = "test" }
 lint = { cmd = "pre-commit run --all-files", help = "pre-commit lint" }
 profile = { cmd = "py-spy record -o profile.svg -- python benchmark.py", help = "tracing" }
-codegen = { cmd = "python torchmix/nn/__codegen.py && task lint", help = "codegen"}
-docgen = { cmd = "python docs/run.py && task lint", help = "generate documentation" }
+codegen = { cmd = "python torchmix/nn/__codegen.py", help = "codegen"}
+docgen = { cmd = "python docs/run.py ", help = "generate documentation" }
 start = { cmd = "(cd docs && pnpm next)", help = "start doc server" }
-deploy = { cmd = "task docgen && vercel --prod", help = "deploy documentation"}
+commit = { cmd = "task codegen && task docgen && task lint || cz commit", help = "commitizen" }
+deploy = { cmd = "vercel --prod", help = "deploy documentation"}
 
 [tool.black]
 line-length = 80
