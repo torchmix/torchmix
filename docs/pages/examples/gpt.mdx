@@ -2,7 +2,7 @@
 
 ```python copy
 from torchmix import (
-    MLP,
+    Feedforward,
     Attention,
     CausalMask,
     DropActivation,
@@ -39,7 +39,7 @@ GPT = nn.Sequential(
                 dim=768,
             ),
             PreNorm(
-                MLP(
+                Feedforward(
                     dim=768,
                     act_layer=nn.GELU(),
                     expansion_factor=4,

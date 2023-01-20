@@ -1,11 +1,11 @@
 from torchmix import (
-    MLP,
     Attention,
     CausalMask,
     DropActivation,
     DropAttention,
     DropProjection,
     DropProjectionOut,
+    Feedforward,
     PreNorm,
     RelativePositionBias,
     Repeat,
@@ -36,7 +36,7 @@ GPT = nn.Sequential(
                 dim=768,
             ),
             PreNorm(
-                MLP(
+                Feedforward(
                     dim=768,
                     act_layer=nn.GELU(),
                     expansion_factor=4,
