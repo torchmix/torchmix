@@ -31,17 +31,23 @@ def signature(method: Any):
     signature = inspect.signature(method)
     params = signature.parameters
 
-    method_signature = ", ".join(
+    input_signatures = ", ".join(
         f"{param.name}: {param.annotation.__module__}.{param.annotation.__name__}"
         for param in params.values()
         if param.name not in ("self", "_", "__")
         if param.annotation.__module__ not in ("inspect")
     )
 
-    return (
-        f"({method_signature}) -> {signature.return_annotation.__module__}."
-        f"{signature.return_annotation.__name__}"
+    output_signatures = (
+        (
+            f"{signature.return_annotation.__module__}."
+            f"{signature.return_annotation.__name__}"
+        )
+        if signature.return_annotation.__module__ not in ("inspect")
+        else "Any"
     )
+
+    return f"({input_signatures}) -> {output_signatures}"
 
 
 class Write:
