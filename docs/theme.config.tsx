@@ -35,7 +35,7 @@ const config: DocsThemeConfig = {
       <meta property="og:description" content={frontMatter.description || 'The pytorch component library'} />
     </>
   },
-  primaryHue: 178,
+  primaryHue: { dark: 178, light: 277 },
   gitTimestamp: ({timestamp}) => {
     const month = timestamp.toLocaleString('default', { month: 'long' })
     const date = timestamp.getDate()

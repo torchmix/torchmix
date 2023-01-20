@@ -90,7 +90,7 @@ class DropProjectionOut(FeedforwardPlugin):
 class Transpose(FeedforwardPlugin):
     """Applies Feedforward to penultimate dimension.
 
-    This plugin can be used to implement token-mixer from [Feedforward-Mixer](https://arxiv.org/abs/2105.01601)
+    This plugin can be used to implement token-mixer from [MLP-Mixer](https://arxiv.org/abs/2105.01601)
 
     Examples:
         Feedforward(
