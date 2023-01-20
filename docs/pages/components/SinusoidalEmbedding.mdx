@@ -1,0 +1,17 @@
+import { Callout } from "nextra-theme-docs"
+import { Tab, Tabs } from "nextra-theme-docs"
+
+# SinusoidalEmbedding
+
+Sinusoidal Positional embeddings in [Attention is all you need](https://arxiv.org/abs/1706.03762)
+
+```python copy
+SinusoidalEmbedding(dim=768)
+```
+
+
+
+## Forward
+```rust
+(x: jaxtyping.Float[Tensor, '... n d'], __: inspect._empty) -> jaxtyping.Float[Tensor, 'n d']
+```

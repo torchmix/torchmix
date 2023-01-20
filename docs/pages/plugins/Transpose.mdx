@@ -1,17 +1,17 @@
 import { Callout } from "nextra-theme-docs"
 import { Tab, Tabs } from "nextra-theme-docs"
 
-# Transpose (MLP)
+# Transpose (Feedforward)
 
-Applies MLP for penultimate dimension.
+Applies Feedforward to penultimate dimension.
 
 ```python copy
-MLP(
-    dim=768,
+Feedforward(
+    dim=196,
     plugins=[
         Transpose(),
     ],
 )
 ```
 
-This plugin can be used to implement token-mixer from [MLP-Mixer](https://arxiv.org/abs/2105.01601)
+This plugin can be used to implement token-mixer from [Feedforward-Mixer](https://arxiv.org/abs/2105.01601)

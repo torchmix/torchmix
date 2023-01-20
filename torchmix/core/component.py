@@ -27,7 +27,7 @@ def _extract_args_from_signature(sig: Signature):
         if param.default is param.empty
         and name != "self"
         and param.kind != param.VAR_KEYWORD
-        # TODO: VAR_POSITIONAL must be handled as well.
+        # TODO: VAR_Pos must be handled as well.
     )
     return args
 
@@ -153,7 +153,7 @@ class Component(nn.Module):
                             raise TypeError(
                                 f"{cls.__name__}.__init__() missing "
                                 f"{-args_offset} "
-                                "required positional arguments: "
+                                "required Pos arguments: "
                                 f"""'{"', '".join(default_args[args_offset:])}'"""
                             )
 

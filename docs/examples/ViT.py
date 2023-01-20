@@ -1,27 +1,27 @@
 from torchmix import (
-    MLP,
     Add,
     Attach,
     Attention,
+    ClassEmbedding,
+    ClassPool,
     DropActivation,
     DropAttention,
     DropProjection,
     DropProjectionOut,
-    Extract,
-    PatchEmbed,
-    PositionEmbed,
+    Feedforward,
+    PatchEmbedding,
+    PositionalEmbedding,
     PreNorm,
     Repeat,
-    Token,
     nn,
 )
 
 ViT = nn.Sequential(
     Attach(
-        Token(dim=768),
+        ClassEmbedding(dim=768),
         Add(
-            PatchEmbed(patch_size=16),
-            PositionEmbed(seq_len=196, dim=768),
+            PatchEmbedding(patch_size=16),
+            PositionalEmbedding(dim=768, seq_len=196),
         ),
     ),
     Repeat(
@@ -39,7 +39,7 @@ ViT = nn.Sequential(
                 dim=768,
             ),
             PreNorm(
-                MLP(
+                Feedforward(
                     dim=768,
                     act_layer=nn.GELU(),
                     expansion_factor=4,
@@ -53,6 +53,6 @@ ViT = nn.Sequential(
         ),
         depth=12,
     ),
-    Extract(0),
+    ClassPool(0),
     nn.Linear(768, 1000),
 )

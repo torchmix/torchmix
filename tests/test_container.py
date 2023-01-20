@@ -1,6 +1,6 @@
 import torch
 
-from torchmix import Add, Attach, Token, nn
+from torchmix import Add, Attach, ClassEmbedding, nn
 
 
 def test_add():
@@ -20,10 +20,10 @@ def test_add():
 def test_attach():
     module = Attach(
         nn.Linear(4, 10),
-        Token(10),
-        Token(10),
-        Token(10),
-        Token(10),
+        ClassEmbedding(10),
+        ClassEmbedding(10),
+        ClassEmbedding(10),
+        ClassEmbedding(10),
     )
 
     assert module(torch.randn(2, 3, 4)).shape == (2, 3 + 4, 10)

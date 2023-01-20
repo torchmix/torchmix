@@ -11,7 +11,7 @@ from jaxtyping import Float
 from torch import Tensor
 
 from torchmix import nn
-from torchmix.core._component import Component
+from torchmix.core.component import Component
 
 
 class AttentionPlugin(Component):
@@ -250,7 +250,6 @@ class RelativePositionBias(AttentionPlugin):
             num_heads=12,
             plugins=[
                 RelativePositionBias(
-                    seq_len=1024,
                     num_buckets=256,
                     num_heads=12,
                 )
@@ -260,7 +259,6 @@ class RelativePositionBias(AttentionPlugin):
 
     def __init__(
         self,
-        seq_len: int = 128,
         num_buckets: int = 32,
         num_heads: int = 8,
         causal: bool = False,
@@ -268,15 +266,18 @@ class RelativePositionBias(AttentionPlugin):
         super().__init__()
         self.causal = causal
         self.num_buckets = num_buckets
-        self.seq_len = seq_len
         self.relative_attention_bias = nn.Parameter(
             torch.randn(num_heads, num_buckets)
         )
 
-    def _relative_position_bucket(
-        self,
-        relative_position,
-    ):
+        self._seq_len_cached = None
+        self._relative_position_bucket_cached = None
+
+    def _update_relative_position_bucket(self):
+        seq_len = self._seq_len_cached
+        index = torch.arange(seq_len, dtype=torch.long)
+        relative_position = index[None, :] - index[:, None]
+
         ret = 0
         n = -relative_position
         if not self.causal:
@@ -293,7 +294,7 @@ class RelativePositionBias(AttentionPlugin):
             max_exact
             + (
                 torch.log(n.float() / max_exact)
-                / math.log(self.seq_len / max_exact)
+                / math.log(seq_len / max_exact)
                 * (self.num_buckets - max_exact)
             ).long()
         )
@@ -303,17 +304,29 @@ class RelativePositionBias(AttentionPlugin):
 
         ret += torch.where(is_small, n, val_if_large)
 
-        return ret
+        self._relative_position_bucket_cached = ret
+
+    def _update_cache(
+        self, dots: Float[Tensor, "... q k"], seq_dimension: int = -1
+    ):
+        seq_len = dots.shape[seq_dimension]
+
+        if not self._seq_len_cached or seq_len != self._seq_len_cached:
+            self._seq_len_cached = seq_len
+            self._update_relative_position_bucket()
+
+        return seq_len
 
     def post_scaled_dot(
         self, dots: Float[Tensor, "... h q k"]
     ) -> Float[Tensor, "... h q k"]:
-        q, k = dots.shape[-2:]
-        q_pos = torch.arange(k - q, k, dtype=torch.long, device=dots.device)
-        k_pos = torch.arange(k, dtype=torch.long, device=dots.device)
-        rel_pos = k_pos[None, :] - q_pos[:, None]
-        rp_bucket = self._relative_position_bucket(rel_pos)
-        bias = self.relative_attention_bias[:, rp_bucket]
+        self._update_cache(dots)
+
+        bias = self.relative_attention_bias[
+            :, self._relative_position_bucket_cached
+        ]
+
+        print(dots.shape, bias.shape)
         return dots + bias
 
 

@@ -1,12 +1,12 @@
 import { Callout } from "nextra-theme-docs"
 import { Tab, Tabs } from "nextra-theme-docs"
 
-# MLP
+# Feedforward
 
-Base class for all MLPs.
+Base class for all Feedforward layers.
 
 ```python copy
-MLP(act_layer=nn.GELU(), dim=768, expansion_factor=4, plugins=[])
+Feedforward(act_layer=nn.GELU(), dim=768, expansion_factor=4, plugins=[])
 ```
 
 
@@ -16,7 +16,7 @@ MLP(act_layer=nn.GELU(), dim=768, expansion_factor=4, plugins=[])
 - `dim`: The dimension size.
 - `act_layer`: Activation layer to be inserted between the two Linear layers.
 - `expansion_factor`: Factor by which to expand `dim` in the first Linear layer.
-- `plugins`: A list of [`MLPPlugin`](/plugins/MLPPlugin)s to use.
+- `plugins`: A list of [`FeedforwardPlugin`](/plugins/FeedforwardPlugin)s to use.
 
 ## Forward
 ```rust

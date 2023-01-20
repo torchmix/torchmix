@@ -1,12 +1,12 @@
 import { Callout } from "nextra-theme-docs"
 import { Tab, Tabs } from "nextra-theme-docs"
 
-# DropActivation (MLP)
+# DropActivation (Feedforward)
 
 Apply dropout after activation layer.
 
 ```python copy
-MLP(
+Feedforward(
     dim=768,
     plugins=[
         DropActivation(p=0.1),

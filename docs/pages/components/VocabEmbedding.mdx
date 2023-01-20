@@ -1,17 +1,13 @@
 import { Callout } from "nextra-theme-docs"
 import { Tab, Tabs } from "nextra-theme-docs"
 
-# Token
+# VocabEmbedding
 
-A single token
 
-```python copy
-Token(dim=768)
-```
 
 
 
 ## Forward
 ```rust
-() -> jaxtyping.Float[Tensor, ' d']
+(x: jaxtyping.Integer[Tensor, '... n']) -> jaxtyping.Float[Tensor, '... n d']
 ```

@@ -1,14 +1,14 @@
 from einops import rearrange
 
 from torchmix import nn
-from torchmix.core._component import Component
+from torchmix.core.component import Component
 
 
-class MLPPlugin(Component):
-    """Base class for all plugins for MLP.
+class FeedforwardPlugin(Component):
+    """Base class for all plugins for Feedforward layers.
 
     Examples:
-        class CustomPlugin(MLPPlugin): ...
+        class CustomPlugin(FeedforwardPlugin): ...
     """
 
     def pre_proj_in(self, x):
@@ -30,11 +30,11 @@ class MLPPlugin(Component):
         return x
 
 
-class DropProjectionIn(MLPPlugin):
+class DropProjectionIn(FeedforwardPlugin):
     """Apply dropout after first linear layer.
 
     Examples:
-        MLP(
+        Feedforward(
             dim=768,
             plugins=[
                 DropProjectionIn(p=0.1),
@@ -49,11 +49,11 @@ class DropProjectionIn(MLPPlugin):
         return self.drop(x)
 
 
-class DropActivation(MLPPlugin):
+class DropActivation(FeedforwardPlugin):
     """Apply dropout after activation layer.
 
     Examples:
-        MLP(
+        Feedforward(
             dim=768,
             plugins=[
                 DropActivation(p=0.1),
@@ -68,17 +68,16 @@ class DropActivation(MLPPlugin):
         return self.drop(x)
 
 
-class DropProjectionOut(MLPPlugin):
+class DropProjectionOut(FeedforwardPlugin):
     """Apply dropout after activation layer.
 
     Examples:
-        MLP(
+        Feedforward(
             dim=768,
             plugins=[
                 DropProjectionOut(p=0.1),
             ],
         )
-
     """
 
     def __init__(self, p: float = 0.1):
@@ -88,14 +87,14 @@ class DropProjectionOut(MLPPlugin):
         return self.drop(x)
 
 
-class Transpose(MLPPlugin):
-    """Applies MLP for penultimate dimension.
+class Transpose(FeedforwardPlugin):
+    """Applies Feedforward to penultimate dimension.
 
-    This plugin can be used to implement token-mixer from [MLP-Mixer](https://arxiv.org/abs/2105.01601)
+    This plugin can be used to implement token-mixer from [Feedforward-Mixer](https://arxiv.org/abs/2105.01601)
 
     Examples:
-        MLP(
-            dim=768,
+        Feedforward(
+            dim=196,
             plugins=[
                 Transpose(),
             ],

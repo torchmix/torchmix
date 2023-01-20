@@ -18,7 +18,7 @@ def no_parameters():
         >>> print(model._parameters)
         AttributeError: 'Linear' object has no attribute '_parameters'
     """
-    with unittest.mock.patch("torchmix.core._component.NO_PARAMS", True):
+    with unittest.mock.patch("torchmix.core.component.NO_PARAMS", True):
         yield
 
 
@@ -26,9 +26,9 @@ def no_parameters():
 def config(*_args, **kwargs):
     if _args:
         raise ValueError(
-            "Positional arguments are not supported, got "
+            "Pos arguments are not supported, got "
             f"""'{"', '".join(map(str, _args))}'"""
         )
 
-    with unittest.mock.patch("torchmix.core._component.GLOBAL_KWARGS", kwargs):
+    with unittest.mock.patch("torchmix.core.component.GLOBAL_KWARGS", kwargs):
         yield

@@ -1,7 +1,7 @@
 from torch import Tensor
 
 from torchmix import nn
-from torchmix.core._component import Component
+from torchmix.core.component import Component
 
 
 class PostNorm(Component):

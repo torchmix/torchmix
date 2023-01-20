@@ -1,21 +1,21 @@
-from ._token import Token
 from .attention import Attention, WindowAttention
-from .avg_pool import AvgPool
-from .containers import *
-from .extract import Extract
-from .mlp import MLP
-from .patch_embed import PatchEmbed
-from .patch_merging import PatchMerging
-from .position_embed import PositionEmbed
+from .container import *
+from .embedding import *
+from .feedforward import Feedforward
+from .pool import *
 
 __all__ = [
-    "Token",
+    # .embedding
+    "PositionalEmbedding",
+    "SinusoidalEmbedding",
+    "VocabEmbedding",
+    "PatchEmbedding",
+    "ClassEmbedding",
+    # .pool
     "AvgPool",
-    "Extract",
-    "PatchEmbed",
-    "PatchMerging",
-    "PositionEmbed",
-    # torchmix.components.containers
+    "ClassPool",
+    "PatchMerge",
+    # .containers
     "Add",
     "Mul",
     "Attach",
@@ -25,8 +25,9 @@ __all__ = [
     "PreNorm",
     "PostNorm",
     "Repeat",
-    # torchmix.components.attention
+    # .attention
     "Attention",
     "WindowAttention",
-    "MLP",
+    # .feedforward
+    "Feedforward",
 ]

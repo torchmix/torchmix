@@ -1,17 +1,17 @@
 import pytest
 
 from torchmix import (
-    MLP,
     Add,
     Attach,
     Attention,
+    ClassEmbedding,
+    ClassPool,
     Component,
-    Extract,
-    PatchEmbed,
-    PositionEmbed,
+    Feedforward,
+    PatchEmbedding,
+    PositionalEmbedding,
     PreNorm,
     Repeat,
-    Token,
     nn,
 )
 from torchmix.core._context import config
@@ -33,10 +33,10 @@ def test_config_context_2(helpers):
     model_1 = nn.Sequential(
         Add(
             Attach(
-                Token(dim=1024),
-                PatchEmbed(dim=1024),
+                ClassEmbedding(dim=1024),
+                PatchEmbedding(dim=1024),
             ),
-            PositionEmbed(
+            PositionalEmbedding(
                 seq_len=196 + 1,
                 dim=1024,
             ),
@@ -44,7 +44,7 @@ def test_config_context_2(helpers):
         Repeat(
             nn.Sequential(
                 PreNorm(
-                    MLP(
+                    Feedforward(
                         dim=1024,
                         expansion_factor=4,
                         act_layer=nn.GELU(),
@@ -62,24 +62,24 @@ def test_config_context_2(helpers):
             ),
             depth=2,
         ),
-        Extract(0),
+        ClassPool(),
     )
 
     with config(dim=1024):
         model_2 = nn.Sequential(
             Add(
                 Attach(
-                    Token(),
-                    PatchEmbed(),
+                    ClassEmbedding(),
+                    PatchEmbedding(),
                 ),
-                PositionEmbed(
+                PositionalEmbedding(
                     seq_len=196 + 1,
                 ),
             ),
             Repeat(
                 nn.Sequential(
                     PreNorm(
-                        MLP(
+                        Feedforward(
                             expansion_factor=4,
                             act_layer=nn.GELU(),
                         ),
@@ -93,7 +93,7 @@ def test_config_context_2(helpers):
                 ),
                 depth=2,
             ),
-            Extract(0),
+            ClassPool(),
         )
 
     # assert model_1.config == model_2.config  # TODO

@@ -1,17 +1,17 @@
 import { Callout } from "nextra-theme-docs"
 import { Tab, Tabs } from "nextra-theme-docs"
 
-# PositionEmbed
+# ClassEmbedding
 
-Learnable positional embeddings
+A single token that represents CLS
 
 ```python copy
-PositionEmbed(seq_len=196, dim=768)
+ClassEmbedding(dim=768)
 ```
 
 
 
 ## Forward
 ```rust
-() -> jaxtyping.Float[Tensor, 'n d']
+(__: inspect._empty) -> jaxtyping.Float[Tensor, ' d']
 ```

@@ -1,18 +1,19 @@
 from torchmix import (
-    MLP,
     Attention,
     DropActivation,
     DropAttention,
     DropProjection,
     DropProjectionOut,
+    Feedforward,
     PreNorm,
     RelativePositionBias,
     Repeat,
+    VocabEmbedding,
     nn,
 )
 
 BERT = nn.Sequential(
-    nn.Embedding(50257, 768),
+    VocabEmbedding(50257, 768),
     Repeat(
         nn.Sequential(
             PreNorm(
@@ -22,7 +23,6 @@ BERT = nn.Sequential(
                     head_dim=64,
                     plugins=[
                         RelativePositionBias(
-                            seq_len=1024,
                             num_buckets=256,
                             num_heads=12,
                         ),
@@ -33,7 +33,7 @@ BERT = nn.Sequential(
                 dim=768,
             ),
             PreNorm(
-                MLP(
+                Feedforward(
                     dim=768,
                     act_layer=nn.GELU(),
                     expansion_factor=4,

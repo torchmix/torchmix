@@ -9,11 +9,12 @@ from torchmix import (
     PreNorm,
     RelativePositionBias,
     Repeat,
+    VocabEmbedding,
     nn,
 )
 
 GPT = nn.Sequential(
-    nn.Embedding(50257, 768),
+    VocabEmbedding(50257, 768),
     Repeat(
         nn.Sequential(
             PreNorm(
@@ -24,7 +25,6 @@ GPT = nn.Sequential(
                     plugins=[
                         CausalMask(),
                         RelativePositionBias(
-                            seq_len=1024,
                             num_buckets=256,
                             num_heads=12,
                             causal=True,

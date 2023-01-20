@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "torchmix"
-version = "0.1.0rc7"
-description = "A collection of useful PyTorch modules"
+version = "0.1.0rc8"
+description = "Flexible components for transformers 🧩"
 authors = ["junhsss <junhsssr@gmail.com>"]
 readme = "README.md"
 packages = [
@@ -40,7 +40,7 @@ profile = { cmd = "py-spy record -o profile.svg -- python benchmark.py", help = 
 codegen = { cmd = "python torchmix/nn/__codegen.py && task lint", help = "codegen"}
 docgen = { cmd = "python docs/run.py && task lint", help = "generate documentation" }
 start = { cmd = "(cd docs && pnpm next)", help = "start doc server" }
-deploy = { cmd = "vercel --prod", help = "deploy documentation"}
+deploy = { cmd = "task docgen && vercel --prod", help = "deploy documentation"}
 
 [tool.black]
 line-length = 80

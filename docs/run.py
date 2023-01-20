@@ -11,7 +11,7 @@ from torch.nn.modules.module import _forward_unimplemented
 import torchmix
 from torchmix import Component
 from torchmix.components.attention import AttentionPlugin
-from torchmix.components.mlp import MLPPlugin
+from torchmix.components.feedforward import FeedforwardPlugin
 
 
 def prepare_path(path: str):
@@ -176,6 +176,12 @@ write_main(torchmix.components, COMPONENTS, base=Component)
 names = write_main(
     torchmix, PLUGINS, base=AttentionPlugin, suffix=" (Attention)", meta=False
 )
-write_main(torchmix, PLUGINS, base=MLPPlugin, suffix=" (MLP)", names=names)
+write_main(
+    torchmix,
+    PLUGINS,
+    base=FeedforwardPlugin,
+    suffix=" (Feedforward)",
+    names=names,
+)
 
 convert(Path("docs/examples"), EXAMPLES)

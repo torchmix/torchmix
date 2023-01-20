@@ -1,17 +1,17 @@
-from .base import MLP
+from .base import Feedforward
 from .plugin import (
     DropActivation,
     DropProjectionIn,
     DropProjectionOut,
-    MLPPlugin,
+    FeedforwardPlugin,
     Transpose,
 )
 
 __all__ = [
-    "MLP",
+    "Feedforward",
     "DropActivation",
     "DropProjectionIn",
     "DropProjectionOut",
-    "MLPPlugin",
+    "FeedforwardPlugin",
     "Transpose",
 ]

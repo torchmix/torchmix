@@ -4,22 +4,22 @@ from jaxtyping import Float
 from torch import Tensor
 
 from torchmix import nn
-from torchmix.core._component import Component
+from torchmix.core.component import Component
 
-from .plugin import MLPPlugin
+from .plugin import FeedforwardPlugin
 
 
-class MLP(Component):
-    """Base class for all MLPs.
+class Feedforward(Component):
+    """Base class for all Feedforward layers.
 
     Args:
         dim: The dimension size.
         act_layer: Activation layer to be inserted between the two Linear layers.
         expansion_factor: Factor by which to expand `dim` in the first Linear layer.
-        plugins: A list of [`MLPPlugin`](/plugins/MLPPlugin)s to use.
+        plugins: A list of [`FeedforwardPlugin`](/plugins/FeedforwardPlugin)s to use.
 
     Examples:
-        MLP(act_layer=nn.GELU(), dim=768, expansion_factor=4, plugins=[])
+        Feedforward(act_layer=nn.GELU(), dim=768, expansion_factor=4, plugins=[])
     """
 
     def __init__(
@@ -27,7 +27,7 @@ class MLP(Component):
         dim: int = 768,
         expansion_factor: float = 4,
         act_layer: Component = nn.GELU(),
-        plugins: List[MLPPlugin] = [],
+        plugins: List[FeedforwardPlugin] = [],
     ):
         proj_dim = int(dim * expansion_factor)
 
@@ -35,7 +35,7 @@ class MLP(Component):
         self.act = act_layer
         self.proj_out_init(dim, proj_dim)
 
-        self.plugins: List[MLPPlugin] = nn.ModuleList(plugins)
+        self.plugins: List[FeedforwardPlugin] = nn.ModuleList(plugins)
 
     def proj_in(
         self, x: Float[Tensor, "... d_in"]

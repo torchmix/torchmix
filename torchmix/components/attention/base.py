@@ -6,7 +6,7 @@ from jaxtyping import Float
 from torch import Tensor
 
 from torchmix import nn
-from torchmix.core._component import Component
+from torchmix.core.component import Component
 
 from .plugin import AttentionPlugin
 
@@ -98,7 +98,7 @@ class Attention(Component):
     ) -> Float[Tensor, "... q d"]:
         return einsum(attention, value, "... q k, ... k d -> ... q d")
 
-    def forward(self, x: Float[Tensor, "... d"]) -> Float[Tensor, "... d"]:
+    def forward(self, x: Float[Tensor, "... n d"]) -> Float[Tensor, "... n d"]:
         for plugin in self.plugins:
             x = plugin.pre_qkv(x)
         query, key, value = self.qkv(x)
