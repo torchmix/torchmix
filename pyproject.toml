@@ -39,7 +39,7 @@ profile = { cmd = "py-spy record -o profile.svg -- python benchmark.py", help = 
 codegen = { cmd = "python torchmix/nn/__codegen.py", help = "codegen"}
 docgen = { cmd = "python docs/run.py ", help = "generate documentation" }
 start = { cmd = "(cd docs && pnpm next)", help = "start doc server" }
-commit = { cmd = "task codegen && task docgen && task lint || cz commit", help = "commitizen" }
+commit = { cmd = "task codegen && task docgen && task lint || git add . && cz commit", help = "commitizen" }
 deploy = { cmd = "vercel --prod", help = "deploy documentation"}
 
 [tool.black]

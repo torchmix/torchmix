@@ -34,7 +34,8 @@ def signature(method: Any):
     method_signature = ", ".join(
         f"{param.name}: {param.annotation.__module__}.{param.annotation.__name__}"
         for param in params.values()
-        if param.name not in ("self", "_")
+        if param.name not in ("self", "_", "__")
+        if param.annotation.__module__ not in ("inspect")
     )
 
     return (
